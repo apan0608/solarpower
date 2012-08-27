@@ -28,7 +28,7 @@ import org.apache.tools.ant.taskdefs.XSLTProcess.Factory;
 public class SolarpowerServlet extends HttpServlet implements Servlet {
 	
 //private static String CALCULATE = "/calculate.jsp";
-private static String HOME ="/home.jsp";
+private static String HOME ="/index.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {

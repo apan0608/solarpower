@@ -1,0 +1,335 @@
+/*
+ * Style sheet for Solar Power Calculator
+ * 
+ * Authors: MGSD Technology
+ * Date: 28 August 2012
+ * Version: 1.0
+*/
+
+
+/* DEFAULTS */
+
+/* make verticle scrollbar visible */
+html {
+    overflow-y: scroll;
+}
+
+/* body font family */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* h1 headings */
+h1 {
+    font-size: 1em;
+    padding-bottom: 10px;
+}
+
+/* h2 headings */
+h2 {
+    font-size: 0.8em;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+/* labels */
+label {
+    font-size: 0.8em;
+    margin-right: 10px;
+}
+
+/* forms */
+form {
+    padding: 5px 0px 5px 50px;
+}
+
+/* tables */
+table {
+    font-size: 0.8em;
+    margin: 10px 0 10px 0;
+}
+
+/* table headers */
+th {
+    background-color: #E5E5E5;
+    font-size: 1.2em;
+    padding: 5px;
+    text-align: left;
+}
+
+/* table cells */
+td {
+    padding: 5px;
+}
+
+
+/* DIVS */
+
+/* centre page in container div */
+#container {
+    margin: auto;
+    width: 800px;
+}
+
+/* header div */
+#header {
+    height: 200px;
+}
+
+/* menu div */
+#menu {
+    background-color: #2D2D2D;
+    height: 30px;
+    text-align: center;
+}
+
+/* position sidebar div to left */
+#sidebar {
+    float: left;
+    padding: 20px 0px 0px 0px;
+    width: 200px;
+}
+
+/* position content div to right */
+#content {
+    float: right;
+    min-height: 300px;
+    padding: 20px 20px 20px 20px;
+    width: 560px;
+}
+
+/* position footer div at bottom */
+#footer {
+    background-color: #EEEEEE;
+    float: left;
+    font-size: 0.8em;
+    font-style: italic;
+    margin-bottom: 4px;
+    padding: 5px;
+    text-align: center;
+    width: 790px;
+}
+
+
+/* MAIN NAV */
+
+/* remove bullets from menu lists and override browser settings for margin/padding */
+#menu ul {
+    list-style-type: none;
+    margin: 0px 1px 0px 1px;
+    padding: 0;
+}
+
+/* position menu list items horizontally */
+#menu li {
+    float: left;
+}
+
+/* position menu list links evenly in clickable boxes */
+#menu a {
+    color: #BBBBBB;
+    display: block;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 7px;
+    text-decoration: none;
+    width: 119px;
+}
+
+/* change colour of menu list links when hovered over */
+#menu a:hover {
+    color: #FFFFFF;
+}
+
+/* hide nested menu lists */
+#menu ul li ul {
+    display: none;
+    margin: 0;
+}
+
+/* display nested menu lists when parent list item is hovered over */
+#menu ul li:hover ul {
+    background-color: #FFFFFF;
+    border: 1px solid #BEBEBE;
+    border-top: 0px;
+    display: block;
+    padding: 7px 0px 7px 0px;
+    position: absolute;
+}
+
+/* position nested menu list items vertically */
+#menu ul li:hover ul li {
+    float: none;
+}
+
+/* change style of clickable boxes for nested menu list links */
+#menu ul li:hover ul li a {
+    color: #000000;
+    padding: 5px 7px 5px 15px;
+    text-align: left;
+    width: 111px;
+}
+
+/* change background colour of nested menu list link when hovered over */
+#menu ul li:hover ul li a:hover {
+    background-color: #EEEEEE;
+}
+
+
+/* SIDEBAR NAV */
+
+/* remove bullets from sidebar lists and override browser settings for margin/padding */
+#sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* position sidebar list links evenly in clickable boxes */
+#sidebar a {
+    color: #000000;
+    display: block;
+    font-size: 0.8em;
+    padding: 10px 0px 10px 20px;
+    text-decoration: none;
+    width: 180px;
+}
+
+/* change background colour of sidebar list links when hovered over */
+#sidebar a:hover {
+    background-color: #EEEEEE;
+}
+
+/* change colour of sidebar list links when clicked */
+#sidebar a:active {
+    color: #DD4B39;
+}
+
+/* hide nested sidebar lists */
+#sidebar ul li ul {
+    display: none;
+}
+
+/* display nested sidebar lists when parent list item is hovered over */
+#sidebar ul li:hover ul {
+    display: block;
+}
+
+/* change style of clickable boxes for nested sidebar list links */
+#sidebar ul li:hover ul li a {
+    padding: 5px 0px 5px 35px;
+    width: 165px;
+}
+
+
+/* CONTENT */
+
+/* content links */
+#content a {
+    color: #1122CC;
+    text-decoration: none;
+}
+
+/* content links when hovered over */
+#content a:hover {
+    color: #1122CC;
+    text-decoration: underline;
+}
+
+/* content links when clicked */
+#content a:active {
+    color: #DD4B39;
+    text-decoration: underline;
+}
+
+/* content paragraphs */
+#content p {
+    font-size: 0.8em;
+}
+
+
+/* IMAGES */
+
+/* class to centre images */
+img.centre {
+    display: block;
+    margin: auto;
+}
+
+
+/* FORMS */
+
+/* day and eventMonth text input controls */
+#day, #eventMonth {
+    width: 20px;
+}
+
+/* email, event and location text input controls */
+#email, #event, #location {
+    width: 300px;
+}
+
+/* first, last and suburb text input controls */
+#first, #last, #suburb {
+    width: 150px;
+}
+
+/* month text input control */
+#month {
+    width: 80px;
+}
+
+/* numBirdsSpotted, place, state and year text input controls */
+#numBirdsSpotted, #place, #state, #year {
+    width: 40px;
+}
+
+/* reason textarea control */
+#reason {
+    height: 48px;
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 400px;
+}
+
+/* register form paragraphs */
+#register p {
+    font-size: 0.7em;
+    font-style: italic;
+}
+
+
+/* CLASSES */
+
+/* class for error messages */
+.error {
+    color: #DD4B39;
+    font-size: 0.8em !important;
+    font-style: normal !important;
+    margin-top: 5px;
+}
+
+/* class for login error messages */
+.loginError {
+    color: #DD4B39;
+    font-size: 0.8em !important;
+    font-style: normal !important;
+    margin: 5px 0 0 50px;
+}
+
+/* class for radio input controls */
+.radioInput {
+    margin: 0 5px 5px 0;
+}
+
+/* class for select input controls */
+.selectInput {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* class for text input controls */
+.textInput {
+    margin-bottom: 5px;
+    padding: 5px;
+}
