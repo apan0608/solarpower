@@ -1,3 +1,5 @@
+// WE SHOULDN'T NEED THIS SERVLET
+
 package solarpower;
 
 import java.io.IOException;
@@ -31,7 +33,12 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
 
 //   }
 	
-	/*
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    /*
 	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
