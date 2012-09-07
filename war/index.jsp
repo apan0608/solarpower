@@ -17,23 +17,39 @@
 </head>
 <body>
 	<p>This is a calculating page.</p>
+	
+	<%
+    UserService userService = UserServiceFactory.getUserService();
+    User user = userService.getCurrentUser();
+    if (user != null) {
+      pageContext.setAttribute("user", user);
+    %>
+	<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
+	<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+	<%
+    } else {
+	%>
+	<p>Hello!
+	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+	to save your calculating data and view calculation history.</p>
+	<%
+    	}
+    %>
 
 	<form action="/calculate" method="post">
 		<p>System location</p>
-		<br>
 		<div>
 			<select name="location">
-				<option value="qld">Queensland</option>
-				<option value="vic">Victoria</option>
-				<option value="nsw">New South Wales</option>
-				<option value="sa">South Australia</option>
-				<option value="wa">Western Australia</option>
-				<option value="tas">Tasmania</option>
+				<option value="Queensland">Queensland</option>
+				<option value="Victoria">Victoria</option>
+				<option value="New South Wales">New South Wales</option>
+				<option value="South Australia">South Australia</option>
+				<option value="Western Australia">Western Australia</option>
+				<option value="Tasmania">Tasmania</option>
 			</select>
 		</div>
 
-		<p>Hours of sunlight per day</p>
-		<br>
+		<br><p>Hours of sunlight per day</p>		
 		<div>
 			<select name="hoursOfSun">
 				<option value="12">12</option>
@@ -51,12 +67,11 @@
 			</select>
 		</div>
 
-		<p>System size</p>
-		<br>
+		<br><p>System size</p>
 		<%--build system size drop-down list--%>
 		<div>
 			<select name="systemSize">
-				<c:forEach var="systemSize" items="${systemSizes}">
+				<c:forEach var="systemSize" items="${systemSizes}"><!-- dont think c: tag works here -->
 					<option value=${systemSize.value}>${systemSize.key}</option>
 				</c:forEach>
 			</select>
@@ -76,14 +91,12 @@
 			</select>
 		</div>
 
-		<p>System cost</p>
-		<br>
+		<br><p>System cost</p>		
 		<div>
 			<input type="text" name="cost">
 		</div>
 
-		<p>Number of panels</p>
-		<br>
+		<br><p>Number of panels</p>
 		<div>
 			<select name="numOfPanels">
 				<option value="4">4</option>
@@ -98,8 +111,7 @@
 			</select>
 		</div>
 
-		<p>Panel orientations</p>
-		<br>
+		<br><p>Panel orientations</p>
 		<div>
 			<select name="oriOfPanels">
 				<option value="20">20 degrees</option>
@@ -114,29 +126,20 @@
 			</select>
 		</div>
 
-		<p>Monthly Electricity Usage</p>
-		<br>
+		<br><p>Monthly Electricity Usage</p>		
 		<div>
 			<input type="text" name="usage">
 		</div>
 
-		<p>Electricity tariffs</p>
-		<br>
+		<br><p>Electricity tariffs</p>
 		<div>
 			<input type="text" name="tariff">
 		</div>
 
 		<div>
-			<input type="submit" value="Submit" />
+			<input type="submit" value="Submit" name="calculationDataForm"/>
 		</div>
-
 	</form>
-	<p>
-		for testing: the location that user selected is: <b>
-			${selectedlocation}</b>
-	</p>
-
-
 
 </body>
 </html>
