@@ -57,7 +57,7 @@
 		<div>
 			<select name="systemSize">
 				<c:forEach var="systemSize" items="${systemSizes}">
-					<option value=${systemSize.value}>${systemSize.key}</option>
+					<option value="${systemSize.key}">${systemSize.value}</option>
 				</c:forEach>
 			</select>
 		</div>
