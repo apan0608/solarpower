@@ -77,22 +77,22 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
 		//Entity statics = 
 		String loc = req.getParameter("location");
 		double cost = Double.parseDouble(req.getParameter("cost"));//need to convert
-		double size = Double.parseDouble(req.getParameter("size"));
-		int hours = Integer.parseInt(req.getParameter("hoursOfSun"));//daily
+		double systemSize = Double.parseDouble(req.getParameter("systemSize"));
+		double hoursOfSunlight = Double.parseDouble(req.getParameter("hoursOfSunlight"));//daily
 		double tariff = Double.parseDouble(req.getParameter("tariff"));
-		int numOfPanels = Integer.parseInt(req.getParameter("numOfPanels"));
-		int oriOfPanels = Integer.parseInt(req.getParameter("oriOfPanels"));//orientation
+		double numberOfPanels = Double.parseDouble(req.getParameter("numberOfPanels"));
+		double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation"));//orientation
 		double usage =  Double.parseDouble(req.getParameter("usage"));//monthly
 			
 		//also be stored in datastore 
 		String content = "Details of the system: " + "\n" + 
-                "\tSize:  " + req.getParameter("size") + "kwh" + "\n" +
+                "\tSize:  " + req.getParameter("systemSize") + "kwh" + "\n" +
         		"\tCost:  " + "$" + req.getParameter("cost") + "\n" +
-                "\tNumber of panels:  " + req.getParameter("numOfPanels") + "\n" +
-        		"\tOrientation of the panels:  " + req.getParameter("oriOfPanels") + "\n\n" +
+                "\tNumber of panels:  " + req.getParameter("numberOfPanels") + "\n" +
+        		"\tOrientation of the panels:  " + req.getParameter("panelOrientation") + "\n\n" +
                 "User defined information: " + "\n" +
         		"\tLocation:  " + req.getParameter("location") + "\n" +
-                "\tHours of sunlight:  "  + req.getParameter("hoursOfSun") + " per day" + "\n" +
+                "\tHours of sunlight:  "  + req.getParameter("hoursOfSunlight") + " per day" + "\n" +
         		"\tElectricity usage of user:  " + req.getParameter("usage") + "kw per day" + "\n" +
                 "\tTariff:  " + req.getParameter("tariff") + "\n\n" +
         		"The daily electricity generation of the systen is: " + generation + "kw" + "\n" +

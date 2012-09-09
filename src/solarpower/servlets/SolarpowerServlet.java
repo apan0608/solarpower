@@ -41,31 +41,10 @@ public class SolarpowerServlet extends HttpServlet implements Servlet {
         // if(req.getParameterMap().containsKey("calculate")){
         // resp.sendRedirect(CALCULATE);
         // } else {
-        resp.sendRedirect(HOME);
+        //resp.sendRedirect(HOME);
         // }
         
-        // make collections available to JSP
-        req.setAttribute("systemSizes", BuildSystemSizes());
-        
-        
     }
     
-    // build collections for form
-    public static LinkedHashMap<String, Double> BuildSystemSizes() {
-        LinkedHashMap<String, Double> systemSizes = new LinkedHashMap<String, Double>();
-        systemSizes.put("1kW", 1.0);
-        systemSizes.put("1.5kW", 1.5);
-        systemSizes.put("2kW", 2.0);
-        systemSizes.put("2.5kW", 2.5);
-        systemSizes.put("3kW", 3.0);
-        systemSizes.put("3.5kW", 3.5);
-        systemSizes.put("4kW", 4.0);
-        systemSizes.put("4.5kW", 4.5);
-        systemSizes.put("5kW", 5.0);
-        systemSizes.put("5.5kW", 5.5);
-        systemSizes.put("6kW", 6.0);
-        return systemSizes;
-    }
     
-   
 }
