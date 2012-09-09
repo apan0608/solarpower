@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
-import solarpower.SolarpowerServlet;
+import solarpower.servlets.SolarpowerServlet;
 
 public class SolarpowerServletTest {
     
