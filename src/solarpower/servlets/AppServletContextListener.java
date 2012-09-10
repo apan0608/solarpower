@@ -14,13 +14,13 @@ public class AppServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         InterfaceBuilder builder = new InterfaceBuilder();
-        LinkedHashMap<String, Double> systemSizes = builder.BuildSystemSizes();
+        LinkedHashMap<String, Double> systemSizes = builder.buildSystemSizes();
         event.getServletContext().setAttribute("systemSizes", systemSizes);
-        LinkedHashMap<String, Double> numberOfPanels = builder.BuildNumberOfPanels();
+        LinkedHashMap<String, Double> numberOfPanels = builder.buildNumberOfPanels();
         event.getServletContext().setAttribute("numberOfPanels", numberOfPanels);
-        LinkedHashMap<String, Double> panelOrientations = builder.BuildPanelOrientations();
+        LinkedHashMap<String, Double> panelOrientations = builder.buildPanelOrientations();
         event.getServletContext().setAttribute("panelOrientations", panelOrientations);
-        LinkedHashMap<String, Double> hoursOfSunlight = builder.BuildHoursOfSunlight();
+        LinkedHashMap<String, Double> hoursOfSunlight = builder.buildHoursOfSunlight();
         event.getServletContext().setAttribute("hoursOfSunlight", hoursOfSunlight);
         
     }

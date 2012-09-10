@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 
 public class InterfaceBuilder {
     
-    public LinkedHashMap<String, Double> BuildSystemSizes() {
+    public LinkedHashMap<String, Double> buildSystemSizes() {
         LinkedHashMap<String, Double> systemSizes = new LinkedHashMap<String, Double>();
         systemSizes.put("Select...", -1.0);
         systemSizes.put("1kW", 1.0);
@@ -22,7 +22,7 @@ public class InterfaceBuilder {
         return systemSizes;
     }
     
-    public LinkedHashMap<String, Double> BuildNumberOfPanels() {
+    public LinkedHashMap<String, Double> buildNumberOfPanels() {
         LinkedHashMap<String, Double> numberOfPanels = new LinkedHashMap<String, Double>();
         numberOfPanels.put("Select...", -1.0);
         for (Double i = 1.0; i < 51.0; i++) {
@@ -31,7 +31,7 @@ public class InterfaceBuilder {
         return numberOfPanels;
     }
     
-    public LinkedHashMap<String, Double> BuildPanelOrientations() {
+    public LinkedHashMap<String, Double> buildPanelOrientations() {
         LinkedHashMap<String, Double> panelOrientations = new LinkedHashMap<String, Double>();
         panelOrientations.put("Select...", -1.0);
         panelOrientations.put("N (0°)", 0.0);
@@ -54,7 +54,7 @@ public class InterfaceBuilder {
         return panelOrientations;
     }
     
-    public LinkedHashMap<String, Double> BuildHoursOfSunlight() {
+    public LinkedHashMap<String, Double> buildHoursOfSunlight() {
         LinkedHashMap<String, Double> hoursOfSunlight = new LinkedHashMap<String, Double>();
         hoursOfSunlight.put("Select...", -1.0);
         for (Double i = 0.0; i < 25.0; i++) {
