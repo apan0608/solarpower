@@ -1,5 +1,3 @@
-// WE SHOULDN'T NEED THIS SERVLET
-
 package solarpower.servlets;
 
 import java.io.IOException;
@@ -75,26 +73,26 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
 		
 		double generation = 0.0;
 		//Entity statics = 
-		String loc = req.getParameter("location");
-		double cost = Double.parseDouble(req.getParameter("cost"));//need to convert
+		String systemLocation = req.getParameter("systemLocation");
+		double systemCost = Double.parseDouble(req.getParameter("systemCost"));//need to convert
 		double systemSize = Double.parseDouble(req.getParameter("systemSize"));
 		double hoursOfSunlight = Double.parseDouble(req.getParameter("hoursOfSunlight"));//daily
-		double tariff = Double.parseDouble(req.getParameter("tariff"));
+		double tariffRate = Double.parseDouble(req.getParameter("tariffRate"));
 		double numberOfPanels = Double.parseDouble(req.getParameter("numberOfPanels"));
 		double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation"));//orientation
-		double usage =  Double.parseDouble(req.getParameter("usage"));//monthly
+		double dailyPowerUsage =  Double.parseDouble(req.getParameter("dailyPowerUsage"));//monthly
 			
 		//also be stored in datastore 
 		String content = "Details of the system: " + "\n" + 
                 "\tSize:  " + req.getParameter("systemSize") + "kwh" + "\n" +
-        		"\tCost:  " + "$" + req.getParameter("cost") + "\n" +
+        		"\tCost:  " + "$" + req.getParameter("systemCost") + "\n" +
                 "\tNumber of panels:  " + req.getParameter("numberOfPanels") + "\n" +
         		"\tOrientation of the panels:  " + req.getParameter("panelOrientation") + "\n\n" +
                 "User defined information: " + "\n" +
-        		"\tLocation:  " + req.getParameter("location") + "\n" +
+        		"\tSystem location:  " + req.getParameter("systemLocation") + "\n" +
                 "\tHours of sunlight:  "  + req.getParameter("hoursOfSunlight") + " per day" + "\n" +
-        		"\tElectricity usage of user:  " + req.getParameter("usage") + "kw per day" + "\n" +
-                "\tTariff:  " + req.getParameter("tariff") + "\n\n" +
+        		"\tElectricity usage of user:  " + req.getParameter("dailyPowerUsage") + "kw per day" + "\n" +
+                "\tTariff rate:  " + req.getParameter("tariffRate") + "\n\n" +
         		"The daily electricity generation of the systen is: " + generation + "kw" + "\n" +
                 "----------------------------------------------------------------------------\n\n";  
         
@@ -105,7 +103,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
 		//if user not logged in yet, go back to calculate page and not store data
         if(user == null){
         	req.setAttribute("history", content);
-    		//redirect to /calculate page, send data of loc to the page
+    		//redirect to /calculate page, send data of location to the page
     		req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
         }
       	     
@@ -143,8 +141,8 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
         req.setAttribute("history", calresults);       
  //       resp.sendRedirect("/calculate.jsp?result=" + "something");
 		req.setAttribute("userid", user.getUserId());		
-		req.setAttribute("selectedlocation", loc);
-		//redirect to /calculate page, send data of loc to the page
+		req.setAttribute("selectedlocation", systemLocation);
+		//redirect to /calculate page, send data of location to the page
 		//req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
 		req.getRequestDispatcher("/calculate.jsp?result="+"something").forward(req, resp);
 	

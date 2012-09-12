@@ -6,7 +6,7 @@
 
 /* DEFAULTS */
 
-/* make verticle scrollbar visible */
+/* make vertical scrollbar visible */
 html {
 	height: 101%;
 }
@@ -18,15 +18,40 @@ body {
 
 /* h1 headings */
 h1 {
-	font-size: 1em;
-	padding-bottom: 10px;
+	font-size: 2em;
+	position: absolute;
+	top: 70px;
+	width: 100%;
+}
+
+/* h1 spans */
+h1 span {
+	background-color: rgb(255, 255, 255);
+	background-color: rgba(255, 255, 255, 0.6);
+	padding: 10px 40px;
 }
 
 /* h2 headings */
 h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+/* h3 headings */
+h3 {
 	font-size: 0.8em;
 	font-weight: bold;
-	padding-top: 10px;
+}
+
+/* forms */
+form {
+	padding: 5px 0;
+}
+
+/* fieldsets */
+fieldset {
+	margin-bottom: 10px;
+	padding: 0 0 15px 10px;
 }
 
 /* labels */
@@ -35,15 +60,10 @@ label {
 	margin-right: 10px;
 }
 
-/* forms */
-form {
-	padding: 5px 0px 5px 50px;
-}
-
 /* tables */
 table {
 	font-size: 0.8em;
-	margin: 10px 0 10px 0;
+	margin: 10px 0;
 }
 
 /* table headers */
@@ -63,7 +83,7 @@ td {
 
 /* centre page in container div */
 #container {
-	margin: 0 auto -16px auto;
+	margin: 0 auto -16px;
 	min-height: 100%;
 	width: 1000px;
 }
@@ -71,19 +91,25 @@ td {
 /* header div */
 #header {
 	height: 200px;
+	position: relative;
+	width: 100%;
 }
 
 /* menu div */
 #menu {
-	background-color: #2D2D2D;
+	background-color: rgb(45, 45, 45);
+	background-color: rgba(45, 45, 45, 0.9);
 	height: 30px;
+	position: absolute;
 	text-align: center;
+	top: 170px;
+	width: 100%;
 }
 
 /* position sidebar div to left */
 #sidebar {
 	float: left;
-	padding: 20px 0px 0px 0px;
+	padding: 20px 0 0;
 	width: 200px;
 }
 
@@ -91,22 +117,23 @@ td {
 #content {
 	float: right;
 	min-height: 300px;
-	padding: 20px 20px 20px 20px;
+	padding: 20px;
 	width: 760px;
 }
 
+/* position footer div at bottom of page */
 #push {
 	height: 16px;
 }
 
-/* position footer div at bottom */
+/* footer div */
 #footer {
-	background-color: #EEEEEE;
+	background-color: #F1F1F1;
 	clear: both;
 	font-size: 0.8em;
 	font-style: italic;
 	height: 16px;
-	margin: 0 auto 0 auto;
+	margin: 0 auto;
 	padding: 5px;
 	text-align: center;
 	width: 990px;
@@ -117,7 +144,7 @@ td {
 /* remove bullets from menu lists and override browser settings for margin/padding */
 #menu ul {
 	list-style-type: none;
-	margin: 0px 1px 0px 1px;
+	margin: 0px 1px;
 	padding: 0;
 }
 
@@ -154,7 +181,7 @@ td {
 	border: 1px solid #BEBEBE;
 	border-top: 0px;
 	display: block;
-	padding: 7px 0px 7px 0px;
+	padding: 7px 0px;
 	position: absolute;
 }
 
@@ -173,7 +200,7 @@ td {
 
 /* change background colour of nested menu list link when hovered over */
 #menu ul li:hover ul li a:hover {
-	background-color: #EEEEEE;
+	background-color: #F5F5F5;
 }
 
 /* SIDEBAR NAV */
@@ -297,6 +324,36 @@ img.centre {
 
 /* CLASSES */
 
+/* class for drop-down lists */
+.ddl {
+	margin-right: 20px;
+}
+
+/* class for radio buttons */
+.rb {
+	margin-right: 5px;
+}
+
+/* class for text fields */
+.tf {
+	margin-right: 20px;
+}
+
+/* class for tooltip icons */
+.tooltip {
+	margin-left: 5px;
+	vertical-align: top;
+}
+
+/* class for tooltips */
+.tooltipsy {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.7em;
+	padding: 5px;
+	max-width: 300px;
+	background-color: #EEEEEE;
+}
+
 /* class for error messages */
 .error {
 	color: #DD4B39;
@@ -305,27 +362,8 @@ img.centre {
 	margin-top: 5px;
 }
 
-/* class for login error messages */
-.loginError {
-	color: #DD4B39;
-	font-size: 0.8em !important;
-	font-style: normal !important;
-	margin: 5px 0 0 50px;
-}
-
-/* class for radio input controls */
-.radioInput {
-	margin: 0 5px 5px 0;
-}
-
 /* class for select input controls */
 .selectInput {
-	margin-bottom: 5px;
-	padding: 5px;
-}
-
-/* class for text input controls */
-.textInput {
 	margin-bottom: 5px;
 	padding: 5px;
 }

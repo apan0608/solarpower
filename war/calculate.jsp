@@ -11,10 +11,10 @@
 <body>
 
 <p>This page displays results of calculations</p>    
-    <p>
+
 		<div><textarea name="content" rows="3" cols="60">
 		${history}</textarea></div>
-	</p>
+
     <p>location of the user ${location}</p>
 
 
@@ -22,7 +22,7 @@
     <a href = "/index.jsp">Back to previous page</a><br>
    
 
-    <form action="/another servlet" method="post">
+    <form action="/calculate" method="post">
 		<div>
 			<input type="submit" value="Clear Results" name="ClearDataForm"/>
 		</div>
