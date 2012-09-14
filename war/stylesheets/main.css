@@ -139,7 +139,7 @@ td {
 	width: 990px;
 }
 
-/* MAIN NAV */
+/* MENU */
 
 /* remove bullets from menu lists and override browser settings for margin/padding */
 #menu ul {
@@ -203,7 +203,7 @@ td {
 	background-color: #F5F5F5;
 }
 
-/* SIDEBAR NAV */
+/* SIDEBAR */
 
 /* remove bullets from sidebar lists and override browser settings for margin/padding */
 #sidebar ul {
@@ -281,32 +281,40 @@ img.centre {
 	margin: auto;
 }
 
-/* FORMS */
+/* FORM */
 
-/* day and eventMonth text input controls */
-#day,#eventMonth {
-	width: 20px;
+/* currency label */
+#lblCurrency {
+	display: none;
 }
 
-/* email, event and location text input controls */
-#email,#event,#location {
+/* replacement cost label */
+#lblReplacementCost {
+	margin-left: 10px;
+}
+
+/* system location text field */
+#tfSystemLocation {
 	width: 300px;
 }
 
-/* first, last and suburb text input controls */
-#first,#last,#suburb {
-	width: 150px;
+#tfSystemCost,#tfReplacementCost,#tfAdditionalFees {
+	width: 70px;
 }
 
-/* month text input control */
-#month {
-	width: 80px;
+#tfCustomSystemSize,#tfDailyPowerUsage,#tfDaytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#tfFeedinTariff
+	{
+	margin-right: 5px;
+	width: 60px;
 }
 
-/* numBirdsSpotted, place, state and year text input controls */
-#numBirdsSpotted,#place,#state,#year {
-	width: 40px;
+#tfPanelEfficiencyLoss,#tfInverterEfficiency,#tariffPercentage1,#tariffPercentage2,#tariffPercentage3,#tariffPercentage4,#tariffPercentage5,#tfTariffIncrease
+	{
+	margin-right: 5px;
+	width: 50px;
 }
+
+/* ----------OLD---------- */
 
 /* reason textarea control */
 #reason {
@@ -324,28 +332,53 @@ img.centre {
 
 /* CLASSES */
 
-/* class for drop-down lists */
+/* buttons */
+.btn {
+	margin-right: 5px;
+}
+
+/* currency labels */
+.cl {
+	margin-right: 5px;
+}
+
+/* custom system size, replacement cost */
+.css,.rc {
+	display: none;
+}
+
+/* drop-down lists */
 .ddl {
 	margin-right: 20px;
 }
 
-/* class for radio buttons */
+/* panel banks */
+.pb {
+	margin-bottom: 5px;
+}
+
+/* radio buttons */
 .rb {
 	margin-right: 5px;
 }
 
-/* class for text fields */
-.tf {
+/* tariff labels */
+.tl {
 	margin-right: 20px;
 }
 
-/* class for tooltip icons */
+/* tariff rates */
+.tr {
+	margin-bottom: 5px;
+}
+
+/* tooltip icons */
 .tooltip {
 	margin-left: 5px;
 	vertical-align: top;
 }
 
-/* class for tooltips */
+/* tooltips */
 .tooltipsy {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.7em;
@@ -353,6 +386,8 @@ img.centre {
 	max-width: 300px;
 	background-color: #EEEEEE;
 }
+
+/* ----------OLD---------- */
 
 /* class for error messages */
 .error {

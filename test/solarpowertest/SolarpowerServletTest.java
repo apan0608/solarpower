@@ -120,4 +120,4 @@
 //        assertEquals((Integer)20, panelsOrientation.get("20 degrees"));
 //    }
 //    
-//}
+// }

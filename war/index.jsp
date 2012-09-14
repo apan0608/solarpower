@@ -4,6 +4,7 @@
   - Description:
   --%>
 
+<%--delete imports if not used--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.api.users.User"%>
@@ -15,22 +16,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
-<script type="text/javascript" src="/scripts/jquery-1.8.1.js"></script>
-<script type="text/javascript" src="/scripts/main.js"></script>
-<script type="text/javascript" src="/scripts/tooltipsy.min.js"></script>
 <title>Solar Power Calculator</title>
+<meta charset="UTF-8">
+<link href="/stylesheets/main.css" type="text/css" rel="stylesheet" />
+<script src="/scripts/jquery-1.8.1.js" type="text/javascript"></script>
+<script src="/scripts/main.js" type="text/javascript"></script>
+<script src="/scripts/tooltipsy.min.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="container">
 		<div id="header">
-			<img src="images\header.jpg" alt="Solar Power Calculator" />
+			<img alt="Solar Power Calculator" src="images\header.jpg" />
 			<h1>
 				<span>Solar Power Calculator</span>
 			</h1>
 			<div id="menu">
 				<ul>
-					<li><a href="index.jsp" style="color: #FFFFFF">Home</a></li>
+					<li><a style="color: #FFFFFF" href="index.jsp">Home</a></li>
 					<li><a href="index.jsp">Example</a>
 						<ul>
 							<li><a href="index.jsp">Nested</a></li>
@@ -41,7 +43,7 @@
 		</div>
 		<div id="sidebar">
 			<ul>
-				<li><a href="index.jsp" style="color: #DD4B39">Home</a></li>
+				<li><a style="color: #DD4B39" href="index.jsp">Home</a></li>
 				<li><a href="index.jsp">Example</a>
 					<ul>
 						<li><a href="index.jsp">Nested</a></li>
@@ -75,84 +77,96 @@
 			    }
 			%>
 
-			<p>This is a solar power calculator for grid-connected systems.</p>
+			<p>This is a solar power calculator for grid-connected systems
+				over a period of 25 years.</p>
 			<%--
 			  - need to supply default values for some of these fields (via default button?)
 			  - need to add client-side (jquery) and server-side (java) validation
 			  - need to add auto-detection features etc.
 			  --%>
-			<form action="/calculate" method="post">
+			<form method="post" action="/calculate">
 				<fieldset>
 					<h3>
-						System location<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the address where the system is located (e.g. 10 Solar Street, Brisbane, QLD)." />
+						System location<img class="tooltip"
+							title="Enter the address where the system is located (e.g. 10 Solar Street, Brisbane, QLD)."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="systemLocation">
+					<input id="tfSystemLocation" type="text" name="systemLocation">
 					<h3>
-						System cost<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the cost of the system (e.g. 15000)." />
+						System cost<img class="tooltip"
+							title="Enter the cost of the system (e.g. 15000)." alt="Tooltip"
+							src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="systemCost">
+					<label class="cl">$</label><input id="tfSystemCost" type="text"
+						name="systemCost">
 					<h3>
-						System size<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Select the size of the system, or select Custom to enter a custom value in kW (e.g. 2.95)." />
+						System size<img class="tooltip"
+							title="Select the size of the system, or select Custom to enter a custom value in kW (e.g. 2.95)."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					
-					<select name="systemSize" class="ddl">
+					<select id="systemSize" class="ddl" name="systemSize">
 						<c:forEach var="size" items="${systemSizes}">
 							<option value="${size.value}">${size.key}</option>
 						</c:forEach>
-					</select>
+					</select><label id="lblCustomSystemSize" class="css">Enter size</label><input
+						id="tfCustomSystemSize" class="css" type="text"
+						name="customSystemSize"><label class="css">kW</label>
 				</fieldset>
 				<fieldset>
 					<h3>
-						Panels and orientations<img src="/images/tooltip.png"
-							alt="Tooltip" class="tooltip"
-							title="Select the number of panels and their orientation. Solar panels should face north in the southern hemisphere and south in the northern hemisphere to maximise their output." />
+						Panels and orientations<img class="tooltip"
+							title="Select the number of panels and their orientation. Solar panels should face north in the southern hemisphere and south in the northern hemisphere to maximise their output."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<label for="numberOfPanels">Number of panels</label><select
-						name="numberOfPanels" class="ddl" id="numberOfPanels">
-						<c:forEach var="number" items="${numberOfPanels}">
-							<option value="${number.value}">${number.key}</option>
-						</c:forEach>
-					</select> <label for="panelOrientation">Orientation</label><select
-						name="panelOrientation" class="ddl" id="panelOrientation">
-						<c:forEach var="orientation" items="${panelOrientations}">
-							<option value="${orientation.value}">${orientation.key}</option>
-						</c:forEach>
-					</select><input type="button" value="Add panel bank">
+					<div id="panelBank1" class="pb">
+						<label>Number of panels</label><select id="numberOfPanels1"
+							class="ddl" name="numberOfPanels1">
+							<c:forEach var="number" items="${numberOfPanels}">
+								<option value="${number.value}">${number.key}</option>
+							</c:forEach>
+						</select><label>Orientation</label><select id="panelOrientation1"
+							class="ddl" name="panelOrientation1">
+							<c:forEach var="orientation" items="${panelOrientations}">
+								<option value="${orientation.value}">${orientation.key}</option>
+							</c:forEach>
+						</select><input id="addPanelBank" class="btn" type="button"
+							value="Add panel bank"><input id="removePanelBank"
+							class="btn" type="button" value="Remove" disabled="disabled">
+					</div>
 					<h3>
-						Average annual panel efficiency loss rate<img
-							src="/images/tooltip.png" alt="Tooltip" class="tooltip"
-							title="Enter the average annual rate at which the panels will lose their efficiency. The industry standard of at least 90% output in the 10th year and 80% output in the 25th year can be represented by an average annual loss rate of 0.83%." />
+						Average annual panel efficiency loss rate<img class="tooltip"
+							title="Enter the average annual rate at which the panels will lose their efficiency. The industry standard of at least 90% output in the 10th year and 80% output in the 25th year can be represented by an average annual loss rate of 0.83%."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="panelEfficiencyLoss">
+					<input id="tfPanelEfficiencyLoss" type="text"
+						name="panelEfficiencyLoss"><label>%</label>
 				</fieldset>
 				<fieldset>
 					<h3>
-						Inverter efficiency<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the inverter efficiency, i.e. the percentage of power the inverter is typically able to convert from DC (power generated by solar panels) to AC (power available to your home or the grid). The industry standard for grid-connected inverters is about 93% or better." />
+						Inverter efficiency<img class="tooltip"
+							title="Enter the inverter efficiency, i.e. the percentage of power the inverter is typically able to convert from DC (power generated by solar panels) to AC (power available to your home or the grid). The industry standard for grid-connected inverters is about 93% or better."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="inverterEfficiency">
+					<input id="tfInverterEfficiency" type="text"
+						name="inverterEfficiency"><label>%</label>
 					<h3>
-						Replacement inverter<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Choose if you want to include the cost of a replacement inverter in your calculations. The industry standard for the lifespan of grid-connected inverters is 10-20 years, but most warranties are for 5-10 years." />
+						Replacement inverter<img class="tooltip"
+							title="Choose if you want to include the cost of a replacement inverter in your calculations. The industry standard for the lifespan of grid-connected inverters is 10-20 years, but most warranties are for 5-10 years. If you're unsure of the cost, use 20% of the total system cost as an estimate."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="radio" name="replacementInverter" class="rb" id="yes"
-						value="yes"><label for="yes">Yes</label><input
-						type="radio" name="replacementInverter" class="rb" id="no"
-						value="no"><label for="no">No</label>
+					<input id="yes" class="rb" type="radio" value="yes"
+						name="replacementInverter"><label for="yes">Yes</label><input
+						id="no" class="rb" type="radio" value="no"
+						name="replacementInverter"><label for="no">No</label><label
+						id="lblReplacementCost" class="rc">Enter cost</label><label
+						id="lblCurrency" class="cl">$</label><input id="tfReplacementCost"
+						class="rc" type="text" name="replacementCost">
 				</fieldset>
 				<fieldset>
 					<h3>
-						Average daily hours of sunlight<img src="/images/tooltip.png"
-							alt="Tooltip" class="tooltip"
-							title="Select the average number of hours of sunlight the system will receive each day." />
+						Average daily hours of sunlight<img class="tooltip"
+							title="Select the average number of hours of sunlight the system will receive each day."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<select name="hoursOfSunlight">
 						<c:forEach var="hours" items="${hoursOfSunlight}">
@@ -160,51 +174,58 @@
 						</c:forEach>
 					</select>
 					<h3>
-						Average daily power usage<img src="/images/tooltip.png"
-							alt="Tooltip" class="tooltip"
-							title="Enter the average amount of power used in your household each day in kWh." />
+						Average daily power usage<img class="tooltip"
+							title="Enter the average amount of power used in your household each day in kWh."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="dailyPowerUsage">
+					<input id="tfDailyPowerUsage" type="text" name="dailyPowerUsage"><label>kWh</label>
 					<h3>
-						Average daytime power usage<img src="/images/tooltip.png"
-							alt="Tooltip" class="tooltip"
-							title="Enter the average amount of power used in daylight hours in your household each day in kWh." />
+						Average daytime power usage<img class="tooltip"
+							title="Enter the average amount of power used in daylight hours in your household each day in kWh."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="daytimePowerUsage">
+					<input id="tfDaytimePowerUsage" type="text"
+						name="daytimePowerUsage"><label>kWh</label>
 				</fieldset>
 				<fieldset>
 					<h3>
-						Tariffs<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the tariff rate in c/kWh and the average percentage of power usage to which the tariff applies." />
+						Tariffs<img class="tooltip"
+							title="Enter the tariff rate in c/kWh and the average percentage of power usage to which the tariff applies."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<label for="tariffRate">Tariff rate</label><input type="text"
-						name="tariffRate" class="tf" id="tariffRate"> <label
-						for="tariffPercentage">Average percentage of power usage</label><input
-						type="text" name="tariffPercentage" class="tf"
-						id="tariffPercentage"><input type="button"
-						value="Add tariff">
+					<div id="tariff1" class="tr">
+						<label>Tariff rate</label><input id="tariffRate1" type="text"
+							name="tariffRate1"><label class="tl">c/kWh</label><label>Average
+							percentage of power usage</label><input id="tariffPercentage1"
+							type="text" name="tariffPercentage1"><label class="tl">%</label><input
+							id="addTariff" class="btn" type="button" value="Add tariff"><input
+							id="removeTariff" class="btn" type="button" value="Remove"
+							disabled="disabled">
+					</div>
 					<h3>
-						Additional fees<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the annual sum of any additional fees you might pay, such as service fees." />
+						Additional fees<img class="tooltip"
+							title="Enter the annual sum of any additional fees you might pay, such as service fees."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="additionalFees">
+					<label class="cl">$</label><input id="tfAdditionalFees" type="text"
+						name="additionalFees">
 					<h3>
-						Average annual tariff rate increase<img src="/images/tooltip.png"
-							alt="Tooltip" class="tooltip"
-							title="Enter the average annual increase in your tariff rates (a conservative estimate like 5% would suffice)." />
+						Average annual tariff rate increase<img class="tooltip"
+							title="Enter the average annual increase in your tariff rates (a conservative estimate like 5% would suffice)."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="tariffIncrease">
+					<input id="tfTariffIncrease" type="text" name="tariffIncrease"><label>%</label>
 					<h3>
-						Feed-in tariff rate<img src="/images/tooltip.png" alt="Tooltip"
-							class="tooltip"
-							title="Enter the feed-in tariff rate in c/kWh for power you on-sell to the grid (this may not apply to you)." />
+						Feed-in tariff rate<img class="tooltip"
+							title="Enter the feed-in tariff rate in c/kWh for power you on-sell to the grid (this may not apply to you)."
+							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input type="text" name="feedinTariff">
+					<input id="tfFeedinTariff" type="text" name="feedinTariff"><label>c/kWh</label>
 				</fieldset>
-				<input type="submit" value="Submit" name="calculationDataForm" />
+				<input type="submit" name="calculationDataForm" value="Submit" />
+				<%--is button name needed?--%>
 			</form>
+			<%--form output should be inserted via jquery here? (jsp>servlet>jquery)--%>
 		</div>
 		<div id="push"></div>
 		<div id="footer">Copyright © 2012 MGSD Technology</div>

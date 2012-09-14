@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<listener>
-        <listener-class>solarpower.servlets.AppServletContextListener</listener-class>
-    </listener>
+		<listener-class>solarpower.servlets.AppServletContextListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>solarpower</servlet-name>
 		<servlet-class>solarpower.servlets.SolarpowerServlet</servlet-class>

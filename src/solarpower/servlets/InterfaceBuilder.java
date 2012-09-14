@@ -50,7 +50,6 @@ public class InterfaceBuilder {
         panelOrientations.put("WNW (292.5°)", 292.5);
         panelOrientations.put("NW (315°)", 315.0);
         panelOrientations.put("NNW (337.5°)", 337.5);
-        panelOrientations.put("Custom", -2.0);
         return panelOrientations;
     }
     

@@ -28,145 +28,164 @@ import java.net.UnknownHostException;
  * and save results to datastore.
  * @author Shenchen Pan 
  * */
-public class CalculateSolarpowerServlet extends HttpServlet implements Servlet{
-
-	//implement it to automatically track user's location and pre fill the form 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-             throws IOException {
-      resp.sendRedirect("/calculate.jsp");
-
-   }
-	
-	/**
+public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
+    
+    // implement it to automatically track user's location and pre fill the form
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect("/calculate.jsp");
+        
+    }
+    
+    /**
      * 
      */
     private static final long serialVersionUID = 1L;
-
+    
     /*
-	 * (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {  	
-		
-		String calculate = req.getParameter("calculationDataForm");
-		String clear = req.getParameter("ClearDataForm");
-		String submit="Submit";
-		//if the request sent from index.jsp. do calculate
-		if(calculate.equalsIgnoreCase(submit)){
-			calculate(req,resp);
-			//System.out.println(calculate.equalsIgnoreCase("Submit"));
-		} else if(clear.equalsIgnoreCase(submit)) {
-			
-			 resp.sendRedirect("/calculate.jsp?result=" + "failed");
-		}
-  }
-	
-	private void calculate(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {  
-
-		System.getProperty("user.name");
-		System.out.println(System.getProperty("user.name"));
-		//req.setAttribute("location", System.getProperty("user.name"));
-		String ip = getIPAddress();
-		req.setAttribute("location", ip);
-		
-		double generation = 0.0;
-		//Entity statics = 
-		String systemLocation = req.getParameter("systemLocation");
-		double systemCost = Double.parseDouble(req.getParameter("systemCost"));//need to convert
-		double systemSize = Double.parseDouble(req.getParameter("systemSize"));
-		double hoursOfSunlight = Double.parseDouble(req.getParameter("hoursOfSunlight"));//daily
-		double tariffRate = Double.parseDouble(req.getParameter("tariffRate"));
-		double numberOfPanels = Double.parseDouble(req.getParameter("numberOfPanels"));
-		double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation"));//orientation
-		double dailyPowerUsage =  Double.parseDouble(req.getParameter("dailyPowerUsage"));//monthly
-			
-		//also be stored in datastore 
-		String content = "Details of the system: " + "\n" + 
-                "\tSize:  " + req.getParameter("systemSize") + "kwh" + "\n" +
-        		"\tCost:  " + "$" + req.getParameter("systemCost") + "\n" +
-                "\tNumber of panels:  " + req.getParameter("numberOfPanels") + "\n" +
-        		"\tOrientation of the panels:  " + req.getParameter("panelOrientation") + "\n\n" +
-                "User defined information: " + "\n" +
-        		"\tSystem location:  " + req.getParameter("systemLocation") + "\n" +
-                "\tHours of sunlight:  "  + req.getParameter("hoursOfSunlight") + " per day" + "\n" +
-        		"\tElectricity usage of user:  " + req.getParameter("dailyPowerUsage") + "kw per day" + "\n" +
-                "\tTariff rate:  " + req.getParameter("tariffRate") + "\n\n" +
-        		"The daily electricity generation of the systen is: " + generation + "kw" + "\n" +
-                "----------------------------------------------------------------------------\n\n";  
+     * (non-Javadoc)
+     * 
+     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
+            ServletException {
         
-		
-		//initiate user service and store data
-		UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-		//if user not logged in yet, go back to calculate page and not store data
-        if(user == null){
-        	req.setAttribute("history", content);
-    		//redirect to /calculate page, send data of location to the page
-    		req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
+        String calculate = req.getParameter("calculationDataForm");
+        String clear = req.getParameter("ClearDataForm");
+        String submit = "Submit";
+        // if the request sent from index.jsp. do calculate
+        if (calculate.equalsIgnoreCase(submit)) {
+            calculate(req, resp);
+            // System.out.println(calculate.equalsIgnoreCase("Submit"));
+        } else if (clear.equalsIgnoreCase(submit)) {
+            
+            resp.sendRedirect("/calculate.jsp?result=" + "failed");
         }
-      	     
+    }
+    
+    private void calculate(HttpServletRequest req, HttpServletResponse resp) throws IOException,
+            ServletException {
+        
+        System.getProperty("user.name");
+        System.out.println(System.getProperty("user.name"));
+        // req.setAttribute("location", System.getProperty("user.name"));
+        String ip = getIPAddress();
+        req.setAttribute("location", ip);
+        
+        double generation = 0.0;
+        // Entity statics =
+        String systemLocation = req.getParameter("systemLocation");
+        double systemCost = Double.parseDouble(req.getParameter("systemCost"));// need to convert
+        double systemSize = Double.parseDouble(req.getParameter("systemSize"));
+        double hoursOfSunlight = Double.parseDouble(req.getParameter("hoursOfSunlight"));// daily
+        double numberOfPanels = Double.parseDouble(req.getParameter("numberOfPanels1"));
+        double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation1"));// orientation
+        double tariffRate = Double.parseDouble(req.getParameter("tariffRate1"));
+        
+        double dailyPowerUsage = Double.parseDouble(req.getParameter("dailyPowerUsage"));// monthly
+        
+        // also be stored in datastore
+        String content = "Details of the system: " + "\n" + "\tSize:  "
+                + req.getParameter("systemSize")
+                + "kwh"
+                + "\n"
+                + "\tCost:  "
+                + "$"
+                + req.getParameter("systemCost")
+                + "\n"
+                + "\tNumber of panels:  "
+                + req.getParameter("numberOfPanels1")
+                + "\n"
+                + "\tOrientation of the panels:  "
+                + req.getParameter("panelOrientation1")
+                + "\n\n"
+                + "User defined information: "
+                + "\n"
+                + "\tSystem location:  "
+                + req.getParameter("systemLocation")
+                + "\n"
+                + "\tHours of sunlight:  "
+                + req.getParameter("hoursOfSunlight")
+                + " per day"
+                + "\n"
+                + "\tElectricity usage of user:  "
+                + req.getParameter("dailyPowerUsage")
+                + "kw per day"
+                + "\n"
+                + "\tTariff rate:  "
+                + req.getParameter("tariffRate1")
+                + "\n\n"
+                + "The daily electricity generation of the systen is: "
+                + generation
+                + "kw"
+                + "\n"
+                + "----------------------------------------------------------------------------\n\n";
+        
+        // initiate user service and store data
+        UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+        // if user not logged in yet, go back to calculate page and not store data
+        if (user == null) {
+            req.setAttribute("history", content);
+            // redirect to /calculate page, send data of location to the page
+            req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
+        }
+        
         /*
          * Create the key, store data entity into the parent of this entity
          */
-        Key resultKey = KeyFactory.createKey("result", user.getUserId()); 
+        Key resultKey = KeyFactory.createKey("result", user.getUserId());
         
         Date date = new Date();
         Entity result = new Entity("calculation", resultKey);
         result.setProperty("user", user);
         result.setProperty("date", date);
         result.setProperty("content", content);
-               
-        //initial datastore service and put entity in datastore
+        
+        // initial datastore service and put entity in datastore
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(result);
-
-        //retrieve all the calculation data of a user from data store, and display 
-
+        
+        // retrieve all the calculation data of a user from data store, and display
         
         String calresults = "";
         // Run an ancestor query to ensure we see the most up-to-date
         // view of the Greetings belonging to the selected Guestbook.
-        Query query = new Query("calculation", resultKey).addSort("date", Query.SortDirection.DESCENDING);
+        Query query = new Query("calculation", resultKey).addSort("date",
+                Query.SortDirection.DESCENDING);
         List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
         if (results.isEmpty()) {
             calresults = "This is no history results to display.";
         } else {
             for (Entity aresult : results) {
-            	calresults += (aresult.getProperty("date") + "\n" + aresult.getProperty("content") + "\n\n");
-                }               
+                calresults += (aresult.getProperty("date") + "\n" + aresult.getProperty("content") + "\n\n");
+            }
         }
-      
-        req.setAttribute("history", calresults);       
- //       resp.sendRedirect("/calculate.jsp?result=" + "something");
-		req.setAttribute("userid", user.getUserId());		
-		req.setAttribute("selectedlocation", systemLocation);
-		//redirect to /calculate page, send data of location to the page
-		//req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
-		req.getRequestDispatcher("/calculate.jsp?result="+"something").forward(req, resp);
-	
-	}
-	
-	private String getIPAddress(){
-		InetAddress ip;
-		try {
-			ip = InetAddress.getLocalHost();
-			System.out.println("Current IP address : " + ip.getHostAddress());
-			return ip.toString();
- 
-		} catch (UnknownHostException e) {
- 
-			e.printStackTrace();
- 
-		}
-		return "Ip address not found";
- 
-	
-	}
-	
-	
-	
-
-	
+        
+        req.setAttribute("history", calresults);
+        // resp.sendRedirect("/calculate.jsp?result=" + "something");
+        req.setAttribute("userid", user.getUserId());
+        req.setAttribute("selectedlocation", systemLocation);
+        // redirect to /calculate page, send data of location to the page
+        // req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
+        req.getRequestDispatcher("/calculate.jsp?result=" + "something").forward(req, resp);
+        
+    }
+    
+    private String getIPAddress() {
+        InetAddress ip;
+        try {
+            ip = InetAddress.getLocalHost();
+            System.out.println("Current IP address : " + ip.getHostAddress());
+            return ip.toString();
+            
+        } catch (UnknownHostException e) {
+            
+            e.printStackTrace();
+            
+        }
+        return "Ip address not found";
+        
+    }
+    
 }
