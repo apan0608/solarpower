@@ -50,7 +50,7 @@ public class InputValidationTest{
 	// Set the panel's density to be 150.%
 	@Test(expected=ValidationException.class)
 	public void invalidPercentWest() throws ValidationException {
-		validate.northRoofDensity(150.5);
+		validate.westRoofDensity(150.5);
 	}
 	
 	// Enter a negative percentage represented for the Efficiency Loss (North Roof)
@@ -74,7 +74,7 @@ public class InputValidationTest{
 	// Enter a percentage over 100% for the Efficiency Loss ( Roof)
 		@Test(expected=ValidationException.class)
 		public void invalidWestRoofEfficiencyLoss() throws ValidationException {
-			validate.northRoofEfficiencyLoss(210.1);
+			validate.westRoofEfficiencyLoss(210.1);
 		}
 	
 		
