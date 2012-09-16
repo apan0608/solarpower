@@ -14,14 +14,63 @@ $(function() {
 	var numTariffs = 1;
 
 	// add tooltips
-	$(".tooltip").tooltipsy({
+	$(".tt").tooltipsy({
 		offset : [ 5, 0 ]
 	});
 
-	// NEED FUNCTION FOR SYSTEM LOCATION
-	
-	
-	
+	// get matching locations
+	$("#confirmLocation").click(
+			function() {
+
+				// get geocoder object and system location text field value
+				var geocoder = new google.maps.Geocoder();
+				var address = $("#systemLocation").val();
+
+				// pass geocoder object with system location text field value
+				geocoder.geocode({
+					"address" : address
+				}, function(results, status) {
+
+					// at least one result is returned
+					if (status == google.maps.GeocoderStatus.OK) {
+
+						// hide error message
+						$("#errConfirmedLocation").hide();
+
+						// prepare drop-down list
+						$("#confirmedLocation").empty();
+						$("#confirmedLocation").append(
+								'<option value="-1.0">Select...</option>');
+
+						// add results to drop-down list
+						for (i = 0; i < results.length; i++) {
+							$("#confirmedLocation").append(
+									'<option value="'
+											+ results[i].geometry.location
+													.lat() + '">'
+											+ results[i].formatted_address
+											+ '</option>');
+						}
+
+						// show div containing drop-down list
+						$("#divConfirmedLocation").show();
+
+					} else { // no results are returned
+
+						// hide div containing drop-down list
+						$("#divConfirmedLocation").hide();
+
+						// prepare error message
+						$("#errConfirmedLocation").empty();
+						$("#errConfirmedLocation").append(
+								"No locations were found. Error code: "
+										+ status);
+
+						// show error message
+						$("#errConfirmedLocation").show();
+					}
+				});
+			});
 
 	// add custom system size text field
 	$("#systemSize").change(function() {

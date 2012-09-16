@@ -283,8 +283,33 @@ img.centre {
 
 /* FORM */
 
-/* currency label */
-#lblCurrency {
+/* confirmed location div */
+#divConfirmedLocation {
+	display: none;
+	margin-top: 10px;
+}
+
+/* currency text fields */
+#systemCost,#replacementCost,#additionalFees {
+	width: 70px;
+}
+
+/* percentage text fields */
+#panelEfficiencyLoss,#inverterEfficiency,#tariffPercentage1,#tariffPercentage2,#tariffPercentage3,#tariffPercentage4,#tariffPercentage5,#tariffIncrease
+	{
+	margin-right: 5px;
+	width: 50px;
+}
+
+/* power text fields */
+#customSystemSize,#dailyPowerUsage,#daytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#feedinTariff
+	{
+	margin-right: 5px;
+	width: 60px;
+}
+
+/* replacement cost currency label */
+#lblReplacementCostCurrency {
 	display: none;
 }
 
@@ -294,24 +319,9 @@ img.centre {
 }
 
 /* system location text field */
-#tfSystemLocation {
+#systemLocation {
+	margin-right: 20px;
 	width: 300px;
-}
-
-#tfSystemCost,#tfReplacementCost,#tfAdditionalFees {
-	width: 70px;
-}
-
-#tfCustomSystemSize,#tfDailyPowerUsage,#tfDaytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#tfFeedinTariff
-	{
-	margin-right: 5px;
-	width: 60px;
-}
-
-#tfPanelEfficiencyLoss,#tfInverterEfficiency,#tariffPercentage1,#tariffPercentage2,#tariffPercentage3,#tariffPercentage4,#tariffPercentage5,#tfTariffIncrease
-	{
-	margin-right: 5px;
-	width: 50px;
 }
 
 /* ----------OLD---------- */
@@ -352,6 +362,13 @@ img.centre {
 	margin-right: 20px;
 }
 
+/* error messages */
+.em {
+	color: #DD4B39;
+	display: none;
+	margin-top: 5px;
+}
+
 /* panel banks */
 .pb {
 	margin-bottom: 5px;
@@ -373,7 +390,7 @@ img.centre {
 }
 
 /* tooltip icons */
-.tooltip {
+.tt {
 	margin-left: 5px;
 	vertical-align: top;
 }
@@ -388,14 +405,6 @@ img.centre {
 }
 
 /* ----------OLD---------- */
-
-/* class for error messages */
-.error {
-	color: #DD4B39;
-	font-size: 0.8em !important;
-	font-style: normal !important;
-	margin-top: 5px;
-}
 
 /* class for select input controls */
 .selectInput {
