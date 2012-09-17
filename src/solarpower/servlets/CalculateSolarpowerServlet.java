@@ -51,15 +51,9 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
             ServletException {
         
         String calculate = req.getParameter("calculationDataForm");
-        String clear = req.getParameter("ClearDataForm");
         String submit = "Submit";
-        // if the request sent from index.jsp. do calculate
         if (calculate.equalsIgnoreCase(submit)) {
-            calculate(req, resp);
-            // System.out.println(calculate.equalsIgnoreCase("Submit"));
-        } else if (clear.equalsIgnoreCase(submit)) {
-            
-            resp.sendRedirect("/calculate.jsp?result=" + "failed");
+            calculate(req, resp);         
         }
     }
     
@@ -121,14 +115,13 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
                 + "\n"
                 + "----------------------------------------------------------------------------\n\n";
         
+        req.setAttribute("history", content);
         // initiate user service and store data
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
         // if user not logged in yet, go back to calculate page and not store data
         if (user == null) {
-            req.setAttribute("history", content);
-            // redirect to /calculate page, send data of location to the page
-            req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
+        	req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
         
         /*
@@ -146,29 +139,9 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(result);
         
-        // retrieve all the calculation data of a user from data store, and display
-        
-        String calresults = "";
-        // Run an ancestor query to ensure we see the most up-to-date
-        // view of the Greetings belonging to the selected Guestbook.
-        Query query = new Query("calculation", resultKey).addSort("date",
-                Query.SortDirection.DESCENDING);
-        List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
-        if (results.isEmpty()) {
-            calresults = "This is no history results to display.";
-        } else {
-            for (Entity aresult : results) {
-                calresults += (aresult.getProperty("date") + "\n" + aresult.getProperty("content") + "\n\n");
-            }
-        }
-        
-        req.setAttribute("history", calresults);
-        // resp.sendRedirect("/calculate.jsp?result=" + "something");
         req.setAttribute("userid", user.getUserId());
         req.setAttribute("selectedlocation", systemLocation);
-        // redirect to /calculate page, send data of location to the page
-        // req.getRequestDispatcher("/calculate.jsp").forward(req, resp);
-        req.getRequestDispatcher("/calculate.jsp?result=" + "something").forward(req, resp);
+        req.getRequestDispatcher("/index.jsp?result " + "something").forward(req, resp);
         
     }
     

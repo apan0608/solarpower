@@ -42,5 +42,14 @@
 	<servlet-mapping>
 		<servlet-name>calculate</servlet-name>
 		<url-pattern>/calculate</url-pattern>
+	</servlet-mapping>	
+		
+	<servlet>
+		<servlet-name>history</servlet-name>
+		<servlet-class>solarpower.servlets.HistoryResultsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>history</servlet-name>
+		<url-pattern>/history</url-pattern>
 	</servlet-mapping>
 </web-app>

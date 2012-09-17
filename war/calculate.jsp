@@ -16,29 +16,16 @@
 		<textarea name="content" rows="3" cols="60">
 		${history}</textarea>
 	</div>
-	<p>location of the user ${location}</p>
-
-
 
 	<a href="/index.jsp">Back to previous page</a>
 	<br>
 
-
-	<form action="/calculate" method="post">
+	<form action="/history" method="post">
 		<div>
-			<input type="submit" value="Clear Results" name="ClearDataForm" />
+			<input type="submit" value="Clear Results" name="clearData" />
+			<input type="submit" value="Save Results"  name="saveResults"/>
 		</div>
 	</form>
-
-
-
-
-
-
-
-
-
-
-
+	
 </body>
 </html>
