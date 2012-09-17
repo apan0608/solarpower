@@ -12,57 +12,109 @@ import solarpower.servlets.InterfaceBuilder;
 public class InterfaceBuilderTest {
     
     private InterfaceBuilder builder;
+    private LinkedHashMap<String, Double> systemSizes;
+    private LinkedHashMap<String, Double> numberOfPanels;
+    private LinkedHashMap<String, Double> panelOrientations;
+    private LinkedHashMap<String, Double> hoursOfSunlight;
+    private Double NEGATIVE_ONE = -1.0;
+    private Double NEGATIVE_TWO = -2.0;
     
     @Before
     public void setUp() {
         builder = new InterfaceBuilder();
+        systemSizes = builder.buildSystemSizes();
+        numberOfPanels = builder.buildNumberOfPanels();
+        panelOrientations = builder.buildPanelOrientations();
+        hoursOfSunlight = builder.buildHoursOfSunlight();
     }
     
     @Test
-    public void testNumberOfPanels1() {
-        LinkedHashMap<String, Double> numberOfPanels = builder.buildNumberOfPanels();
+    public void systemSizesHasSelectOption() {
+        assertEquals(NEGATIVE_ONE, systemSizes.get("Select..."));
+    }
+    
+    @Test
+    public void systemSizesHasCorrectLowerBound() throws Exception {
+        systemSizes.get("0.5kW");
+    }
+    
+    @Test
+    public void systemSizesHasFirstOption() {
+        assertEquals((Double) 1.0, systemSizes.get("1kW"));
+    }
+    
+    @Test
+    public void systemSizesHasLastOption() {
+        assertEquals((Double) 6.0, systemSizes.get("6kW"));
+    }
+    
+    @Test
+    public void systemSizesHasCorrectUpperBound() throws Exception {
+        systemSizes.get("6.5kW");
+    }
+    
+    @Test
+    public void systemSizesHasCustomOption() {
+        assertEquals(NEGATIVE_TWO, systemSizes.get("Custom"));
+    }
+    
+    @Test
+    public void numberOfPanelsHasSelectOption() {
+        assertEquals(NEGATIVE_ONE, numberOfPanels.get("Select..."));
+    }
+    
+    @Test
+    public void numberOfPanelsHasCorrectLowerBound() throws Exception {
+        numberOfPanels.get("0");
+    }
+    
+    @Test
+    public void numberOfPanelsHasFirstOption() {
         assertEquals((Double) 1.0, numberOfPanels.get("1"));
     }
     
     @Test
-    public void testNumberOfPanels2() {
-        LinkedHashMap<String, Double> numberOfPanels = builder.buildNumberOfPanels();
+    public void numberOfPanelsHasLastOption() {
         assertEquals((Double) 50.0, numberOfPanels.get("50"));
     }
     
     @Test
-    public void testSystemSize1() {
-        LinkedHashMap<String, Double> sizes = builder.buildSystemSizes();
-        assertEquals((Double) 1.0, sizes.get("1kW"));
+    public void numberOfPanelsHasCorrectUpperBound() throws Exception {
+        numberOfPanels.get("51");
     }
     
     @Test
-    public void testSystemSize2() {
-        LinkedHashMap<String, Double> sizes = builder.buildSystemSizes();
-        assertEquals((Double) 6.0, sizes.get("6kW"));
+    public void panelOrientationsHasSelectOption() {
+        assertEquals(NEGATIVE_ONE, panelOrientations.get("Select..."));
     }
     
     @Test
-    public void testPanelOrientations1() {
-        LinkedHashMap<String, Double> panelOrientations = builder.buildPanelOrientations();
+    public void panelOrientationsHasFirstOption() {
         assertEquals((Double) 0.0, panelOrientations.get("N (0°)"));
     }
     
     @Test
-    public void testPanelOrientations2() {
-        LinkedHashMap<String, Double> panelOrientations = builder.buildPanelOrientations();
+    public void panelOrientationsHasLastOption() {
         assertEquals((Double) 337.5, panelOrientations.get("NNW (337.5°)"));
     }
     
     @Test
-    public void testHoursOfSunlight1() {
-        LinkedHashMap<String, Double> HoursOfSunlight = builder.buildHoursOfSunlight();
-        assertEquals((Double) 0.0, HoursOfSunlight.get("0"));
+    public void hoursOfSunlightHasSelectOption() {
+        assertEquals(NEGATIVE_ONE, hoursOfSunlight.get("Select..."));
     }
     
     @Test
-    public void testHoursOfSunlight2() {
-        LinkedHashMap<String, Double> HoursOfSunlight = builder.buildHoursOfSunlight();
-        assertEquals((Double) 24.0, HoursOfSunlight.get("24"));
+    public void hoursOfSunlightHasFirstOption() {
+        assertEquals((Double) 0.0, hoursOfSunlight.get("0"));
+    }
+    
+    @Test
+    public void hoursOfSunlightHasLastOption() {
+        assertEquals((Double) 24.0, hoursOfSunlight.get("24"));
+    }
+    
+    @Test
+    public void hoursOfSunlightHasCorrectUpperBound() throws Exception {
+        hoursOfSunlight.get("25");
     }
 }

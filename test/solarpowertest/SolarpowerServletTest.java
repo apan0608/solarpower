@@ -100,24 +100,4 @@
 //        // we can assert that we can logout
 //        tester.assertLinkPresent("Logout");	
 //    }
-//
-//	
-//    @Test
-//    public void buildSystemSizesTest() {
-//        LinkedHashMap<String, Double> sizes = SolarpowerServlet.BuildSystemSizes();
-//        assertEquals((Double)1.0, sizes.get("1kW"));
-//    }
-//    
-//    @Test
-//    public void buildNoOfPanelsTest() {
-//        LinkedHashMap<String, Integer> noOfPanels = SolarpowerServlet.BuildNoOfPanels();
-//        assertEquals((Integer)4, noOfPanels.get("4"));
-//    }
-//    
-//    @Test
-//    public void buildPanelsOrientationTest() {
-//        LinkedHashMap<String, Integer> panelsOrientation = SolarpowerServlet.BuildPanelsOrientation();
-//        assertEquals((Integer)20, panelsOrientation.get("20 degrees"));
-//    }
-//    
 // }
