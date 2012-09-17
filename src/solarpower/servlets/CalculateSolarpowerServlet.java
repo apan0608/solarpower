@@ -23,6 +23,8 @@ import com.google.appengine.api.users.UserServiceFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import solarpower.entities.SolarCalculator;
+
 /*
  * Perform all kinds of calculations. And in later development, enable user service 
  * and save results to datastore.
@@ -59,14 +61,14 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
     
     private void calculate(HttpServletRequest req, HttpServletResponse resp) throws IOException,
             ServletException {
-        
+        SolarCalculator calc = new SolarCalculator();
         System.getProperty("user.name");
         System.out.println(System.getProperty("user.name"));
         // req.setAttribute("location", System.getProperty("user.name"));
         String ip = getIPAddress();
         req.setAttribute("location", ip);
         
-        double generation = 0.0;
+        
         // Entity statics =
         String systemLocation = req.getParameter("systemLocation");
         double systemCost = Double.parseDouble(req.getParameter("systemCost"));// need to convert
@@ -76,7 +78,13 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation1"));// orientation
         double tariffRate = Double.parseDouble(req.getParameter("tariffRate1"));
         
+        double inverterEfficiency = Double.parseDouble(req.getParameter("inverterEfficiency"));
+        
         double dailyPowerUsage = Double.parseDouble(req.getParameter("dailyPowerUsage"));// monthly
+        
+        Double generation = calc.calculateDailyGeneration(systemSize, inverterEfficiency/100, hoursOfSunlight, panelOrientation);
+        String strGen = generation.toString();
+        
         
         // also be stored in datastore
         String content = "Details of the system: " + "\n" + "\tSize:  "
@@ -109,7 +117,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
                 + "\tTariff rate:  "
                 + req.getParameter("tariffRate1")
                 + "\n\n"
-                + "The daily electricity generation of the systen is: "
+                + "The daily electricity generation of the system is: "
                 + generation
                 + "kw"
                 + "\n"
@@ -145,7 +153,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         
     }
     
-    private String getIPAddress() {
+	private String getIPAddress() {
         InetAddress ip;
         try {
             ip = InetAddress.getLocalHost();
