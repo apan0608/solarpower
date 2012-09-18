@@ -38,7 +38,7 @@
 			<div id="menu">
 				<ul>
 					<li><a style="color: #FFFFFF" href="index.jsp">Home</a></li>
-					<li><a style="color: #FFFFFF" href="/history">View History</a></li>
+					<li><a href="/history">View History</a></li>
 					<li><a href="index.jsp">Nested List</a>
 						<ul>
 							<li><a href="index.jsp">Item 1</a></li>
@@ -50,6 +50,7 @@
 		<div id="sidebar">
 			<ul>
 				<li><a style="color: #DD4B39" href="index.jsp">Home</a></li>
+				<li><a href="/history">View History</a></li>
 				<li><a href="index.jsp">Nested List</a>
 					<ul>
 						<li><a href="index.jsp">Item 1</a></li>
@@ -236,16 +237,11 @@
 				<input type="submit" name="calculationDataForm" value="Submit" />
 				<%--is button name needed?--%>
 			</form>
-			
-			<div id="resultbox">
-			    <h4>Results</h4>
-			    <p>view your calculation results</p><br><br>
-				<div>
-				<textarea name="content" rows="3" cols="60">
+			<div id="results">
+				<h2>Results</h2>
+				<textarea cols="20" rows="2" name="content">
 					${history}</textarea>
-				</div>
 			</div>
-			<%--form output should be inserted via jquery here? (jsp>servlet>jquery)--%>
 		</div>
 		<div id="push"></div>
 		<div id="footer">Copyright © 2012 MGSD Technology</div>

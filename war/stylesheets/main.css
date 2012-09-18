@@ -35,7 +35,7 @@ h1 span {
 h2 {
 	font-size: 1.2em;
 	font-weight: bold;
-    width: 515px;
+	width: 515px;
 }
 
 /* h3 headings */
@@ -46,10 +46,7 @@ h3 {
 
 /* forms */
 form {
-	width: 515px;
-	float: left;
 	padding: 5px 0;
-	margin: 10px 10px 10px 0;
 }
 
 /* fieldsets */
@@ -114,17 +111,15 @@ td {
 #sidebar {
 	float: left;
 	padding: 20px 0 0;
-	width: 130px;
-	margin-right:10px;
+	width: 200px;
 }
 
 /* position content div to right */
 #content {
-	float: left;
+	float: right;
 	min-height: 300px;
 	padding: 20px;
-	width: 820px;
-	margin-left: -30px;
+	width: 760px;
 }
 
 /* position footer div at bottom of page */
@@ -145,18 +140,6 @@ td {
 	width: 990px;
 }
 
-#resultbox{
-	float: left;
-	width: 250px;
-	margin:10px 0 0 25px;
-
-}
-
-#resultbox textarea{
-	width: 320px;
-	height: 500px;
-	border: none;
-}
 /* MENU */
 
 /* remove bullets from menu lists and override browser settings for margin/padding */
@@ -235,9 +218,9 @@ td {
 	color: #000000;
 	display: block;
 	font-size: 0.8em;
-	padding: 10px 0px 0px 20px;
+	padding: 10px 0px 10px 20px;
 	text-decoration: none;
-	width: 100px;
+	width: 180px;
 }
 
 /* change background colour of sidebar list links when hovered over */
@@ -263,7 +246,7 @@ td {
 /* change style of clickable boxes for nested sidebar list links */
 #sidebar ul li:hover ul li a {
 	padding: 5px 0px 5px 35px;
-	width: 90px;
+	width: 165px;
 }
 
 /* CONTENT */

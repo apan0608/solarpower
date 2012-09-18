@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8888/" />
+<title>submitFormWithCustomValues</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">submitFormWithCustomValues</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=systemLocation</td>
+	<td>10 Test Rd</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=confirmLocation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>id=divConfirmedLocation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=confirmedLocation</td>
+	<td>label=10 Test Rd, Whitchurch, Hampshire RG28, UK</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=systemCost</td>
+	<td>15000.00</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=systemSize</td>
+	<td>label=Custom</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customSystemSize</td>
+	<td>2.95</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=numberOfPanels1</td>
+	<td>label=10</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=panelOrientation1</td>
+	<td>label=N (0°)</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addPanelBank</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=numberOfPanels2</td>
+	<td>label=5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=panelOrientation2</td>
+	<td>label=NNE (22.5°)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=panelEfficiencyLoss</td>
+	<td>0.81</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inverterEfficiency</td>
+	<td>94.9</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=yes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=replacementCost</td>
+	<td>2999.99</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=hoursOfSunlight</td>
+	<td>label=6</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=dailyPowerUsage</td>
+	<td>40.44</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>20.22</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tariffRate1</td>
+	<td>20.50</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tariffPercentage1</td>
+	<td>75</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addTariff</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tariffRate2</td>
+	<td>10.25</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tariffPercentage2</td>
+	<td>25</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=additionalFees</td>
+	<td>87.65</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tariffIncrease</td>
+	<td>6.99</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=feedinTariff</td>
+	<td>8.06</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=calculationDataForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>name=content</td>
+	<td>Details of the system: <br />	Size:&nbsp;&nbsp;-2.0kwh<br />	Cost:&nbsp;&nbsp;$15000.00<br />	Number of panels:&nbsp;&nbsp;10.0<br />	Orientation of the panels:&nbsp;&nbsp;0.0<br /><br />User defined information: <br />	System location:&nbsp;&nbsp;10 Test Rd<br />	Hours of sunlight:&nbsp;&nbsp;6.0 per day<br />	Electricity usage of user:&nbsp;&nbsp;40.44kw per day<br />	Tariff rate:&nbsp;&nbsp;20.50<br /><br />The daily electricity generation of the system is: -11.388000000000002kw<br />----------------------------------------------------------------------------</td>
+</tr>
+</tbody></table>
+</body>
+</html>

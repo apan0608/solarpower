@@ -55,7 +55,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         String calculate = req.getParameter("calculationDataForm");
         String submit = "Submit";
         if (calculate.equalsIgnoreCase(submit)) {
-            calculate(req, resp);         
+            calculate(req, resp);
         }
     }
     
@@ -67,7 +67,6 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         // req.setAttribute("location", System.getProperty("user.name"));
         String ip = getIPAddress();
         req.setAttribute("location", ip);
-        
         
         // Entity statics =
         String systemLocation = req.getParameter("systemLocation");
@@ -82,9 +81,9 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         
         double dailyPowerUsage = Double.parseDouble(req.getParameter("dailyPowerUsage"));// monthly
         
-        Double generation = calc.calculateDailyGeneration(systemSize, inverterEfficiency/100, hoursOfSunlight, panelOrientation);
+        Double generation = calc.calculateDailyGeneration(systemSize, inverterEfficiency / 100,
+                hoursOfSunlight, panelOrientation);
         String strGen = generation.toString();
-        
         
         // also be stored in datastore
         String content = "Details of the system: " + "\n" + "\tSize:  "
@@ -129,7 +128,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         User user = userService.getCurrentUser();
         // if user not logged in yet, go back to calculate page and not store data
         if (user == null) {
-        	req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
         
         /*
@@ -153,7 +152,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         
     }
     
-	private String getIPAddress() {
+    private String getIPAddress() {
         InetAddress ip;
         try {
             ip = InetAddress.getLocalHost();
