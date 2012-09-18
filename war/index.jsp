@@ -31,7 +31,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<img alt="Solar Power Calculator" src="images\header.jpg" />
+			<img alt="Solar Power Calculator" src="images/header.jpg" />
 			<h1>
 				<span>Solar Power Calculator</span>
 			</h1>

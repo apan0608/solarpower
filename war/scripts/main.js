@@ -145,10 +145,10 @@ $(function() {
 	$(".rb").change(function() {
 		if ($("#yes").is(":checked")) {
 			$(".rc").show();
-			$("#lblCurrency").show();
+			$("#lblReplacementCostCurrency").show();
 		} else {
 			$(".rc").hide();
-			$("#lblCurrency").hide();
+			$("#lblReplacementCostCurrency").hide();
 		}
 	});
 
