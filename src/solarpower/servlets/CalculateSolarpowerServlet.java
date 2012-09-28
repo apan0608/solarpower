@@ -73,17 +73,20 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         double systemCost = Double.parseDouble(req.getParameter("systemCost"));// need to convert
         double systemSize = Double.parseDouble(req.getParameter("systemSize"));
         double hoursOfSunlight = Double.parseDouble(req.getParameter("hoursOfSunlight"));// daily
+        
+        //Check for more than one panel bank
         double numberOfPanels = Double.parseDouble(req.getParameter("numberOfPanels1"));
         double panelOrientation = Double.parseDouble(req.getParameter("panelOrientation1"));// orientation
+        
+        
         double tariffRate = Double.parseDouble(req.getParameter("tariffRate1"));
         
         double inverterEfficiency = Double.parseDouble(req.getParameter("inverterEfficiency"));
         
         double dailyPowerUsage = Double.parseDouble(req.getParameter("dailyPowerUsage"));// monthly
         
-        Double generation = calc.calculateDailyGeneration(systemSize, inverterEfficiency / 100,
-                hoursOfSunlight, panelOrientation);
-        String strGen = generation.toString();
+        double dailyGeneration = calc.calculateDailyGeneration(systemSize, inverterEfficiency / 100,
+                hoursOfSunlight, panelOrientation, 1);
         
         // also be stored in datastore
         String content = "Details of the system: " + "\n" + "\tSize:  "
@@ -117,7 +120,7 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
                 + req.getParameter("tariffRate1")
                 + "\n\n"
                 + "The daily electricity generation of the system is: "
-                + generation
+                + dailyGeneration
                 + "kw"
                 + "\n"
                 + "----------------------------------------------------------------------------\n\n";
