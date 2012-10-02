@@ -239,7 +239,7 @@
 			</form>
 			<div id="results">
 				<h2>Results</h2>
-				<textarea cols="20" rows="2" name="content">
+				<textarea rows="10" cols="90" name="content">
 					${history}</textarea>
 			</div>
 		</div>
