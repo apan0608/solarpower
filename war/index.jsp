@@ -95,8 +95,9 @@
 			  - need to add auto-detection features etc.
 			  --%>
 			  
-			<!-- <form method="post" action="/calculate" id="formData"> -->
-			<form id="formData">
+			<!-- <form method="post" action="/calculate" id="formData" onsubmit="loadXMLDoc()"> -->
+			<form> 
+			    <label id="errorflag"></label><!-- Show input error information in the page -->
 				<fieldset>
 					<h3>
 						System location<img class="tt"
@@ -241,7 +242,6 @@
 				</fieldset>
 				<input type="button" name="calculationDataForm" value="Submit" onclick="loadXMLDoc()"/>
 				<!-- <input type="submit" name="calculationDataForm" value="Submit" />-->
-				<%--is button name needed?--%>
 			</form>
 		
 			<div id="results">
