@@ -7,6 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Selenium"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/repackaged-appengine-jakarta-jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/repackaged-appengine-jakarta-standard-1.1.2.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/v1"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

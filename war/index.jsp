@@ -19,14 +19,17 @@
 <title>Solar Power Calculator</title>
 <meta charset="UTF-8">
 <link href="/stylesheets/main.css" type="text/css" rel="stylesheet" />
+<link href="/stylesheets/showresults.css" type="text/css" rel="stylesheet" />
 <script src="/scripts/jquery-1.8.1.js" type="text/javascript"></script>
 <script src="/scripts/main.js" type="text/javascript"></script>
 <script src="/scripts/tooltipsy.min.js" type="text/javascript"></script>
+<script src="/scripts/ajaxCalResults.js" type="text/javascript"></script>
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAZm_mPUozK_s1588VtsTER4yIMEhmr_4k&sensor=false"
 	type="text/javascript">
 	
 </script>
+
 </head>
 <body>
 	<div id="container">
@@ -91,7 +94,9 @@
 			  - need to add client-side (jquery) and server-side (java) validation
 			  - need to add auto-detection features etc.
 			  --%>
-			<form method="post" action="/calculate">
+			  
+			<!-- <form method="post" action="/calculate" id="formData"> -->
+			<form id="formData">
 				<fieldset>
 					<h3>
 						System location<img class="tt"
@@ -111,7 +116,7 @@
 							src="/images/tooltip.png" />
 					</h3>
 					<label class="cl">$</label><input id="systemCost" type="text"
-						name="systemCost">
+						name="systemCost" value="2000">
 					<h3>
 						System size<img class="tt"
 							title="Select the size of the system, or select Custom to enter a custom value in kW (e.g. 2.95)."
@@ -181,7 +186,7 @@
 							title="Select the average number of hours of sunlight the system will receive each day."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<select name="hoursOfSunlight">
+					<select name="hoursOfSunlight" id="hoursOfSunlight" value="9">
 						<c:forEach var="hours" items="${hoursOfSunlight}">
 							<option value="${hours.value}">${hours.key}</option>
 						</c:forEach>
@@ -191,13 +196,13 @@
 							title="Enter the average amount of power used in your household each day in kWh."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input id="dailyPowerUsage" type="text" name="dailyPowerUsage"><label>kWh</label>
+					<input id="dailyPowerUsage" type="text" name="dailyPowerUsage" value="6"><label>kWh</label>
 					<h3>
 						Average daytime power usage<img class="tt"
 							title="Enter the average amount of power used in daylight hours in your household each day in kWh."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input id="daytimePowerUsage" type="text" name="daytimePowerUsage"><label>kWh</label>
+					<input id="daytimePowerUsage" type="text" name="daytimePowerUsage" value="3"><label>kWh</label>
 				</fieldset>
 				<fieldset>
 					<h3>
@@ -234,14 +239,18 @@
 					</h3>
 					<input id="feedinTariff" type="text" name="feedinTariff"><label>c/kWh</label>
 				</fieldset>
-				<input type="submit" name="calculationDataForm" value="Submit" />
+				<input type="button" name="calculationDataForm" value="Submit" onclick="loadXMLDoc()"/>
+				<!-- <input type="submit" name="calculationDataForm" value="Submit" />-->
 				<%--is button name needed?--%>
 			</form>
+		
 			<div id="results">
 				<h2>Results</h2>
-				<textarea rows="10" cols="90" name="content">
+				
+				<textarea id="ajaxresponse" rows="10" cols="90" name="content" readonly>				
 					${history}</textarea>
 			</div>
+			
 		</div>
 		<div id="push"></div>
 		<div id="footer">Copyright © 2012 MGSD Technology</div>

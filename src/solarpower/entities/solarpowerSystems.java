@@ -15,7 +15,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 /**
- * @author Shenchen Pan
+ * @author 
  * 
  *         Entity class are already implemented for data store. Do we really need a customized
  *         entity??? This entity class is to store the data of a certain solarpower system.
