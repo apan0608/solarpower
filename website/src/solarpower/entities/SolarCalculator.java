@@ -83,7 +83,7 @@ public class SolarCalculator {
         return calculateDailyCost(cost, power) * 365; // No leap years
     }
     
-    // /////
+    ///////
     
     public double calcDailySolarUsed(double daytimePowerUsage, double hoursOfSunlight) {
         double hourlyUsage = daytimePowerUsage / hoursOfSunlight;

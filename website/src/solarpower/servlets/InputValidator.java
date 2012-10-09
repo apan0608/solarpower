@@ -2,27 +2,18 @@ package solarpower.servlets;
 
 public class InputValidator {
     
-	public Boolean isPositive (double n){
-		if (n < 0){
-			return false;
-		}
-		return true;
-	}
-	
-	public Boolean isValidPercentage (double p){
-		if ((p < 0) || (p > 100)) {
-			return false;
-		}
-		return true;
-	}
-	
-	public Boolean isValidTime (double h){
-		if ((h < 0) || (h > 24)) {
-			return false;
-		}
-		return true;
-	}
-	
+    public Boolean isPositive(double n) {
+        return (n >= 0);
+    }
+    
+    public Boolean isValidPercentage(double p) {
+        return ((p >= 0) && (p <= 100));
+    }
+    
+    public Boolean isValidTime(double h) {
+        return ((h > 0) && (h <= 24));
+    }
+    
     public void systemSize(double size) throws ValidationException {
         if (!isPositive(size)) {
             throw new ValidationException("System size must be positive");
