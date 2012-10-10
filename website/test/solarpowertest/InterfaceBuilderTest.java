@@ -15,6 +15,7 @@ public class InterfaceBuilderTest {
     private LinkedHashMap<String, Double> systemSizes;
     private LinkedHashMap<String, Double> numberOfPanels;
     private LinkedHashMap<String, Double> panelOrientations;
+    private LinkedHashMap<String, Double> panelTilts;
     private LinkedHashMap<String, Double> hoursOfSunlight;
     private Double NEGATIVE_ONE = -1.0;
     private Double NEGATIVE_TWO = -2.0;
@@ -25,6 +26,7 @@ public class InterfaceBuilderTest {
         systemSizes = builder.buildSystemSizes();
         numberOfPanels = builder.buildNumberOfPanels();
         panelOrientations = builder.buildPanelOrientations();
+        panelTilts = builder.buildPanelTilts();
         hoursOfSunlight = builder.buildHoursOfSunlight();
     }
     
@@ -96,6 +98,26 @@ public class InterfaceBuilderTest {
     @Test
     public void panelOrientationsHasLastOption() {
         assertEquals((Double) 337.5, panelOrientations.get("NNW (337.5°)"));
+    }
+    
+    @Test
+    public void panelTiltsHasSelectOption() {
+        assertEquals(NEGATIVE_ONE, panelTilts.get("Select..."));
+    }
+    
+    @Test
+    public void panelTiltsHasFirstOption() {
+        assertEquals((Double) 0.0, panelTilts.get("0°"));
+    }
+    
+    @Test
+    public void panelTiltsHasLastOption() {
+        assertEquals((Double) 90.0, panelTilts.get("90°"));
+    }
+    
+    @Test
+    public void panelTiltsHasCorrectUpperBound() throws Exception {
+        panelTilts.get("91°");
     }
     
     @Test

@@ -1,12 +1,10 @@
 <%--
   - Author: MGSD Technology
-  - Date: 17/9
+  - Date: 23 October 2012
   - Description:
   --%>
 
-<%--delete imports if not used--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -22,13 +20,11 @@
 <script src="/scripts/jquery-1.8.1.js" type="text/javascript"></script>
 <script src="/scripts/main.js" type="text/javascript"></script>
 <script src="/scripts/tooltipsy.min.js" type="text/javascript"></script>
-<script src="/scripts/ajaxCalResults.js" type="text/javascript"></script>
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAZm_mPUozK_s1588VtsTER4yIMEhmr_4k&sensor=false"
 	type="text/javascript">
 	
 </script>
-
 </head>
 <body>
 	<div id="container">
@@ -88,14 +84,8 @@
 
 			<p>This is a solar power calculator for grid-connected systems
 				over a period of 25 years.</p>
-			<%--
-			  - need to supply default values for some of these fields (via default button?)
-			  - need to add client-side (jquery) and server-side (java) validation
-			  - need to add auto-detection features etc.
-			  --%>
-
-			<form>
-				<label id="errorflag"></label>
+			<form id="form">
+				<%--<label id="errorflag"></label>--%>
 				<!-- Show input error information in the page -->
 				<fieldset>
 					<h3>
@@ -116,7 +106,7 @@
 							src="/images/tooltip.png" />
 					</h3>
 					<label class="cl">$</label><input id="systemCost" type="text"
-						name="systemCost" value="2000">
+						name="systemCost">
 					<h3>
 						System size<img class="tt"
 							title="Select the size of the system, or select Custom to enter a custom value in kW (e.g. 2.95)."
@@ -132,7 +122,7 @@
 				</fieldset>
 				<fieldset>
 					<h3>
-						Panels and orientations<img class="tt"
+						Panel banks<img class="tt"
 							title="Select the number of panels and their orientation. Solar panels should face north in the southern hemisphere and south in the northern hemisphere to maximise their output."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
@@ -146,6 +136,11 @@
 							class="ddl" name="panelOrientation1">
 							<c:forEach var="orientation" items="${panelOrientations}">
 								<option value="${orientation.value}">${orientation.key}</option>
+							</c:forEach>
+						</select><label>Tilt</label><select id="panelTilt1" class="ddl"
+							name="panelTilt1">
+							<c:forEach var="tilt" items="${panelTilts}">
+								<option value="${tilt.value}">${tilt.key}</option>
 							</c:forEach>
 						</select><input id="addPanelBank" class="btn" type="button"
 							value="Add panel bank"><input id="removePanelBank"
@@ -172,9 +167,9 @@
 							title="Choose if you want to include the cost of a replacement inverter in your calculations. The industry standard for the lifespan of grid-connected inverters is 10-20 years, but most warranties are for 5-10 years. If you're unsure of the cost, use 20% of the total system cost as an estimate."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input id="yes" class="rb" type="radio" value="yes"
+					<input id="yes" class="rb" type="radio" value="Yes"
 						name="replacementInverter"><label for="yes">Yes</label><input
-						id="no" class="rb" type="radio" value="no"
+						id="no" class="rb" type="radio" value="No"
 						name="replacementInverter"><label for="no">No</label><label
 						id="lblReplacementCost" class="rc">Enter cost</label><label
 						id="lblReplacementCostCurrency" class="cl">$</label><input
@@ -186,7 +181,7 @@
 							title="Select the average number of hours of sunlight the system will receive each day."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<select name="hoursOfSunlight" id="hoursOfSunlight" value="9">
+					<select name="hoursOfSunlight" id="hoursOfSunlight">
 						<c:forEach var="hours" items="${hoursOfSunlight}">
 							<option value="${hours.value}">${hours.key}</option>
 						</c:forEach>
@@ -196,15 +191,13 @@
 							title="Enter the average amount of power used in your household each day in kWh."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input id="dailyPowerUsage" type="text" name="dailyPowerUsage"
-						value="6"><label>kWh</label>
+					<input id="dailyPowerUsage" type="text" name="dailyPowerUsage"><label>kWh</label>
 					<h3>
 						Average daytime power usage<img class="tt"
 							title="Enter the average amount of power used in daylight hours in your household each day in kWh."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
-					<input id="daytimePowerUsage" type="text" name="daytimePowerUsage"
-						value="3"><label>kWh</label>
+					<input id="daytimePowerUsage" type="text" name="daytimePowerUsage"><label>kWh</label>
 				</fieldset>
 				<fieldset>
 					<h3>
@@ -234,18 +227,15 @@
 					</h3>
 					<input id="feedinTariff" type="text" name="feedinTariff"><label>c/kWh</label>
 				</fieldset>
-				<input type="button" name="calculationDataForm" value="Submit"
-					onclick="loadXMLDoc()" />
+				<input id="submitForm" type="button" value="Submit" />
 			</form>
-
-			<div id="results">
+			<div id="divResults"></div>
+			<%-- <div id="results">
 				<h2>Results</h2>
-
 				<textarea id="ajaxresponse" rows="10" cols="90" name="content"
 					readonly>				
 					${history}</textarea>
-			</div>
-
+			</div> --%>
 		</div>
 		<div id="push"></div>
 		<div id="footer">Copyright © 2012 MGSD Technology</div>

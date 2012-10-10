@@ -3,12 +3,12 @@
 		<listener-class>solarpower.servlets.AppServletContextListener</listener-class>
 	</listener>
 	<servlet>
-		<servlet-name>solarpower</servlet-name>
-		<servlet-class>solarpower.servlets.SolarpowerServlet</servlet-class>
+		<servlet-name>calculate</servlet-name>
+		<servlet-class>solarpower.servlets.CalculateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>solarpower</servlet-name>
-		<url-pattern>/solarpower</url-pattern>
+		<servlet-name>calculate</servlet-name>
+		<url-pattern>/calculate</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -36,14 +36,14 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>calculate</servlet-name>
+		<servlet-name>oldcalculate</servlet-name>
 		<servlet-class>solarpower.servlets.CalculateSolarpowerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>calculate</servlet-name>
-		<url-pattern>/calculate</url-pattern>
-	</servlet-mapping>	
-		
+		<servlet-name>oldcalculate</servlet-name>
+		<url-pattern>/oldcalculate</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>history</servlet-name>
 		<servlet-class>solarpower.servlets.HistoryResultsServlet</servlet-class>

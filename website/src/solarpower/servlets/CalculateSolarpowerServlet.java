@@ -32,6 +32,7 @@ import solarpower.entities.SolarCalculator;
  * */
 public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
     
+    private static final long serialVersionUID = 1L;
     String calResults = "";
     
     // implement it to automatically track user's location and pre fill the form
@@ -40,11 +41,6 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         resp.sendRedirect("/calculate.jsp");
         
     }
-    
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
     
     /*
      * (non-Javadoc)

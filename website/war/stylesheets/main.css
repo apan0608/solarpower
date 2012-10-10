@@ -1,6 +1,6 @@
 /*
  * Author: MGSD Technology
- * Date:
+ * Date: 23 October 2012
  * Description:
  */
 
@@ -35,7 +35,6 @@ h1 span {
 h2 {
 	font-size: 1.2em;
 	font-weight: bold;
-	width: 515px;
 }
 
 /* h3 headings */
@@ -117,6 +116,7 @@ td {
 /* position content div to right */
 #content {
 	float: right;
+	margin-bottom: 10px;
 	min-height: 300px;
 	padding: 20px;
 	width: 760px;
@@ -272,15 +272,6 @@ td {
 /* content paragraphs */
 #content p {
 	font-size: 0.8em;
-	width: 515px;
-}
-
-/* IMAGES */
-
-/* class to centre images */
-img.centre {
-	display: block;
-	margin: auto;
 }
 
 /* FORM */
@@ -320,26 +311,20 @@ img.centre {
 	margin-left: 10px;
 }
 
+/* results div */
+#divResults {
+	font-size: 0.8em;
+}
+
+/* results div h2 headings*/
+#divResults h2 {
+	font-size: 1.5em;
+}
+
 /* system location text field */
 #systemLocation {
 	margin-right: 20px;
 	width: 300px;
-}
-
-/* ----------OLD---------- */
-
-/* reason textarea control */
-#reason {
-	height: 48px;
-	margin-bottom: 5px;
-	padding: 5px;
-	width: 400px;
-}
-
-/* register form paragraphs */
-#register p {
-	font-size: 0.7em;
-	font-style: italic;
 }
 
 /* CLASSES */
@@ -404,16 +389,4 @@ img.centre {
 	padding: 5px;
 	max-width: 300px;
 	background-color: #EEEEEE;
-}
-
-/* ----------OLD---------- */
-
-/* class for select input controls */
-.selectInput {
-	margin-bottom: 5px;
-	padding: 5px;
-}
-
-#results {
-	visibility: hidden;
 }

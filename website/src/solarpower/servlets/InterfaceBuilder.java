@@ -53,6 +53,31 @@ public class InterfaceBuilder {
         return panelOrientations;
     }
     
+    public LinkedHashMap<String, Double> buildPanelTilts() {
+        LinkedHashMap<String, Double> panelTilts = new LinkedHashMap<String, Double>();
+        panelTilts.put("Select...", -1.0);
+        panelTilts.put("0°", 0.0);
+        panelTilts.put("5°", 5.0);
+        panelTilts.put("10°", 10.0);
+        panelTilts.put("15°", 15.0);
+        panelTilts.put("20°", 20.0);
+        panelTilts.put("25°", 25.0);
+        panelTilts.put("30°", 30.0);
+        panelTilts.put("35°", 35.0);
+        panelTilts.put("40°", 40.0);
+        panelTilts.put("45°", 45.0);
+        panelTilts.put("50°", 50.0);
+        panelTilts.put("55°", 55.0);
+        panelTilts.put("60°", 60.0);
+        panelTilts.put("65°", 65.0);
+        panelTilts.put("70°", 70.0);
+        panelTilts.put("75°", 75.0);
+        panelTilts.put("80°", 80.0);
+        panelTilts.put("85°", 85.0);
+        panelTilts.put("90°", 90.0);
+        return panelTilts;
+    }
+    
     public LinkedHashMap<String, Double> buildHoursOfSunlight() {
         LinkedHashMap<String, Double> hoursOfSunlight = new LinkedHashMap<String, Double>();
         hoursOfSunlight.put("Select...", -1.0);

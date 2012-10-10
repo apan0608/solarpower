@@ -20,6 +20,8 @@ public class AppServletContextListener implements ServletContextListener {
         event.getServletContext().setAttribute("numberOfPanels", numberOfPanels);
         LinkedHashMap<String, Double> panelOrientations = builder.buildPanelOrientations();
         event.getServletContext().setAttribute("panelOrientations", panelOrientations);
+        LinkedHashMap<String, Double> panelTilts = builder.buildPanelTilts();
+        event.getServletContext().setAttribute("panelTilts", panelTilts);
         LinkedHashMap<String, Double> hoursOfSunlight = builder.buildHoursOfSunlight();
         event.getServletContext().setAttribute("hoursOfSunlight", hoursOfSunlight);
     }
