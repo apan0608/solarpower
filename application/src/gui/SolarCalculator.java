@@ -40,7 +40,7 @@ public class SolarCalculator {
     }
 
     //Returns an un-rounded annual generation
-    public double calculateAnnualGeneration(double sysSize, double invEff, double hoursSun,
+    public static double calculateAnnualGeneration(double sysSize, double invEff, double hoursSun,
             double orientation, double panelEff) {
         double result = calculateDailyGeneration(sysSize, invEff, hoursSun, orientation, panelEff);
         //Doesn't take leap years into account
@@ -48,14 +48,14 @@ public class SolarCalculator {
     }
 
     //Returns a rounded annual generation
-    public double calculateAnnualGenerationRound(double sysSize, double invEff, double hoursSun,
+    public static double calculateAnnualGenerationRound(double sysSize, double invEff, double hoursSun,
             double orientation, double panelEff) {
         double result = calculateAnnualGeneration(sysSize, invEff, hoursSun, orientation, panelEff);
         return roundNumber(result);
     }
 
     //Returns an un-rounded generation for 'years' years.
-    public double calculateGeneration(int years, double sysSize, double invEff, double hoursSun,
+    public static double calculateGeneration(int years, double sysSize, double invEff, double hoursSun,
             double orientation, double panelEffDrop) {
         double result = 0;
         double panelEff = 1;
@@ -67,17 +67,61 @@ public class SolarCalculator {
     }
 
     //Returns an rounded generation for 'years' years.
-    public double calculateGenerationRound(int years, double sysSize, double invEff, double hoursSun,
+    public static double calculateGenerationRound(int years, double sysSize, double invEff, double hoursSun,
             double orientation, double panelEffDrop) {
         double result = calculateGeneration(years, sysSize, invEff, hoursSun, orientation, panelEffDrop);
         return roundNumber(result);
     }
 
-    public double calculateDailyCost(double cost, double power) {
+    public static double calculateDailyCost(double cost, double power) {
         return cost * power;
     }
 
-    public double calculateAnnualCost(double cost, double power) {
+    public static double calculateAnnualCost(double cost, double power) {
         return calculateDailyCost(cost, power) * 365; //No leap years
+    }
+    
+    public static double calcDailySolarUsed(double daytimePowerUsage, double hoursOfSunlight) {
+        double hourlyUsage = daytimePowerUsage / hoursOfSunlight;
+        return hourlyUsage * hoursOfSunlight;
+    }
+    
+    public static double calcDailySolarExported(double dailySolarGeneration, double dailySolarUsed) {
+        return dailySolarGeneration - dailySolarUsed;
+    }
+    
+    public static double calcDailySavings(double dailySolarUsed, double tariffRate1,
+            double dailySolarExported, double feedinTariff) {
+        double freePower = dailySolarUsed * (tariffRate1 / 100);
+        double paidSolar = dailySolarExported * (feedinTariff / 100);
+        return freePower + paidSolar;
+    }
+    
+    public static double calcAnnualSavings(double dailySavings) {
+        return dailySavings * 365;
+    }
+    
+    public static double calcCumulativeSavings(double annualSavings) {
+        return annualSavings * 25;
+    }
+    
+    public static double calcBreakEvenPoint(double systemCost, double annualSavings) {
+        double cumulativeSavings = annualSavings;
+        double year = 1;
+        while (systemCost > cumulativeSavings) {
+            cumulativeSavings += annualSavings;
+            year++;
+        }
+        return year;
+    }
+    
+    public static double calcInvestmentReturn(double systemCost) {
+        double investmentReturn = systemCost;
+        double year = 1;
+        while (year < 26) {
+            investmentReturn += investmentReturn * 0.05;
+            year++;
+        }
+        return investmentReturn;
     }
 }
