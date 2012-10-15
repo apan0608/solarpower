@@ -155,7 +155,7 @@ public class SolarPowerGui extends javax.swing.JFrame {
 
         OrientationLabel.setText("Orientation");
 
-        OrientationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select...", "N (0°)", "NNE (22.5°)", "NE (45°)", "ENE (67.5°)", "E (90°)", "ESE (112.5°)", "SE (135°)", "SSE (157.5°)", "S (180°)", "SSW (202.5°)", "SW (225°)", "WSW (247.5°)", "W (270°)", "WNW (292.5°)", "NW (315°)", "NNW (337.5°)", "Custom" }));
+        OrientationComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select...", "N (0Â°)", "NNE (22.5Â°)", "NE (45Â°)", "ENE (67.5Â°)", "E (90Â°)", "ESE (112.5Â°)", "SE (135Â°)", "SSE (157.5Â°)", "S (180Â°)", "SSW (202.5Â°)", "SW (225Â°)", "WSW (247.5Â°)", "W (270Â°)", "WNW (292.5Â°)", "NW (315Â°)", "NNW (337.5Â°)", "Custom" }));
         OrientationComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OrientationComboBoxActionPerformed(evt);
@@ -698,7 +698,7 @@ public class SolarPowerGui extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel3);
 
-        jLabel37.setText("Copyright � 2012 MGSD Technology");
+        jLabel37.setText("Copyright © 2012 MGSD Technology");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -948,7 +948,7 @@ public class SolarPowerGui extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    public static javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private org.jdesktop.swingx.JXMapKit jXMapKit1;
