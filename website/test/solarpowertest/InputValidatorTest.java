@@ -182,6 +182,36 @@ public class InputValidatorTest {
     }
     
     @Test
+    public void isGreaterThanZero() {
+        assertTrue(val.isGreaterThanZero("1"));
+    }
+    
+    @Test
+    public void isGreaterThanZero2() {
+        assertTrue(val.isGreaterThanZero("0.1"));
+    }
+    
+    @Test
+    public void isGreaterThanZero3() {
+        assertTrue(val.isGreaterThanZero("0.00001"));
+    }
+    
+    @Test
+    public void isNotGreaterThanZero() {
+        assertFalse(val.isGreaterThanZero("0"));
+    }
+    
+    @Test
+    public void isNotGreaterThanZero2() {
+        assertFalse(val.isGreaterThanZero("-0.1"));
+    }
+    
+    @Test
+    public void isNotGreaterThanZero3() {
+        assertFalse(val.isGreaterThanZero("-0.00001"));
+    }
+    
+    @Test
     public void isInvalidSystemSize() {
         assertTrue(val.isInvalidSystemSize(null));
     }
@@ -212,8 +242,23 @@ public class InputValidatorTest {
     }
     
     @Test
+    public void isInvalidSystemSize7() {
+        assertTrue(val.isInvalidSystemSize("0"));
+    }
+    
+    @Test
+    public void isInvalidSystemSize8() {
+        assertTrue(val.isInvalidSystemSize("-0.1"));
+    }
+    
+    @Test
+    public void isInvalidSystemSize9() {
+        assertTrue(val.isInvalidSystemSize("-0.00001"));
+    }
+    
+    @Test
     public void isValidSystemSize() {
-        assertFalse(val.isInvalidSystemSize("0"));
+        assertFalse(val.isInvalidSystemSize("1"));
     }
     
     @Test
@@ -229,6 +274,11 @@ public class InputValidatorTest {
     @Test
     public void isValidSystemSize4() {
         assertFalse(val.isInvalidSystemSize("456.789"));
+    }
+    
+    @Test
+    public void isValidSystemSize5() {
+        assertFalse(val.isInvalidSystemSize("0.00001"));
     }
     
     @Test
@@ -424,6 +474,36 @@ public class InputValidatorTest {
     @Test
     public void isValidReplacementCost5() {
         assertFalse(val.isInvalidReplacementCost("456.789", true));
+    }
+    
+    @Test
+    public void isInvalidPowerUsage() {
+        assertTrue(val.isInvalidPowerUsage("1", "2"));
+    }
+    
+    @Test
+    public void isInvalidPowerUsage2() {
+        assertTrue(val.isInvalidPowerUsage("1", "1.1"));
+    }
+    
+    @Test
+    public void isInvalidPowerUsage3() {
+        assertTrue(val.isInvalidPowerUsage("1.00001", "1.1"));
+    }
+    
+    @Test
+    public void isValidPowerUsage() {
+        assertFalse(val.isInvalidPowerUsage("1", "1"));
+    }
+    
+    @Test
+    public void isValidPowerUsage2() {
+        assertFalse(val.isInvalidPowerUsage("1", "0.9"));
+    }
+    
+    @Test
+    public void isValidPowerUsage3() {
+        assertFalse(val.isInvalidPowerUsage("1.00001", "0.9"));
     }
     
     @Test

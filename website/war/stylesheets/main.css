@@ -311,16 +311,6 @@ td {
 	margin-left: 10px;
 }
 
-/* results div */
-#divResults {
-	font-size: 0.8em;
-}
-
-/* results div h2 headings*/
-#divResults h2 {
-	font-size: 1.5em;
-}
-
 /* system location text field */
 #systemLocation {
 	margin-right: 20px;
@@ -384,9 +374,9 @@ td {
 
 /* tooltips */
 .tooltipsy {
+	background-color: #EEEEEE;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.7em;
-	padding: 5px;
 	max-width: 300px;
-	background-color: #EEEEEE;
+	padding: 5px;
 }

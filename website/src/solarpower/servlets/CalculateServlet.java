@@ -48,35 +48,39 @@ public class CalculateServlet extends HttpServlet {
     
     boolean inputIsValid = true;
     
-    String error = "<h2>Results</h2>No results were returned. ";
-    String confirmedLocationError = error + "Please ensure you have selected a system location.";
-    String systemCostError = error + "Please ensure you have entered a valid system cost.";
+    String error = "<h2>Results</h2><p>No results were returned.</p><p>";
+    String confirmedLocationError = error
+            + "Please ensure you have entered a valid system location, clicked <em>Confirm location</em> and selected from a list of matching locations.</p>";
+    String systemCostError = error
+            + "Please ensure you have entered a valid system cost (numbers only).</p>";
     String systemSizeError = error
-            + "Please ensure you have selected or entered a valid system size.";
+            + "Please ensure you have selected or entered a valid system size (numbers only; must be greater than 0).</p>";
     String panelBankError = error
-            + "Please ensure you have selected a number of panels, orientation and tilt for each panel bank.";
+            + "Please ensure you have selected a number of panels, orientation and tilt angle for each panel bank.</p>";
     String panelEfficiencyLossError = error
-            + "Please ensure you have entered a valid average annual panel efficiency loss rate.";
+            + "Please ensure you have entered a valid average annual panel efficiency loss (numbers only).</p>";
     String inverterEfficiencyError = error
-            + "Please ensure you have entered a valid inverter efficiency.";
+            + "Please ensure you have entered a valid inverter efficiency (numbers only).</p>";
     String replacementInverterError = error
-            + "Please ensure you have specified whether or not you want a replacement inverter.";
+            + "Please ensure you have specified whether or not you want to include the cost of a replacement inverter in your calculations.</p>";
     String replacementCostError = error
-            + "Please ensure you have entered a valid replacement inverter cost.";
+            + "Please ensure you have entered a valid replacement inverter cost (numbers only).</p>";
     String hoursOfSunlightError = error
-            + "Please ensure you have selected an average daily hours of sunlight.";
+            + "Please ensure you have selected an average daily hours of sunlight.</p>";
     String dailyPowerUsageError = error
-            + "Please ensure you have entered a valid average daily power usage.";
+            + "Please ensure you have entered a valid average daily power usage (numbers only).</p>";
     String daytimePowerUsageError = error
-            + "Please ensure you have entered a valid average daytime power usage.";
+            + "Please ensure you have entered a valid average daytime power usage (numbers only).</p>";
+    String powerUsageError = error
+            + "Please ensure the average daytime power usage is less than or equal to the average daily power usage.</p>";
     String tariffError = error
-            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff.";
+            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff (numbers only).</p>";
     String tariffPercentageError = error
-            + "Please ensure the sum of the average percentages of power usage for each tariff equals 100%.";
+            + "Please ensure the sum of the average percentages of power usage equals 100%.</p>";
     String tariffIncreaseError = error
-            + "Please ensure you have entered a valid average annual tariff rate increase.";
+            + "Please ensure you have entered a valid average annual tariff rate increase (numbers only).</p>";
     String feedinTariffError = error
-            + "Please ensure you have entered a valid feed-in tariff rate.";
+            + "Please ensure you have entered a valid feed-in tariff rate (numbers only).</p>";
     String results;
     
     double confirmedLocation;
@@ -116,6 +120,15 @@ public class CalculateServlet extends HttpServlet {
     double tariffPercentage5;
     double tariffIncrease;
     double feedinTariff;
+    
+    double dailySolarGeneration;
+    double[] dailySolarGenerationOver25Years = new double[25];
+    double[] annualSolarGenerationOver25Years = new double[25];
+    double[] dailySolarUsedOver25Years = new double[25];
+    double[] dailySolarExportedOver25Years = new double[25];
+    double[] dailySavingsOver25Years = new double[25];
+    double[] annualSavingsOver25Years = new double[25];
+    double[] cumulativeSavingsOver25Years = new double[25];
     
     public CalculateServlet() {
         super();
@@ -269,6 +282,9 @@ public class CalculateServlet extends HttpServlet {
             outputError(dailyPowerUsageError);
         } else if (val.isInvalidNumberField(req.getParameter("daytimePowerUsage"))) {
             outputError(daytimePowerUsageError);
+        } else if (val.isInvalidPowerUsage(req.getParameter("dailyPowerUsage"),
+                req.getParameter("daytimePowerUsage"))) {
+            outputError(powerUsageError);
         } else if (val.isInvalidTariff(req.getParameter(tariffRate1Parameter),
                 req.getParameter(tariffPercentage1Parameter))) {
             outputError(tariffError);
@@ -367,80 +383,242 @@ public class CalculateServlet extends HttpServlet {
             tariffIncrease = Double.parseDouble(req.getParameter("tariffIncrease"));
             feedinTariff = Double.parseDouble(req.getParameter("feedinTariff"));
             
-            //calculations done here, still need lots of work
-            //-----------------------------------------------
-            double dailySolarGeneration = cal.calculateDailyGeneration(systemSize,
-                    inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
+            // calculations done here, still need lots of work
+            // -----------------------------------------------
+            // double dailySolarGeneration = cal.calculateDailyGeneration(systemSize,
+            // inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
+            //
+            // double annualSolarGeneration = cal.calculateAnnualGeneration(systemSize,
+            // inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
             
-            double annualSolarGeneration = cal.calculateAnnualGeneration(systemSize,
-                    inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
+            // ////
             
-            double dailySolarUsed = cal.calcDailySolarUsed(daytimePowerUsage, hoursOfSunlight);
+            double panelEfficiency = 1;
             
-            double dailySolarExported = cal.calcDailySolarExported(dailySolarGeneration,
-                    dailySolarUsed);
-            
-            double dailySavings = cal.calcDailySavings(dailySolarUsed, tariffRate1,
-                    dailySolarExported, feedinTariff);
-            
-            double annualSavings = cal.calcAnnualSavings(dailySavings);
-            
-            double cumulativeSavings = cal.calcCumulativeSavings(annualSavings);
-            
-            double breakEvenPoint = cal.calcBreakEvenPoint(systemCost, annualSavings);
-            
-            double investmentReturn = cal.calcInvestmentReturn(systemCost);
-            
-            //results string constructed here, still needs work
-            //-------------------------------------------------
-            results = "<h2>Results</h2>System location latitude: " + confirmedLocation
-                    + "<br />System cost: " + systemCost + "<br />System size: " + systemSize
-                    + "<br />Average annual panel efficiency loss rate: " + panelEfficiencyLoss
-                    + "<br />Inverter efficiency: " + inverterEfficiency
-                    + "<br />Replacement inverter: " + replacementInverter;
-            
-            if (costNeeded) {
-                results += "<br />Replacement inverter cost: " + replacementCost;
+            switch (numPanelBanks) {
+                case 1:
+                    dailySolarGeneration = cal.calcDailySolarGenerationWithOnePanelBank(
+                            panelOrientation1, panelTilt1, confirmedLocation, systemSize,
+                            inverterEfficiency, hoursOfSunlight);
+                    for (int i = 0; i < 25; i++) {
+                        dailySolarGenerationOver25Years[i] = dailySolarGeneration * panelEfficiency;
+                        panelEfficiency = panelEfficiency - (panelEfficiencyLoss / 100);
+                        if (panelEfficiency < 0) {
+                            panelEfficiency = 0;
+                        }
+                    }
+                    break;
+                case 2:
+                    dailySolarGeneration = cal.calcDailySolarGenerationWithTwoPanelBanks(
+                            numberOfPanels1, panelOrientation1, panelTilt1, numberOfPanels2,
+                            panelOrientation2, panelTilt2, confirmedLocation, systemSize,
+                            inverterEfficiency, hoursOfSunlight);
+                    for (int i = 0; i < 25; i++) {
+                        dailySolarGenerationOver25Years[i] = dailySolarGeneration * panelEfficiency;
+                        panelEfficiency = panelEfficiency - (panelEfficiencyLoss / 100);
+                        if (panelEfficiency < 0) {
+                            panelEfficiency = 0;
+                        }
+                    }
+                    break;
+                case 3:
+                    dailySolarGeneration = cal.calcDailySolarGenerationWithThreePanelBanks(
+                            numberOfPanels1, panelOrientation1, panelTilt1, numberOfPanels2,
+                            panelOrientation2, panelTilt2, numberOfPanels3, panelOrientation3,
+                            panelTilt3, confirmedLocation, systemSize, inverterEfficiency,
+                            hoursOfSunlight);
+                    for (int i = 0; i < 25; i++) {
+                        dailySolarGenerationOver25Years[i] = dailySolarGeneration * panelEfficiency;
+                        panelEfficiency = panelEfficiency - (panelEfficiencyLoss / 100);
+                        if (panelEfficiency < 0) {
+                            panelEfficiency = 0;
+                        }
+                    }
+                    break;
+                case 4:
+                    dailySolarGeneration = cal.calcDailySolarGenerationWithFourPanelBanks(
+                            numberOfPanels1, panelOrientation1, panelTilt1, numberOfPanels2,
+                            panelOrientation2, panelTilt2, numberOfPanels3, panelOrientation3,
+                            panelTilt3, numberOfPanels4, panelOrientation4, panelTilt4,
+                            confirmedLocation, systemSize, inverterEfficiency, hoursOfSunlight);
+                    for (int i = 0; i < 25; i++) {
+                        dailySolarGenerationOver25Years[i] = dailySolarGeneration * panelEfficiency;
+                        panelEfficiency = panelEfficiency - (panelEfficiencyLoss / 100);
+                        if (panelEfficiency < 0) {
+                            panelEfficiency = 0;
+                        }
+                    }
+                    break;
+                case 5:
+                    dailySolarGeneration = cal.calcDailySolarGenerationWithFivePanelBanks(
+                            numberOfPanels1, panelOrientation1, panelTilt1, numberOfPanels2,
+                            panelOrientation2, panelTilt2, numberOfPanels3, panelOrientation3,
+                            panelTilt3, numberOfPanels4, panelOrientation4, panelTilt4,
+                            numberOfPanels5, panelOrientation5, panelTilt5, confirmedLocation,
+                            systemSize, inverterEfficiency, hoursOfSunlight);
+                    for (int i = 0; i < 25; i++) {
+                        dailySolarGenerationOver25Years[i] = dailySolarGeneration * panelEfficiency;
+                        panelEfficiency = panelEfficiency - (panelEfficiencyLoss / 100);
+                        if (panelEfficiency < 0) {
+                            panelEfficiency = 0;
+                        }
+                    }
+                    break;
             }
             
-            results += "<br />Average daily hours of sunlight: "
-                    + hoursOfSunlight
-                    + "<br />Average daily power usage: "
-                    + dailyPowerUsage
-                    + "<br />Average daytime power usage: "
-                    + daytimePowerUsage
-                    + "<br />Average annual tariff rate increase: "
-                    + tariffIncrease
-                    + "<br />Feed-in tariff rate: "
-                    + feedinTariff
-                    + "<br /><br />Daily power generation of the system: "
-                    + dailySolarGeneration
-                    + "kWh<br />"
-                    + "Annual power generation of the system: "
-                    + annualSolarGeneration
-                    + "kWh<br />"
-                    + "Daily solar used: "
-                    + dailySolarUsed
-                    + "kWh<br />"
-                    + "Daily solar exported: "
-                    + dailySolarExported
-                    + "kWh<br />"
-                    + "Daily savings: $"
-                    + dailySavings
-                    + "<br />"
-                    + "Annual savings: $"
-                    + annualSavings
-                    + "<br />"
-                    + "Cumulative savings: $"
-                    + cumulativeSavings
-                    + "<br />"
-                    + "You will break even after: "
-                    + breakEvenPoint
-                    + " years<br />"
-                    + "The equivalent investment return after 25 years would be: $"
-                    + investmentReturn
-                    + "<br />"
-                    + "----------------------------------------------------------------------------\n\n";
+            for (int i = 0; i < 25; i++) {
+                annualSolarGenerationOver25Years[i] = dailySolarGenerationOver25Years[i] * 365;
+                dailySolarUsedOver25Years[i] = cal.calcDailySolarUsed(daytimePowerUsage,
+                        dailySolarGenerationOver25Years[i]);
+                dailySolarExportedOver25Years[i] = cal.calcDailySolarExported(
+                        dailySolarGenerationOver25Years[i], dailySolarUsedOver25Years[i]);
+            }
+            
+            switch (numTariffs) {
+                case 1:
+                    for (int i = 0; i < 25; i++) {
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithOneTariff(tariffRate1,
+                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
+                                feedinTariff);
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < 25; i++) {
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithTwoTariffs(
+                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
+                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
+                                feedinTariff);
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < 25; i++) {
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithThreeTariffs(
+                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
+                                tariffRate3, tariffPercentage3, dailySolarUsedOver25Years[i],
+                                dailySolarExportedOver25Years[i], feedinTariff);
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i < 25; i++) {
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithFourTariffs(
+                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
+                                tariffRate3, tariffPercentage3, tariffRate4, tariffPercentage4,
+                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
+                                feedinTariff);
+                    }
+                    break;
+                case 5:
+                    for (int i = 0; i < 25; i++) {
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithFiveTariffs(
+                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
+                                tariffRate3, tariffPercentage3, tariffRate4, tariffPercentage4,
+                                tariffRate5, tariffPercentage5, dailySolarUsedOver25Years[i],
+                                dailySolarExportedOver25Years[i], feedinTariff);
+                    }
+                    break;
+            }
+            
+            double cumulativeSavings = 0;
+            
+            for (int i = 0; i < 25; i++) {
+                annualSavingsOver25Years[i] = dailySavingsOver25Years[i] * 365;
+                cumulativeSavings += annualSavingsOver25Years[i];
+                cumulativeSavingsOver25Years[i] = cumulativeSavings;
+            }
+            
+            // double breakEvenPoint = cal.calcBreakEvenPoint(systemCost, annualSavings);
+            
+            // double investmentReturn = cal.calcInvestmentReturn(systemCost);
+            
+            // results string constructed here, still needs work
+            // -------------------------------------------------
+            results = "<h2>Results</h2><p>System location latitude: " + confirmedLocation
+                    + "<br />System cost: $" + systemCost + "<br />System size: " + systemSize
+                    + "kW<br /><br />Panel bank: " + numberOfPanels1 + " panels, "
+                    + panelOrientation1 + "&deg; orientation, " + panelTilt1 + "&deg; tilt";
+            
+            if (numPanelBanks > 1) {
+                results += "<br />Panel bank: " + numberOfPanels2 + " panels, " + panelOrientation2
+                        + "&deg; orientation, " + panelTilt2 + "&deg; tilt";
+                if (numPanelBanks > 2) {
+                    results += "<br />Panel bank: " + numberOfPanels3 + " panels, "
+                            + panelOrientation3 + "&deg; orientation, " + panelTilt3 + "&deg; tilt";
+                    if (numPanelBanks > 3) {
+                        results += "<br />Panel bank: " + numberOfPanels4 + " panels, "
+                                + panelOrientation4 + "&deg; orientation, " + panelTilt4
+                                + "&deg; tilt";
+                        if (numPanelBanks > 4) {
+                            results += "<br />Panel bank: " + numberOfPanels5 + " panels, "
+                                    + panelOrientation5 + "&deg; orientation, " + panelTilt5
+                                    + "&deg; tilt";
+                        }
+                    }
+                }
+            }
+            
+            results += "<br />Average annual panel efficiency loss rate: " + panelEfficiencyLoss
+                    + "%<br /><br />Inverter efficiency: " + inverterEfficiency
+                    + "%<br />Replacement inverter: " + replacementInverter;
+            
+            if (costNeeded) {
+                results += "<br />Replacement inverter cost: $" + replacementCost;
+            }
+            
+            results += "<br /><br />Average daily hours of sunlight: " + hoursOfSunlight
+                    + "<br />Average daily power usage: " + dailyPowerUsage
+                    + "kWh<br />Average daytime power usage: " + daytimePowerUsage
+                    + "kWh<br /><br />Tariff: " + tariffRate1 + "c/kWh, " + tariffPercentage1
+                    + "% average percentage of power usage";
+            
+            if (numTariffs > 1) {
+                results += "<br />Tariff: " + tariffRate2 + " c/kWh, " + tariffPercentage2
+                        + "% average percentage of power usage";
+                if (numTariffs > 2) {
+                    results += "<br />Tariff: " + tariffRate3 + " c/kWh, " + tariffPercentage3
+                            + "% average percentage of power usage";
+                    if (numTariffs > 3) {
+                        results += "<br />Tariff: " + tariffRate4 + " c/kWh, " + tariffPercentage4
+                                + "% average percentage of power usage";
+                        if (numTariffs > 4) {
+                            results += "<br />Tariff: " + tariffRate5 + " c/kWh, "
+                                    + tariffPercentage5 + "% average percentage of power usage";
+                        }
+                    }
+                }
+            }
+            
+            results += "<br />Average annual tariff rate increase: " + tariffIncrease
+                    + "%<br />Feed-in tariff rate: " + feedinTariff
+                    + "c/kWh</p><p>Average daily solar generation over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += dailySolarGenerationOver25Years[i] + "kWh, ";
+            }
+            
+            results += "</p><p>Average annual solar generation over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += annualSolarGenerationOver25Years[i] + "kWh, ";
+            }
+            
+            results += "</p><p>Daily savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + dailySavingsOver25Years[i] + ", ";
+            }
+            
+            results += "</p><p>Annual savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + annualSavingsOver25Years[i] + ", ";
+            }
+            
+            results += "</p><p>Cumulative savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + cumulativeSavingsOver25Years[i] + ", ";
+            }
+            
         }
         
         // output string as response

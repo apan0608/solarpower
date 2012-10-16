@@ -121,14 +121,14 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         double dailySolarExported = calc.calcDailySolarExported(dailySolarGeneration,
                 dailySolarUsed);
         
-        double dailySavings = calc.calcDailySavings(dailySolarUsed, tariffRate, dailySolarExported,
-                feedinTariff);
-        
-        double annualSavings = calc.calcAnnualSavings(dailySavings);
-        
-        double cumulativeSavings = calc.calcCumulativeSavings(annualSavings);
-        
-        double breakEvenPoint = calc.calcBreakEvenPoint(systemCost, annualSavings);
+//        double dailySavings = calc.calcDailySavings(dailySolarUsed, tariffRate, dailySolarExported,
+//                feedinTariff);
+//        
+//        double annualSavings = calc.calcAnnualSavings(dailySavings);
+//        
+//        double cumulativeSavings = calc.calcCumulativeSavings(annualSavings);
+//        
+//        double breakEvenPoint = calc.calcBreakEvenPoint(systemCost, annualSavings);
         
         double investmentReturn = calc.calcInvestmentReturn(systemCost);
         
@@ -175,17 +175,17 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
                 + "Daily solar exported: "
                 + dailySolarExported
                 + "kWh\n"
-                + "Daily savings: $"
-                + dailySavings
+//                + "Daily savings: $"
+//                + dailySavings
                 + "\n"
-                + "Annual savings: $"
-                + annualSavings
+//                + "Annual savings: $"
+//                + annualSavings
                 + "\n"
-                + "Cumulative savings: $"
-                + cumulativeSavings
+//                + "Cumulative savings: $"
+//                + cumulativeSavings
                 + "\n"
-                + "You will break even after: "
-                + breakEvenPoint
+//                + "You will break even after: "
+//                + breakEvenPoint
                 + " years\n"
                 + "The equivalent investment return after 25 years would be: $"
                 + investmentReturn

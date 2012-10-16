@@ -92,12 +92,12 @@ public class InterfaceBuilderTest {
     
     @Test
     public void panelOrientationsHasFirstOption() {
-        assertEquals((Double) 0.0, panelOrientations.get("N (0°)"));
+        assertEquals((Double) 0.0, panelOrientations.get("N (0&deg;)"));
     }
     
     @Test
     public void panelOrientationsHasLastOption() {
-        assertEquals((Double) 337.5, panelOrientations.get("NNW (337.5°)"));
+        assertEquals((Double) 337.5, panelOrientations.get("NNW (337.5&deg;)"));
     }
     
     @Test
@@ -107,17 +107,17 @@ public class InterfaceBuilderTest {
     
     @Test
     public void panelTiltsHasFirstOption() {
-        assertEquals((Double) 0.0, panelTilts.get("0°"));
+        assertEquals((Double) 0.0, panelTilts.get("0&deg;"));
     }
     
     @Test
     public void panelTiltsHasLastOption() {
-        assertEquals((Double) 90.0, panelTilts.get("90°"));
+        assertEquals((Double) 90.0, panelTilts.get("90&deg;"));
     }
     
     @Test
     public void panelTiltsHasCorrectUpperBound() throws Exception {
-        panelTilts.get("91°");
+        panelTilts.get("91&deg;");
     }
     
     @Test

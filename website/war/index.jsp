@@ -90,7 +90,7 @@
 				<fieldset>
 					<h3>
 						System location<img class="tt"
-							title="Enter the address where the system is located (e.g. 10 Solar Street, Brisbane, QLD)."
+							title="Enter the address where the system is located and click <em>Confirm location</em> to select from a list of matching locations."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="systemLocation" type="text" name="systemLocation"><input
@@ -109,7 +109,7 @@
 						name="systemCost">
 					<h3>
 						System size<img class="tt"
-							title="Select the size of the system, or select Custom to enter a custom value in kW (e.g. 2.95)."
+							title="Select the size of the system, or select <em>Custom</em> to enter a custom value in kW (e.g. 2.95)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<select id="systemSize" class="ddl" name="systemSize">
@@ -123,7 +123,7 @@
 				<fieldset>
 					<h3>
 						Panel banks<img class="tt"
-							title="Select the number of panels and their orientation. Solar panels should face north in the southern hemisphere and south in the northern hemisphere to maximise their output."
+							title="For each panel bank, select the number of panels, their orientation and their tilt angle. Solar panels should face north in the southern hemisphere and south in the northern hemisphere to maximise their output."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<div id="panelBank1" class="pb">
@@ -147,8 +147,8 @@
 							class="btn" type="button" value="Remove" disabled="disabled">
 					</div>
 					<h3>
-						Average annual panel efficiency loss rate<img class="tt"
-							title="Enter the average annual rate at which the panels will lose their efficiency. The industry standard of at least 90% output in the 10th year and 80% output in the 25th year can be represented by an average annual loss rate of 0.83%."
+						Average annual panel efficiency loss<img class="tt"
+							title="Enter the average annual loss in panel efficiency. The industry standard of at least 90% output in the 10th year and 80% output in the 25th year can be represented by an average annual loss of 0.83%."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="panelEfficiencyLoss" type="text"
@@ -202,7 +202,7 @@
 				<fieldset>
 					<h3>
 						Tariffs<img class="tt"
-							title="Enter the tariff rate in c/kWh and the average percentage of power usage to which the tariff applies."
+							title="For each tariff, enter the tariff rate in c/kWh and the average percentage of power usage to which the tariff applies (the sum of the average percentages should equal 100%)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<div id="tariff1" class="tr">
@@ -222,7 +222,7 @@
 					<input id="tariffIncrease" type="text" name="tariffIncrease"><label>%</label>
 					<h3>
 						Feed-in tariff rate<img class="tt"
-							title="Enter the feed-in tariff rate in c/kWh for power you on-sell to the grid (this may not apply to you)."
+							title="Enter the feed-in tariff rate in c/kWh for power you on-sell to the grid (enter 0 if this doesn't apply to)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="feedinTariff" type="text" name="feedinTariff"><label>c/kWh</label>

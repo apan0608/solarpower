@@ -35,8 +35,13 @@ public class InputValidator {
         return isNullOrEmpty(value) || !isValidNumber(value);
     }
     
+    public boolean isGreaterThanZero(String value) {
+        double number = Double.parseDouble(value);
+        return number > 0;
+    }
+    
     public boolean isInvalidSystemSize(String value) {
-        return isInvalidDropdown(value) || !isValidNumber(value);
+        return isInvalidDropdown(value) || !isValidNumber(value) || !isGreaterThanZero(value);
     }
     
     public boolean isInvalidPanelBank(String value, String value2, String value3) {
@@ -61,6 +66,12 @@ public class InputValidator {
             return isInvalidNumberField(value);
         }
         return false;
+    }
+    
+    public boolean isInvalidPowerUsage(String value, String value2) {
+        double dailyPower = Double.parseDouble(value);
+        double daytimePower = Double.parseDouble(value2);
+        return dailyPower < daytimePower;
     }
     
     public boolean isInvalidTariff(String value, String value2) {
