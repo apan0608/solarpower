@@ -153,37 +153,37 @@ public class Calculate extends javax.swing.JFrame {
         double panOrientation = 0;
         Object panOrientationItem = SolarPowerGui.OrientationComboBox.getSelectedItem();
         
-        if (panOrientationItem.equals("N (0°)")) {
+        if (panOrientationItem.equals("N (0 °)")) {
             panOrientation = 0;
-        } else if (panOrientationItem.equals("NNE (22.5°)")) {
+        } else if (panOrientationItem.equals("NNE (22.5 °)")) {
             panOrientation = 22.5;
-        } else if (panOrientationItem.equals("NE (45°)")) {
+        } else if (panOrientationItem.equals("NE (45 °)")) {
             panOrientation =45;
-        } else if (panOrientationItem.equals("ENE (67.5°)")) {
+        } else if (panOrientationItem.equals("ENE (67.5 °)")) {
             panOrientation = 67.5;
-        } else if (panOrientationItem.equals("E (90°)")) {
+        } else if (panOrientationItem.equals("E (90 °)")) {
             panOrientation = 90;
-        } else if (panOrientationItem.equals("ESE (112.5°)")) {
+        } else if (panOrientationItem.equals("ESE (112.5 °)")) {
             panOrientation = 112.5;
-        } else if (panOrientationItem.equals("SE (135°)")) {
+        } else if (panOrientationItem.equals("SE (135 °)")) {
             panOrientation = 135;
-        } else if (panOrientationItem.equals("SSE (157.5°)")) {
+        } else if (panOrientationItem.equals("SSE (157.5 °)")) {
             panOrientation = 157.5;
-        } else if (panOrientationItem.equals("S (180°)")) {
+        } else if (panOrientationItem.equals("S (180 °)")) {
             panOrientation = 180;
-        } else if (panOrientationItem.equals("SSW (202.5°)")) {
+        } else if (panOrientationItem.equals("SSW (202.5 °)")) {
             panOrientation = 202.5;
-        } else if (panOrientationItem.equals("SW (225°)")) {
+        } else if (panOrientationItem.equals("SW (225 °)")) {
             panOrientation = 225;
-        } else if (panOrientationItem.equals("WSW (247.5°)")) {
+        } else if (panOrientationItem.equals("WSW (247.5 °)")) {
             panOrientation = 247.5;
-        } else if (panOrientationItem.equals("W (270°)")) {
+        } else if (panOrientationItem.equals("W (270 °)")) {
             panOrientation = 270;
-        } else if (panOrientationItem.equals("WNW (292.5°)")) {
+        } else if (panOrientationItem.equals("WNW (292.5 °)")) {
             panOrientation = 292.5;
-        } else if (panOrientationItem.equals("NW (315°)")) {
+        } else if (panOrientationItem.equals("NW (315 °)")) {
             panOrientation = 315;
-        } else if (panOrientationItem.equals("NNW (337.5°)")) {
+        } else if (panOrientationItem.equals("NNW (337.5 °)")) {
             panOrientation = 337.5;
         } else if (panOrientationItem.equals("Custom")) {
             panOrientation = Double.parseDouble(SolarPowerGui.OrientationTextField.getText());
@@ -253,7 +253,8 @@ public class Calculate extends javax.swing.JFrame {
     
     public static void updateResults() {
         double systemSize, systemCost, numOfPanels, panelOrientation, hoursOfSunlight, dailyPowerUsage, tariffRate, dailyGeneration,
-                inverterEfficiency, panelEfficiency;
+                inverterEfficiency, panelEfficiency, annualSolarGeneration, dailySolarUsed, dailySolarExported,
+                dailySavings, annualSavings, cumulativeSavings, breakEvenPoint, investmentReturn, daytimePowerUsage, feedInTariff;
         String systemLocation;
         
         systemSize = getSystemSize();
@@ -266,10 +267,21 @@ public class Calculate extends javax.swing.JFrame {
         tariffRate = Double.parseDouble(SolarPowerGui.TariffRateTextField.getText());
         inverterEfficiency = Double.parseDouble(SolarPowerGui.inverterEfficiencyTextField.getText());
         panelEfficiency = SolarCalculator.efficiencyCalc(panelOrientation);
+        daytimePowerUsage = Double.parseDouble(SolarPowerGui.DailyPowerUsageTextField.getText());
+        feedInTariff = Double.parseDouble(SolarPowerGui.jTextField4.getText());
+        
         
         dailyGeneration = SolarCalculator.calculateDailyGenerationRound(systemSize, inverterEfficiency, hoursOfSunlight, panelOrientation, panelEfficiency);
+        annualSolarGeneration = SolarCalculator.calculateAnnualGenerationRound(systemSize, inverterEfficiency, hoursOfSunlight, panelOrientation, panelEfficiency);
+        dailySolarUsed = SolarCalculator.calcDailySolarUsed(daytimePowerUsage, hoursOfSunlight);
+        dailySolarExported = SolarCalculator.calcDailySolarExported(dailyGeneration, dailySolarUsed);
+        dailySavings = SolarCalculator.calcDailySavings(dailySolarUsed, tariffRate, dailySolarExported, feedInTariff);
+        annualSavings = SolarCalculator.calcAnnualSavings(dailySavings);
+        cumulativeSavings = SolarCalculator.calcCumulativeSavings(annualSavings);
+        breakEvenPoint = SolarCalculator.calcBreakEvenPoint(systemCost, annualSavings);
+        investmentReturn = SolarCalculator.calcInvestmentReturn(systemCost);
         
-        String content = "Details of the system: " + "\n" + "\tSize: "
+    	String content = "Details of the system: " + "\n" + "\tSize: "
                 + systemSize
                 + " kWh"
                 + "\n"
@@ -282,7 +294,7 @@ public class Calculate extends javax.swing.JFrame {
                 + "\n"
                 + "\tOrientation of the panels: "
                 + panelOrientation
-                + "° "
+                + "Â° "
                 + "\n\n"
                 + "User defined information: "
                 + "\n"
@@ -303,7 +315,30 @@ public class Calculate extends javax.swing.JFrame {
                 + "\n\n"
                 + "The daily electricity generation of the system is: "
                 + dailyGeneration
-                + " kW"
+                + "kWh\n"
+                + "Annual power generation of the system: "
+                + annualSolarGeneration
+                + "kWh\n"
+                + "Daily solar used: "
+                + dailySolarUsed
+                + "kWh\n"
+                + "Daily solar exported: "
+                + dailySolarExported
+                + "kWh\n"
+                + "Daily savings: $"
+                + dailySavings
+                + "\n"
+                + "Annual savings: $"
+                + annualSavings
+                + "\n"
+                + "Cumulative savings: $"
+                + cumulativeSavings
+                + "\n"
+                + "You will break even after: "
+                + breakEvenPoint
+                + " years\n"
+                + "The equivalent investment return after 25 years would be: $"
+                + investmentReturn
                 + "\n"
                 + "----------------------------------------------------------------------------\n\n";
         
