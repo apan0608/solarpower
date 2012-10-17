@@ -117,105 +117,105 @@ public class SolarCalculatorTest {
     
     // ////
     
-    @Test
-    public void calcPanelOrientationEfficiency() {
-        assertEquals(100, cal.calcPanelOrientationEfficiency(0, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency() {
-        assertEquals(100, cal.calcPanelTiltEfficiency(0, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency2() {
-        assertEquals(100, cal.calcPanelTiltEfficiency(0, 15), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency3() {
-        assertEquals(90, cal.calcPanelTiltEfficiency(0, 16), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency4() {
-        assertEquals(90, cal.calcPanelTiltEfficiency(0, 30), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency5() {
-        assertEquals(80, cal.calcPanelTiltEfficiency(0, 31), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency6() {
-        assertEquals(80, cal.calcPanelTiltEfficiency(0, 45), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency7() {
-        assertEquals(70, cal.calcPanelTiltEfficiency(0, 46), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency8() {
-        assertEquals(70, cal.calcPanelTiltEfficiency(0, 60), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency9() {
-        assertEquals(60, cal.calcPanelTiltEfficiency(0, 61), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency10() {
-        assertEquals(60, cal.calcPanelTiltEfficiency(0, 90), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency11() {
-        assertEquals(100, cal.calcPanelTiltEfficiency(-15, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency12() {
-        assertEquals(90, cal.calcPanelTiltEfficiency(-16, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency13() {
-        assertEquals(90, cal.calcPanelTiltEfficiency(-30, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency14() {
-        assertEquals(80, cal.calcPanelTiltEfficiency(-31, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency15() {
-        assertEquals(80, cal.calcPanelTiltEfficiency(-45, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency16() {
-        assertEquals(70, cal.calcPanelTiltEfficiency(-46, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency17() {
-        assertEquals(70, cal.calcPanelTiltEfficiency(-60, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency18() {
-        assertEquals(60, cal.calcPanelTiltEfficiency(-61, 0), 0);
-    }
-    
-    @Test
-    public void calcPanelTiltEfficiency19() {
-        assertEquals(60, cal.calcPanelTiltEfficiency(-90, 0), 0);
-    }
+//    @Test
+//    public void calcPanelOrientationEfficiency() {
+//        assertEquals(100, cal.calcPanelOrientationEfficiency(0, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency() {
+//        assertEquals(100, cal.calcPanelTiltEfficiency(0, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency2() {
+//        assertEquals(100, cal.calcPanelTiltEfficiency(0, 15), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency3() {
+//        assertEquals(90, cal.calcPanelTiltEfficiency(0, 16), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency4() {
+//        assertEquals(90, cal.calcPanelTiltEfficiency(0, 30), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency5() {
+//        assertEquals(80, cal.calcPanelTiltEfficiency(0, 31), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency6() {
+//        assertEquals(80, cal.calcPanelTiltEfficiency(0, 45), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency7() {
+//        assertEquals(70, cal.calcPanelTiltEfficiency(0, 46), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency8() {
+//        assertEquals(70, cal.calcPanelTiltEfficiency(0, 60), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency9() {
+//        assertEquals(60, cal.calcPanelTiltEfficiency(0, 61), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency10() {
+//        assertEquals(60, cal.calcPanelTiltEfficiency(0, 90), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency11() {
+//        assertEquals(100, cal.calcPanelTiltEfficiency(-15, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency12() {
+//        assertEquals(90, cal.calcPanelTiltEfficiency(-16, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency13() {
+//        assertEquals(90, cal.calcPanelTiltEfficiency(-30, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency14() {
+//        assertEquals(80, cal.calcPanelTiltEfficiency(-31, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency15() {
+//        assertEquals(80, cal.calcPanelTiltEfficiency(-45, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency16() {
+//        assertEquals(70, cal.calcPanelTiltEfficiency(-46, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency17() {
+//        assertEquals(70, cal.calcPanelTiltEfficiency(-60, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency18() {
+//        assertEquals(60, cal.calcPanelTiltEfficiency(-61, 0), 0);
+//    }
+//    
+//    @Test
+//    public void calcPanelTiltEfficiency19() {
+//        assertEquals(60, cal.calcPanelTiltEfficiency(-90, 0), 0);
+//    }
     
     @Test
     public void calcDailySolarUsed() {

@@ -294,6 +294,11 @@ td {
 	width: 50px;
 }
 
+/* populate fields link */
+#populateFields {
+	cursor: pointer;
+}
+
 /* power text fields */
 #customSystemSize,#dailyPowerUsage,#daytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#feedinTariff
 	{

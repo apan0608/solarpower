@@ -13,9 +13,23 @@ $(function() {
 	// number of tariffs
 	var numTariffs = 1;
 
+	// populate text fields
+	$("#populateFields").click(function() {
+		$("#panelEfficiencyLoss").val("0.83");
+		$("#inverterEfficiency").val("95");
+		// $("#tariffIncrease").val("7");
+	});
+
 	// add tooltips
 	$(".tt").tooltipsy({
 		offset : [ 5, 0 ]
+	});
+
+	// confirm location when text field is active and enter key is pressed
+	$("#systemLocation").keypress(function(event) {
+		if (event.keyCode == 13) {
+			$("#confirmLocation").click();
+		}
 	});
 
 	// get matching locations
@@ -164,6 +178,33 @@ $(function() {
 	$("#addTariff").click(
 			function() {
 
+				// tariff percentage total
+				var percentageTotal = 0;
+
+				// new tariff percentage
+				var newPercentage = 0;
+
+				// round tariff percentages and get rounded total
+				for ( var i = 1; i <= numTariffs; i++) {
+					var percentage = $("#tariff" + i).children(
+							"#tariffPercentage" + i).val();
+					if (percentage > 0) {
+						percentage = parseFloat($("#tariff" + i).children(
+								"#tariffPercentage" + i).val());
+					} else {
+						percentage = 0;
+					}
+					var roundedPercentage = percentage.toFixed(2);
+					$("#tariff" + i).children("#tariffPercentage" + i).val(
+							roundedPercentage);
+					percentageTotal += parseFloat(roundedPercentage);
+				}
+
+				// get new tariff percentage
+				if (percentageTotal < 100) {
+					newPercentage = 100 - percentageTotal;
+				}
+
 				// new number of tariffs
 				var newNumTariffs = numTariffs + 1;
 
@@ -174,12 +215,13 @@ $(function() {
 				// increment text field attributes
 				newDiv.children("#tariffRate" + numTariffs).attr("id",
 						"tariffRate" + newNumTariffs).attr("name",
-						"tariffRate" + newNumTariffs);
+						"tariffRate" + newNumTariffs).attr("value", "");
 
 				// increment text field attributes
 				newDiv.children("#tariffPercentage" + numTariffs).attr("id",
 						"tariffPercentage" + newNumTariffs).attr("name",
-						"tariffPercentage" + newNumTariffs);
+						"tariffPercentage" + newNumTariffs).attr("value",
+						newPercentage.toFixed(2));
 
 				// hide add button
 				newDiv.children("#addTariff").hide();
@@ -226,7 +268,7 @@ $(function() {
 		// post form data to calculate page/servlet
 		$.post("calculate", $("#form").serialize(), function(data) {
 
-			//alert($("#form").serialize());
+			// alert($("#form").serialize());
 
 			// set content of results div to output from servlet
 			$("#divResults").html(data);

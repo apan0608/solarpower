@@ -26,9 +26,9 @@ public class InputValidator {
         return isNullOrEmpty(value) || isInvalidSelection(value);
     }
     
-    // zero or more numbers followed by zero or one decimal point followed by one or more numbers
+    // zero or more numbers followed by zero or one decimal point followed by one or two numbers
     public boolean isValidNumber(String value) {
-        return value.matches("(\\d*)(\\.\\d+)?");
+        return value.matches("(\\d*)(\\.\\d{1,2})?");
     }
     
     public boolean isInvalidNumberField(String value) {

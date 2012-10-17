@@ -108,12 +108,12 @@ public class InputValidatorTest {
     
     @Test
     public void isValidNumber4() {
-        assertTrue(val.isValidNumber("456.789"));
+        assertTrue(val.isValidNumber("4567.89"));
     }
     
     @Test
     public void isInvalidNumber() {
-        assertFalse(val.isValidNumber("0 dollars"));
+        assertFalse(val.isValidNumber("$0"));
     }
     
     @Test
@@ -128,7 +128,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidNumber4() {
-        assertFalse(val.isValidNumber("$4"));
+        assertFalse(val.isValidNumber("4.567"));
     }
     
     @Test
@@ -143,7 +143,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidNumberField3() {
-        assertTrue(val.isInvalidNumberField("0 dollars"));
+        assertTrue(val.isInvalidNumberField("$0"));
     }
     
     @Test
@@ -158,7 +158,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidNumberField6() {
-        assertTrue(val.isInvalidNumberField("$4"));
+        assertTrue(val.isInvalidNumberField("4.567"));
     }
     
     @Test
@@ -178,7 +178,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidNumberField4() {
-        assertFalse(val.isInvalidNumberField("456.789"));
+        assertFalse(val.isInvalidNumberField("4567.89"));
     }
     
     @Test
@@ -188,12 +188,7 @@ public class InputValidatorTest {
     
     @Test
     public void isGreaterThanZero2() {
-        assertTrue(val.isGreaterThanZero("0.1"));
-    }
-    
-    @Test
-    public void isGreaterThanZero3() {
-        assertTrue(val.isGreaterThanZero("0.00001"));
+        assertTrue(val.isGreaterThanZero("0.01"));
     }
     
     @Test
@@ -203,12 +198,7 @@ public class InputValidatorTest {
     
     @Test
     public void isNotGreaterThanZero2() {
-        assertFalse(val.isGreaterThanZero("-0.1"));
-    }
-    
-    @Test
-    public void isNotGreaterThanZero3() {
-        assertFalse(val.isGreaterThanZero("-0.00001"));
+        assertFalse(val.isGreaterThanZero("-0.01"));
     }
     
     @Test
@@ -243,17 +233,17 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidSystemSize7() {
-        assertTrue(val.isInvalidSystemSize("0"));
+        assertTrue(val.isInvalidSystemSize("4.567"));
     }
     
     @Test
     public void isInvalidSystemSize8() {
-        assertTrue(val.isInvalidSystemSize("-0.1"));
+        assertTrue(val.isInvalidSystemSize("0"));
     }
     
     @Test
     public void isInvalidSystemSize9() {
-        assertTrue(val.isInvalidSystemSize("-0.00001"));
+        assertTrue(val.isInvalidSystemSize("-0.01"));
     }
     
     @Test
@@ -273,12 +263,12 @@ public class InputValidatorTest {
     
     @Test
     public void isValidSystemSize4() {
-        assertFalse(val.isInvalidSystemSize("456.789"));
+        assertFalse(val.isInvalidSystemSize("4567.89"));
     }
     
     @Test
     public void isValidSystemSize5() {
-        assertFalse(val.isInvalidSystemSize("0.00001"));
+        assertFalse(val.isInvalidSystemSize("0.01"));
     }
     
     @Test
@@ -313,7 +303,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentage2() {
-        assertTrue(val.isInvalidPercentage("-0.1"));
+        assertTrue(val.isInvalidPercentage("-0.01"));
     }
     
     @Test
@@ -323,7 +313,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentage4() {
-        assertTrue(val.isInvalidPercentage("100.1"));
+        assertTrue(val.isInvalidPercentage("100.01"));
     }
     
     @Test
@@ -333,7 +323,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidPercentage2() {
-        assertFalse(val.isInvalidPercentage("0.1"));
+        assertFalse(val.isInvalidPercentage("0.01"));
     }
     
     @Test
@@ -353,7 +343,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentageField3() {
-        assertTrue(val.isInvalidPercentageField("0 percent"));
+        assertTrue(val.isInvalidPercentageField("0%"));
     }
     
     @Test
@@ -368,7 +358,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentageField6() {
-        assertTrue(val.isInvalidPercentageField("4%"));
+        assertTrue(val.isInvalidPercentageField("4.567"));
     }
     
     @Test
@@ -378,7 +368,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentageField9() {
-        assertTrue(val.isInvalidPercentageField("-0.1"));
+        assertTrue(val.isInvalidPercentageField("-0.01"));
     }
     
     @Test
@@ -388,7 +378,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentageField11() {
-        assertTrue(val.isInvalidPercentageField("100.1"));
+        assertTrue(val.isInvalidPercentageField("100.01"));
     }
     
     @Test
@@ -403,7 +393,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidPercentageField3() {
-        assertFalse(val.isInvalidPercentageField("0.1"));
+        assertFalse(val.isInvalidPercentageField("0.01"));
     }
     
     @Test
@@ -433,7 +423,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidReplacementCost3() {
-        assertTrue(val.isInvalidReplacementCost("0 dollars", true));
+        assertTrue(val.isInvalidReplacementCost("$0", true));
     }
     
     @Test
@@ -448,7 +438,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidReplacementCost6() {
-        assertTrue(val.isInvalidReplacementCost("$4", true));
+        assertTrue(val.isInvalidReplacementCost("4.567", true));
     }
     
     @Test
@@ -473,7 +463,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidReplacementCost5() {
-        assertFalse(val.isInvalidReplacementCost("456.789", true));
+        assertFalse(val.isInvalidReplacementCost("4567.89", true));
     }
     
     @Test
@@ -488,7 +478,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPowerUsage3() {
-        assertTrue(val.isInvalidPowerUsage("1.00001", "1.1"));
+        assertTrue(val.isInvalidPowerUsage("1.01", "1.1"));
     }
     
     @Test
@@ -503,7 +493,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidPowerUsage3() {
-        assertFalse(val.isInvalidPowerUsage("1.00001", "0.9"));
+        assertFalse(val.isInvalidPowerUsage("1.01", "0.9"));
     }
     
     @Test
@@ -523,7 +513,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff4() {
-        assertTrue(val.isInvalidTariff("0 dollars", "0"));
+        assertTrue(val.isInvalidTariff("$0", "0"));
     }
     
     @Test
@@ -538,7 +528,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff7() {
-        assertTrue(val.isInvalidTariff("$4", "0"));
+        assertTrue(val.isInvalidTariff("4.567", "0"));
     }
     
     @Test
@@ -553,7 +543,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff10() {
-        assertTrue(val.isInvalidTariff("0", "0 percent"));
+        assertTrue(val.isInvalidTariff("0", "0%"));
     }
     
     @Test
@@ -568,7 +558,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff13() {
-        assertTrue(val.isInvalidTariff("0", "4%"));
+        assertTrue(val.isInvalidTariff("0", "4.567"));
     }
     
     @Test
@@ -578,7 +568,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff15() {
-        assertTrue(val.isInvalidTariff("0", "-0.1"));
+        assertTrue(val.isInvalidTariff("0", "-0.01"));
     }
     
     @Test
@@ -588,7 +578,7 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariff17() {
-        assertTrue(val.isInvalidTariff("0", "100.1"));
+        assertTrue(val.isInvalidTariff("0", "100.01"));
     }
     
     @Test
@@ -608,7 +598,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidTariff4() {
-        assertFalse(val.isInvalidTariff("456.789", "0"));
+        assertFalse(val.isInvalidTariff("4567.89", "0"));
     }
     
     @Test
@@ -618,7 +608,7 @@ public class InputValidatorTest {
     
     @Test
     public void isValidTariff6() {
-        assertFalse(val.isInvalidTariff("0", "0.1"));
+        assertFalse(val.isInvalidTariff("0", "0.01"));
     }
     
     @Test
@@ -633,17 +623,17 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidTariffPercentage2() {
-        assertTrue(val.isInvalidTariffPercentage("0", "99.9", "0", "0", "0", 2));
+        assertTrue(val.isInvalidTariffPercentage("0", "99.99", "0", "0", "0", 2));
     }
     
     @Test
     public void isInvalidTariffPercentage3() {
-        assertTrue(val.isInvalidTariffPercentage("0", "0", "100.1", "0", "0", 3));
+        assertTrue(val.isInvalidTariffPercentage("0", "0", "100.01", "0", "0", 3));
     }
     
     @Test
     public void isInvalidTariffPercentage4() {
-        assertTrue(val.isInvalidTariffPercentage("0", "0", "0", "100.00001", "0", 4));
+        assertTrue(val.isInvalidTariffPercentage("0", "0", "0", "100.01", "0", 4));
     }
     
     @Test
@@ -668,12 +658,12 @@ public class InputValidatorTest {
     
     @Test
     public void isValidTariffPercentage4() {
-        assertFalse(val.isInvalidTariffPercentage("0", ".1", "9.9", "90", "100", 4));
+        assertFalse(val.isInvalidTariffPercentage("0", ".01", "9.99", "90", "100", 4));
     }
     
     @Test
     public void isValidTariffPercentage5() {
-        assertFalse(val.isInvalidTariffPercentage("0", ".1", "9.9", "40", "50", 5));
+        assertFalse(val.isInvalidTariffPercentage("0", ".01", "9.99", "40", "50", 5));
     }
     
     // @Test(expected = Exception.class)

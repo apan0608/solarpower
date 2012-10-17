@@ -52,7 +52,7 @@ public class CalculateServlet extends HttpServlet {
     String confirmedLocationError = error
             + "Please ensure you have entered a valid system location, clicked <em>Confirm location</em> and selected from a list of matching locations.</p>";
     String systemCostError = error
-            + "Please ensure you have entered a valid system cost (numbers only).</p>";
+            + "Please ensure you have entered a valid system cost (numbers only; no more than 2 decimal places).</p>";
     String systemSizeError = error
             + "Please ensure you have selected or entered a valid system size (numbers only; must be greater than 0).</p>";
     String panelBankError = error
@@ -74,7 +74,7 @@ public class CalculateServlet extends HttpServlet {
     String powerUsageError = error
             + "Please ensure the average daytime power usage is less than or equal to the average daily power usage.</p>";
     String tariffError = error
-            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff (numbers only).</p>";
+            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff (numbers only; no more than 2 decimal places).</p>";
     String tariffPercentageError = error
             + "Please ensure the sum of the average percentages of power usage equals 100%.</p>";
     String tariffIncreaseError = error
