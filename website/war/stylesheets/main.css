@@ -62,21 +62,17 @@ label {
 
 /* tables */
 table {
-	font-size: 0.8em;
-	margin: 10px 0;
-}
-
-/* table headers */
-th {
-	background-color: #E5E5E5;
-	font-size: 1.2em;
-	padding: 5px;
-	text-align: left;
+	border: 1px solid #BEBEBE;
+	border-collapse: collapse; font-size : 0.8em;
+	margin: 5px;
+	font-size: 0.8em
 }
 
 /* table cells */
 td {
-	padding: 5px;
+	border: 1px solid #BEBEBE;
+	padding: 0 5px;
+	width: 82px;
 }
 
 /* DIVS */

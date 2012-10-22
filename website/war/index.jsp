@@ -74,9 +74,9 @@
 
 			<p>This is a solar power calculator for grid-connected systems
 				over a period of 25 years. It will calculate average daily and
-				annual solar generation, as well as average daily, annual and cumulative
-				savings. It will also calculate if and when you'll break even, and
-				your return if you were to invest your money instead.</p>
+				annual solar generation, average daily and annual savings, and
+				cumulative savings. It will also calculate if and when you'll break
+				even, and the return if the system expenses were invested instead.</p>
 			<p>
 				<a id="populateFields">Click here</a> to populate the <em>Average
 					annual panel efficiency loss</em> and <em>Inverter efficiency</em>
@@ -213,14 +213,14 @@
 					</div>
 					<h3>
 						Average annual tariff rate increase *<img class="tt"
-							title="Enter the average annual increase in your tariff rates (a conservative estimate like 7% per annum would suffice)."
+							title="Enter the average annual increase in tariff rates (a conservative estimate like 7% per annum would suffice)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="tariffIncrease" type="text" name="tariffIncrease"><label>%
 						p.a.</label>
 					<h3>
 						Feed-in tariff rate<img class="tt"
-							title="Enter the feed-in tariff rate in c/kWh for power you on-sell to the grid (this may not apply to you)."
+							title="Enter the feed-in tariff rate in c/kWh for power on-sold to the grid (this may not apply)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="feedinTariff" type="text" name="feedinTariff"><label>c/kWh</label>
@@ -228,7 +228,7 @@
 				<fieldset>
 					<h3>
 						Average annual interest rate for comparison<img class="tt"
-							title="Enter the average annual interest rate used to calculate your return if you were to invest your money instead (a conservative estimate like 5% per annum would suffice)."
+							title="Enter the average annual interest rate used to calculate the return if the system expenses were invested instead (a conservative estimate like 5% per annum would suffice)."
 							alt="Tooltip" src="/images/tooltip.png" />
 					</h3>
 					<input id="interestRate" type="text" name="interestRate"><label>%

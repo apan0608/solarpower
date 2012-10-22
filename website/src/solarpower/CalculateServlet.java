@@ -137,7 +137,6 @@ public class CalculateServlet extends HttpServlet {
     double[] cumulativeInvestmentReturnOver25Years = new double[25];
     
     int breakEvenPoint;
-    
     double averageDailySolarGeneration;
     double averageAnnualSolarGeneration;
     double averageDailySavings;
@@ -578,145 +577,51 @@ public class CalculateServlet extends HttpServlet {
             
             // construct results string
             results = "<h2>Results</h2>"
-                    + "<p><a id=\"toggleResults\">Click here</a> to toggle between simple and advanced results.</p>"
-                    
-                    // get simple results
-                    + "<span id=\"simpleResults\"><h3>Solar generation</h3>"
-                    + "<p>Average daily generation over 25 years: ";
+                    + "<p><a id=\"toggleResults\">Click here</a> to toggle between simple and advanced results.</p>";
             
-            averageDailySolarGeneration = 0;
-            
-            for (int i = 0; i < 25; i++) {
-                averageDailySolarGeneration += dailySolarGenerationOver25Years[i];
-            }
-            
-            averageDailySolarGeneration = averageDailySolarGeneration / 25;
-            
-            results += cal.calcRoundedDouble(averageDailySolarGeneration) + "kWh<br />"
-                    + "Average annual generation over 25 years: ";
-            
-            averageAnnualSolarGeneration = 0;
-            
-            for (int i = 0; i < 25; i++) {
-                averageAnnualSolarGeneration += annualSolarGenerationOver25Years[i];
-            }
-            
-            averageAnnualSolarGeneration = averageAnnualSolarGeneration / 25;
-            
-            results += cal.calcRoundedDouble(averageAnnualSolarGeneration) + "kWh</p>"
-                    + "<h3>Savings</h3>" + "<p>Average daily savings over 25 years: ";
-            
-            averageDailySavings = 0;
-            
-            for (int i = 0; i < 25; i++) {
-                averageDailySavings += dailySavingsOver25Years[i];
-            }
-            
-            averageDailySavings = averageDailySavings / 25;
-            
-            results += "$" + cal.calcRoundedDouble(averageDailySavings) + "<br />"
-                    + "Average annual savings over 25 years: ";
-            
-            averageAnnualSavings = 0;
-            
-            for (int i = 0; i < 25; i++) {
-                averageAnnualSavings += annualSavingsOver25Years[i];
-            }
-            
-            averageAnnualSavings = averageAnnualSavings / 25;
-            
-            results += "$" + cal.calcRoundedDouble(averageAnnualSavings) + "<br />"
-                    + "Cumulative savings after 25 years: $"
-                    + cal.calcRoundedDouble(cumulativeSavingsOver25Years[24]) + "</p>"
-                    + "<h3>Break even point</h3>";
-            
-            if (breakEvenPoint == 99) {
-                results += "<p>You won't break even after 25 years.</p>";
-            } else {
-                results += "<p>You will break even after " + breakEvenPoint;
-                if (breakEvenPoint == 1) {
-                    results += " year.</p>";
-                } else {
-                    results += " years.</p>";
-                }
-            }
-            
-            results += "<h3>Investment return</h3>";
-            
-            if (interestRate > 0) {
-                results += "<p>Equivalent investment return after 25 years (including system expenses): $"
-                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[24])
-                        + "</p></span>";
-            } else {
-                results += "<p>Enter a valid average annual interest rate for comparison to calculate the equivalent investment return after 25 years (including system expenses).</p></span>";
-            }
+            // get simple results
+            results += "<span id=\"simpleResults\">" + "<h3>Break even point</h3>";
+            outputBreakEvenPoint();
+            results += "<h3>Solar generation</h3>" + "<p>";
+            outputDailySolar();
+            results += "<br />";
+            outputAnnualSolar();
+            results += "</p>" + "<h3>Savings</h3>" + "<p>";
+            outputDailySavings();
+            results += "<br />";
+            outputAnnualSavings();
+            results += "<br />";
+            outputCumulativeSavings();
+            results += "</p>" + "<h3>Investment return</h3>";
+            outputInvestmentReturn();
+            results += "</span>";
             
             // get advanced results
-            results += "<span id=\"advancedResults\"><p>Average daily solar generation over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += cal.calcRoundedDouble(dailySolarGenerationOver25Years[i]) + "kWh, ";
-            }
-            
-            results += "</p><p>Average daily solar used over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += cal.calcRoundedDouble(dailySolarUsedOver25Years[i]) + "kWh, ";
-            }
-            
-            results += "</p><p>Average daily solar exported over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += cal.calcRoundedDouble(dailySolarExportedOver25Years[i]) + "kWh, ";
-            }
-            
-            results += "</p><p>Average annual solar generation over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += cal.calcRoundedDouble(annualSolarGenerationOver25Years[i]) + "kWh, ";
-            }
-            
-            results += "</p><p>Daily savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + ", ";
-            }
-            
-            results += "</p><p>Annual savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + ", ";
-            }
-            
-            results += "</p><p>Cumulative savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + ", ";
-            }
-            
-            if (breakEvenPoint == 99) {
-                results += "</p><p>You won't break even after 25 years.";
-            } else {
-                results += "</p><p>You will break even after " + breakEvenPoint;
-                if (breakEvenPoint == 1) {
-                    results += " year.";
-                } else {
-                    results += " years.";
-                }
-            }
-            
-            if (interestRate > 0) {
-                results += "</p><p>Cumulative investment return over 25 years: ";
-                
-                for (int i = 0; i < 25; i++) {
-                    results += "$"
-                            + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i])
-                            + ", ";
-                }
-            } else {
-                results += "</p><p>Enter a valid average annual interest rate for comparison if you would like to calculate your cumulative investment return over 25 years.</p>";
-            }
-            
+            results += "<span id=\"advancedResults\">" + "<h3>Break even point</h3>";
+            outputBreakEvenPoint();
+            results += "<h3>Solar generation</h3>" + "<p>";
+            outputDailySolar();
+            results += "</p>";
+            outputDailySolarTable();
+            results += "<p>";
+            outputAnnualSolar();
+            results += "</p>";
+            outputAnnualSolarTable();
+            results += "<h3>Savings</h3>" + "<p>";
+            outputDailySavings();
+            results += "</p>";
+            outputDailySavingsTable();
+            results += "<p>";
+            outputAnnualSavings();
+            results += "</p>";
+            outputAnnualSavingsTable();
+            results += "<p>";
+            outputCumulativeSavings();
+            results += "</p>";
+            outputCumulativeSavingsTable();
+            results += "<h3>Investment return</h3>";
+            outputInvestmentReturn();
+            outputInvestmentReturnTable();
             results += "</span>";
         }
         
@@ -734,68 +639,375 @@ public class CalculateServlet extends HttpServlet {
         results = error;
     }
     
-    // add system details to output string
-    public void outputSystemDetails(boolean detailsWillOutput) {
-        if (detailsWillOutput) {
-            results += "<p>System location latitude: " + confirmedLocation + "<br />System cost: $"
-                    + systemCost + "<br />System size: " + systemSize
-                    + "kW<br /><br />Panel bank: " + numberOfPanels1 + " panels, "
-                    + panelOrientation1 + "&deg; orientation, " + panelTilt1 + "&deg; tilt";
-            
-            if (numPanelBanks > 1) {
-                results += "<br />Panel bank: " + numberOfPanels2 + " panels, " + panelOrientation2
-                        + "&deg; orientation, " + panelTilt2 + "&deg; tilt";
-                if (numPanelBanks > 2) {
-                    results += "<br />Panel bank: " + numberOfPanels3 + " panels, "
-                            + panelOrientation3 + "&deg; orientation, " + panelTilt3 + "&deg; tilt";
-                    if (numPanelBanks > 3) {
-                        results += "<br />Panel bank: " + numberOfPanels4 + " panels, "
-                                + panelOrientation4 + "&deg; orientation, " + panelTilt4
-                                + "&deg; tilt";
-                        if (numPanelBanks > 4) {
-                            results += "<br />Panel bank: " + numberOfPanels5 + " panels, "
-                                    + panelOrientation5 + "&deg; orientation, " + panelTilt5
-                                    + "&deg; tilt";
-                        }
-                    }
-                }
-            }
-            
-            results += "<br />Average annual panel efficiency loss rate: " + panelEfficiencyLoss
-                    + "% p.a.<br /><br />Inverter efficiency: " + inverterEfficiency
-                    + "%<br />Replacement inverter: " + replacementInverter;
-            
-            if (costNeeded) {
-                results += "<br />Replacement inverter cost: $" + replacementCost;
-            }
-            
-            results += "<br /><br />Average daily hours of sunlight: " + hoursOfSunlight
-                    + "<br />Average daily power usage: " + dailyPowerUsage
-                    + "kWh<br />Average daytime power usage: " + daytimePowerUsage
-                    + "kWh<br /><br />Tariff: " + tariffRate1 + "c/kWh, " + tariffPercentage1
-                    + "% average percentage of power usage";
-            
-            if (numTariffs > 1) {
-                results += "<br />Tariff: " + tariffRate2 + "c/kWh, " + tariffPercentage2
-                        + "% average percentage of power usage";
-                if (numTariffs > 2) {
-                    results += "<br />Tariff: " + tariffRate3 + "c/kWh, " + tariffPercentage3
-                            + "% average percentage of power usage";
-                    if (numTariffs > 3) {
-                        results += "<br />Tariff: " + tariffRate4 + "c/kWh, " + tariffPercentage4
-                                + "% average percentage of power usage";
-                        if (numTariffs > 4) {
-                            results += "<br />Tariff: " + tariffRate5 + "c/kWh, "
-                                    + tariffPercentage5 + "% average percentage of power usage";
-                        }
-                    }
-                }
-            }
-            
-            results += "<br />Average annual tariff rate increase: " + tariffIncrease
-                    + "% p.a.<br />Feed-in tariff rate: " + feedinTariff
-                    + "c/kWh<br /><br />Average annual interest rate for comparison: "
-                    + interestRate + "% p.a.</p>";
+    // add daily solar generation to output string
+    public void outputDailySolar() {
+        averageDailySolarGeneration = 0;
+        for (int i = 0; i < 25; i++) {
+            averageDailySolarGeneration += dailySolarGenerationOver25Years[i];
         }
+        averageDailySolarGeneration = averageDailySolarGeneration / 25;
+        results += "Average daily generation over 25 years: "
+                + cal.calcRoundedDouble(averageDailySolarGeneration) + "kWh";
+    }
+    
+    // add annual solar generation to output string
+    public void outputAnnualSolar() {
+        averageAnnualSolarGeneration = 0;
+        for (int i = 0; i < 25; i++) {
+            averageAnnualSolarGeneration += annualSolarGenerationOver25Years[i];
+        }
+        averageAnnualSolarGeneration = averageAnnualSolarGeneration / 25;
+        results += "Average annual generation over 25 years: "
+                + cal.calcRoundedDouble(averageAnnualSolarGeneration) + "kWh";
+    }
+    
+    // add daily savings to output string
+    public void outputDailySavings() {
+        averageDailySavings = 0;
+        for (int i = 0; i < 25; i++) {
+            averageDailySavings += dailySavingsOver25Years[i];
+        }
+        averageDailySavings = averageDailySavings / 25;
+        results += "Average daily savings over 25 years: $"
+                + cal.calcRoundedDouble(averageDailySavings);
+    }
+    
+    // add annual savings to output string
+    public void outputAnnualSavings() {
+        averageAnnualSavings = 0;
+        for (int i = 0; i < 25; i++) {
+            averageAnnualSavings += annualSavingsOver25Years[i];
+        }
+        averageAnnualSavings = averageAnnualSavings / 25;
+        results += "Average annual savings over 25 years: $"
+                + cal.calcRoundedDouble(averageAnnualSavings);
+    }
+    
+    // add cumulative savings to output string
+    public void outputCumulativeSavings() {
+        results += "Cumulative savings after 25 years: $"
+                + cal.calcRoundedDouble(cumulativeSavingsOver25Years[24]);
+    }
+    
+    // add break even point to output string
+    public void outputBreakEvenPoint() {
+        if (breakEvenPoint == 99) {
+            results += "<p>You won't break even after 25 years.</p>";
+        } else {
+            results += "<p>You will break even after " + breakEvenPoint;
+            if (breakEvenPoint == 1) {
+                results += " year.</p>";
+            } else {
+                results += " years.</p>";
+            }
+        }
+    }
+    
+    // add investment return to output string
+    public void outputInvestmentReturn() {
+        if (interestRate > 0) {
+            results += "<p>Equivalent investment return after 25 years (including system expenses): $"
+                    + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[24]) + "</p>";
+        } else {
+            results += "<p>Enter a valid average annual interest rate for comparison to calculate the equivalent investment return after 25 years (including system expenses).</p>";
+        }
+    }
+    
+    // add daily solar generation table to output string
+    public void outputDailySolarTable() {
+        results += "<table><tr><td>Year</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + cal.calcRoundedDouble(dailySolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + cal.calcRoundedDouble(dailySolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + cal.calcRoundedDouble(dailySolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + cal.calcRoundedDouble(dailySolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table>";
+    }
+    
+    // add annual solar generation table to output string
+    public void outputAnnualSolarTable() {
+        results += "<table><tr><td>Year</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + cal.calcRoundedDouble(annualSolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + cal.calcRoundedDouble(annualSolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + cal.calcRoundedDouble(annualSolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + cal.calcRoundedDouble(annualSolarGenerationOver25Years[i])
+                    + "kWh</td>";
+        }
+        results += "</tr></table>";
+    }
+    
+    // add daily savings table to output string
+    public void outputDailySavingsTable() {
+        results += "<table><tr><td>Year</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Daily</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table>";
+    }
+    
+    // add annual savings table to output string
+    public void outputAnnualSavingsTable() {
+        results += "<table><tr><td>Year</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Annual</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table>";
+    }
+    
+    // add cumulative savings table to output string
+    public void outputCumulativeSavingsTable() {
+        results += "<table><tr><td>Year</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Cumulative</td>";
+        for (int i = 0; i < 7; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Cumulative</td>";
+        for (int i = 7; i < 14; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Cumulative</td>";
+        for (int i = 14; i < 21; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table><table><tr><td>Year</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>" + (i + 1) + "</td>";
+        }
+        results += "</tr><tr><td>Cumulative</td>";
+        for (int i = 21; i < 25; i++) {
+            results += "<td>$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + "</td>";
+        }
+        results += "</tr></table>";
+    }
+    
+    // add investment return table to output string
+    public void outputInvestmentReturnTable() {
+        if (interestRate > 0 && cumulativeInvestmentReturnOver25Years[0] > 0) {
+            results += "<table><tr><td>Year</td>";
+            for (int i = 0; i < 7; i++) {
+                results += "<td>" + (i + 1) + "</td>";
+            }
+            results += "</tr><tr><td>Return</td>";
+            for (int i = 0; i < 7; i++) {
+                results += "<td>$"
+                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i]) + "</td>";
+            }
+            results += "</tr></table><table><tr><td>Year</td>";
+            for (int i = 7; i < 14; i++) {
+                results += "<td>" + (i + 1) + "</td>";
+            }
+            results += "</tr><tr><td>Return</td>";
+            for (int i = 7; i < 14; i++) {
+                results += "<td>$"
+                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i]) + "</td>";
+            }
+            results += "</tr></table><table><tr><td>Year</td>";
+            for (int i = 14; i < 21; i++) {
+                results += "<td>" + (i + 1) + "</td>";
+            }
+            results += "</tr><tr><td>Return</td>";
+            for (int i = 14; i < 21; i++) {
+                results += "<td>$"
+                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i]) + "</td>";
+            }
+            results += "</tr></table><table><tr><td>Year</td>";
+            for (int i = 21; i < 25; i++) {
+                results += "<td>" + (i + 1) + "</td>";
+            }
+            results += "</tr><tr><td>Return</td>";
+            for (int i = 21; i < 25; i++) {
+                results += "<td>$"
+                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i]) + "</td>";
+            }
+            results += "</tr></table>";
+        }
+    }
+    
+    // add system details to output string
+    public void outputSystemDetails() {
+        results += "<p>System location latitude: " + confirmedLocation + "<br />System cost: $"
+                + systemCost + "<br />System size: " + systemSize + "kW<br /><br />Panel bank: "
+                + numberOfPanels1 + " panels, " + panelOrientation1 + "&deg; orientation, "
+                + panelTilt1 + "&deg; tilt";
+        
+        if (numPanelBanks > 1) {
+            results += "<br />Panel bank: " + numberOfPanels2 + " panels, " + panelOrientation2
+                    + "&deg; orientation, " + panelTilt2 + "&deg; tilt";
+            if (numPanelBanks > 2) {
+                results += "<br />Panel bank: " + numberOfPanels3 + " panels, " + panelOrientation3
+                        + "&deg; orientation, " + panelTilt3 + "&deg; tilt";
+                if (numPanelBanks > 3) {
+                    results += "<br />Panel bank: " + numberOfPanels4 + " panels, "
+                            + panelOrientation4 + "&deg; orientation, " + panelTilt4 + "&deg; tilt";
+                    if (numPanelBanks > 4) {
+                        results += "<br />Panel bank: " + numberOfPanels5 + " panels, "
+                                + panelOrientation5 + "&deg; orientation, " + panelTilt5
+                                + "&deg; tilt";
+                    }
+                }
+            }
+        }
+        
+        results += "<br />Average annual panel efficiency loss rate: " + panelEfficiencyLoss
+                + "% p.a.<br /><br />Inverter efficiency: " + inverterEfficiency
+                + "%<br />Replacement inverter: " + replacementInverter;
+        
+        if (costNeeded) {
+            results += "<br />Replacement inverter cost: $" + replacementCost;
+        }
+        
+        results += "<br /><br />Average daily hours of sunlight: " + hoursOfSunlight
+                + "<br />Average daily power usage: " + dailyPowerUsage
+                + "kWh<br />Average daytime power usage: " + daytimePowerUsage
+                + "kWh<br /><br />Tariff: " + tariffRate1 + "c/kWh, " + tariffPercentage1
+                + "% average percentage of power usage";
+        
+        if (numTariffs > 1) {
+            results += "<br />Tariff: " + tariffRate2 + "c/kWh, " + tariffPercentage2
+                    + "% average percentage of power usage";
+            if (numTariffs > 2) {
+                results += "<br />Tariff: " + tariffRate3 + "c/kWh, " + tariffPercentage3
+                        + "% average percentage of power usage";
+                if (numTariffs > 3) {
+                    results += "<br />Tariff: " + tariffRate4 + "c/kWh, " + tariffPercentage4
+                            + "% average percentage of power usage";
+                    if (numTariffs > 4) {
+                        results += "<br />Tariff: " + tariffRate5 + "c/kWh, " + tariffPercentage5
+                                + "% average percentage of power usage";
+                    }
+                }
+            }
+        }
+        
+        results += "<br />Average annual tariff rate increase: " + tariffIncrease
+                + "% p.a.<br />Feed-in tariff rate: " + feedinTariff
+                + "c/kWh<br /><br />Average annual interest rate for comparison: " + interestRate
+                + "% p.a.</p>";
     }
 }
