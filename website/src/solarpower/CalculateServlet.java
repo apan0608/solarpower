@@ -1,4 +1,4 @@
-package solarpower.servlets;
+package solarpower;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import solarpower.entities.SolarCalculator;
 
 public class CalculateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -52,35 +50,37 @@ public class CalculateServlet extends HttpServlet {
     String confirmedLocationError = error
             + "Please ensure you have entered a valid system location, clicked <em>Confirm location</em> and selected from a list of matching locations.</p>";
     String systemCostError = error
-            + "Please ensure you have entered a valid system cost (numbers only; no more than 2 decimal places).</p>";
+            + "Please ensure you have entered a valid system cost or left it blank (numbers only; no more than two decimal places).</p>";
     String systemSizeError = error
-            + "Please ensure you have selected or entered a valid system size (numbers only; must be greater than 0).</p>";
+            + "Please ensure you have selected or entered a valid system size (numbers only; no more than two decimal places; must be greater than zero).</p>";
     String panelBankError = error
             + "Please ensure you have selected a number of panels, orientation and tilt angle for each panel bank.</p>";
     String panelEfficiencyLossError = error
-            + "Please ensure you have entered a valid average annual panel efficiency loss (numbers only).</p>";
+            + "Please ensure you have entered a valid average annual panel efficiency loss (numbers only; no more than two decimal places).</p>";
     String inverterEfficiencyError = error
-            + "Please ensure you have entered a valid inverter efficiency (numbers only).</p>";
+            + "Please ensure you have entered a valid inverter efficiency (numbers only; no more than 2 decimal places).</p>";
     String replacementInverterError = error
             + "Please ensure you have specified whether or not you want to include the cost of a replacement inverter in your calculations.</p>";
     String replacementCostError = error
-            + "Please ensure you have entered a valid replacement inverter cost (numbers only).</p>";
+            + "Please ensure you have entered a valid replacement inverter cost (numbers only; no more than two decimal places).</p>";
     String hoursOfSunlightError = error
             + "Please ensure you have selected an average daily hours of sunlight.</p>";
     String dailyPowerUsageError = error
-            + "Please ensure you have entered a valid average daily power usage (numbers only).</p>";
+            + "Please ensure you have entered a valid average daily power usage (numbers only; no more than two decimal places).</p>";
     String daytimePowerUsageError = error
-            + "Please ensure you have entered a valid average daytime power usage (numbers only).</p>";
+            + "Please ensure you have entered a valid average daytime power usage (numbers only; no more than two decimal places).</p>";
     String powerUsageError = error
             + "Please ensure the average daytime power usage is less than or equal to the average daily power usage.</p>";
     String tariffError = error
-            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff (numbers only; no more than 2 decimal places).</p>";
+            + "Please ensure you have entered a valid tariff rate and average percentage of power usage for each tariff (numbers only; no more than two decimal places).</p>";
     String tariffPercentageError = error
             + "Please ensure the sum of the average percentages of power usage equals 100%.</p>";
     String tariffIncreaseError = error
-            + "Please ensure you have entered a valid average annual tariff rate increase (numbers only).</p>";
+            + "Please ensure you have entered a valid average annual tariff rate increase (numbers only; no more than two decimal places).</p>";
     String feedinTariffError = error
-            + "Please ensure you have entered a valid feed-in tariff rate (numbers only).</p>";
+            + "Please ensure you have entered a valid feed-in tariff rate or left it blank (numbers only; no more than two decimal places).</p>";
+    String interestRateError = error
+            + "Please ensure you have entered a valid average annual interest rate for comparison or left it blank (numbers only; no more than two decimal places).</p>";
     String results;
     
     double confirmedLocation;
@@ -110,18 +110,23 @@ public class CalculateServlet extends HttpServlet {
     double daytimePowerUsage;
     double tariffRate1;
     double tariffPercentage1;
+    double newTariffRate1;
     double tariffRate2;
     double tariffPercentage2;
+    double newTariffRate2;
     double tariffRate3;
     double tariffPercentage3;
+    double newTariffRate3;
     double tariffRate4;
     double tariffPercentage4;
+    double newTariffRate4;
     double tariffRate5;
     double tariffPercentage5;
+    double newTariffRate5;
     double tariffIncrease;
     double feedinTariff;
+    double interestRate;
     
-    double dailySolarGeneration;
     double[] dailySolarGenerationOver25Years = new double[25];
     double[] annualSolarGenerationOver25Years = new double[25];
     double[] dailySolarUsedOver25Years = new double[25];
@@ -129,6 +134,14 @@ public class CalculateServlet extends HttpServlet {
     double[] dailySavingsOver25Years = new double[25];
     double[] annualSavingsOver25Years = new double[25];
     double[] cumulativeSavingsOver25Years = new double[25];
+    double[] cumulativeInvestmentReturnOver25Years = new double[25];
+    
+    int breakEvenPoint;
+    
+    double averageDailySolarGeneration;
+    double averageAnnualSolarGeneration;
+    double averageDailySavings;
+    double averageAnnualSavings;
     
     public CalculateServlet() {
         super();
@@ -178,7 +191,7 @@ public class CalculateServlet extends HttpServlet {
         }
         
         // get number of panel banks
-        for (int i = 2; i < 6; i++) {
+        for (int i = 2; i <= 5; i++) {
             if (!val.isNull(req.getParameter("numberOfPanels" + i))) {
                 numPanelBanks = i;
             }
@@ -212,7 +225,7 @@ public class CalculateServlet extends HttpServlet {
         }
         
         // get number of tariffs
-        for (int i = 2; i < 6; i++) {
+        for (int i = 2; i <= 5; i++) {
             if (!val.isNull(req.getParameter("tariffRate" + i))) {
                 numTariffs = i;
             }
@@ -239,7 +252,7 @@ public class CalculateServlet extends HttpServlet {
         // validate all fields and output appropriate error messages
         if (val.isInvalidDropdown(req.getParameter("confirmedLocation"))) {
             outputError(confirmedLocationError);
-        } else if (val.isInvalidNumberField(req.getParameter("systemCost"))) {
+        } else if (val.isInvalidNumberField(req.getParameter("systemCost"), false)) {
             outputError(systemCostError);
         } else if (val.isInvalidSystemSize(req.getParameter(systemSizeParameter))) {
             outputError(systemSizeError);
@@ -268,9 +281,9 @@ public class CalculateServlet extends HttpServlet {
                         req.getParameter(panelOrientation5Parameter),
                         req.getParameter(panelTilt5Parameter))) {
             outputError(panelBankError);
-        } else if (val.isInvalidPercentageField(req.getParameter("panelEfficiencyLoss"))) {
+        } else if (val.isInvalidPercentageField(req.getParameter("panelEfficiencyLoss"), true)) {
             outputError(panelEfficiencyLossError);
-        } else if (val.isInvalidPercentageField(req.getParameter("inverterEfficiency"))) {
+        } else if (val.isInvalidPercentageField(req.getParameter("inverterEfficiency"), true)) {
             outputError(inverterEfficiencyError);
         } else if (val.isNull(req.getParameter("replacementInverter"))) {
             outputError(replacementInverterError);
@@ -278,9 +291,9 @@ public class CalculateServlet extends HttpServlet {
             outputError(replacementCostError);
         } else if (val.isInvalidDropdown(req.getParameter("hoursOfSunlight"))) {
             outputError(hoursOfSunlightError);
-        } else if (val.isInvalidNumberField(req.getParameter("dailyPowerUsage"))) {
+        } else if (val.isInvalidNumberField(req.getParameter("dailyPowerUsage"), true)) {
             outputError(dailyPowerUsageError);
-        } else if (val.isInvalidNumberField(req.getParameter("daytimePowerUsage"))) {
+        } else if (val.isInvalidNumberField(req.getParameter("daytimePowerUsage"), true)) {
             outputError(daytimePowerUsageError);
         } else if (val.isInvalidPowerUsage(req.getParameter("dailyPowerUsage"),
                 req.getParameter("daytimePowerUsage"))) {
@@ -306,10 +319,12 @@ public class CalculateServlet extends HttpServlet {
                 req.getParameter(tariffPercentage4Parameter),
                 req.getParameter(tariffPercentage5Parameter), numTariffs)) {
             outputError(tariffPercentageError);
-        } else if (val.isInvalidPercentageField(req.getParameter("tariffIncrease"))) {
+        } else if (val.isInvalidPercentageField(req.getParameter("tariffIncrease"), true)) {
             outputError(tariffIncreaseError);
-        } else if (val.isInvalidNumberField(req.getParameter("feedinTariff"))) {
+        } else if (val.isInvalidNumberField(req.getParameter("feedinTariff"), false)) {
             outputError(feedinTariffError);
+        } else if (val.isInvalidPercentageField(req.getParameter("interestRate"), false)) {
+            outputError(interestRateError);
         } else {
             inputIsValid = true;
         }
@@ -317,7 +332,7 @@ public class CalculateServlet extends HttpServlet {
         // get form data if it is all valid
         if (inputIsValid) {
             confirmedLocation = Double.parseDouble(req.getParameter("confirmedLocation"));
-            systemCost = Double.parseDouble(req.getParameter("systemCost"));
+            systemCost = cal.calcBlankField(req.getParameter("systemCost"));
             systemSize = Double.parseDouble(req.getParameter(systemSizeParameter));
             numberOfPanels1 = Double.parseDouble(req.getParameter("numberOfPanels1"));
             panelOrientation1 = Double.parseDouble(req.getParameter("panelOrientation1"));
@@ -360,41 +375,39 @@ public class CalculateServlet extends HttpServlet {
             daytimePowerUsage = Double.parseDouble(req.getParameter("daytimePowerUsage"));
             tariffRate1 = Double.parseDouble(req.getParameter("tariffRate1"));
             tariffPercentage1 = Double.parseDouble(req.getParameter("tariffPercentage1"));
+            newTariffRate1 = tariffRate1;
             
             // get more tariff data according to number of tariffs
             if (numTariffs > 1) {
                 tariffRate2 = Double.parseDouble(req.getParameter("tariffRate2"));
                 tariffPercentage2 = Double.parseDouble(req.getParameter("tariffPercentage2"));
+                newTariffRate2 = tariffRate2;
                 if (numTariffs > 2) {
                     tariffRate3 = Double.parseDouble(req.getParameter("tariffRate3"));
                     tariffPercentage3 = Double.parseDouble(req.getParameter("tariffPercentage3"));
+                    newTariffRate3 = tariffRate3;
                     if (numTariffs > 3) {
                         tariffRate4 = Double.parseDouble(req.getParameter("tariffRate4"));
                         tariffPercentage4 = Double.parseDouble(req
                                 .getParameter("tariffPercentage4"));
+                        newTariffRate4 = tariffRate4;
                         if (numTariffs > 4) {
                             tariffRate5 = Double.parseDouble(req.getParameter("tariffRate5"));
                             tariffPercentage5 = Double.parseDouble(req
                                     .getParameter("tariffPercentage5"));
+                            newTariffRate5 = tariffRate5;
                         }
                     }
                 }
             }
             tariffIncrease = Double.parseDouble(req.getParameter("tariffIncrease"));
-            feedinTariff = Double.parseDouble(req.getParameter("feedinTariff"));
+            feedinTariff = cal.calcBlankField(req.getParameter("feedinTariff"));
+            interestRate = cal.calcBlankField(req.getParameter("interestRate"));
             
-            // calculations done here, still need lots of work
-            // -----------------------------------------------
-            // double dailySolarGeneration = cal.calculateDailyGeneration(systemSize,
-            // inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
-            //
-            // double annualSolarGeneration = cal.calculateAnnualGeneration(systemSize,
-            // inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
-            
-            // ////
-            
+            double dailySolarGeneration;
             double panelEfficiency = 1;
             
+            // calculate daily solar generation over 25 years according to number of panel banks
             switch (numPanelBanks) {
                 case 1:
                     dailySolarGeneration = cal.calcDailySolarGenerationWithOnePanelBank(
@@ -466,6 +479,7 @@ public class CalculateServlet extends HttpServlet {
                     break;
             }
             
+            // calculate annual solar generation and daily solar used/exported over 25 years
             for (int i = 0; i < 25; i++) {
                 annualSolarGenerationOver25Years[i] = dailySolarGenerationOver25Years[i] * 365;
                 dailySolarUsedOver25Years[i] = cal.calcDailySolarUsed(daytimePowerUsage,
@@ -474,66 +488,257 @@ public class CalculateServlet extends HttpServlet {
                         dailySolarGenerationOver25Years[i], dailySolarUsedOver25Years[i]);
             }
             
+            // calculate daily savings over 25 years according to number of tariffs
             switch (numTariffs) {
                 case 1:
                     for (int i = 0; i < 25; i++) {
-                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithOneTariff(tariffRate1,
-                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
-                                feedinTariff);
+                        dailySavingsOver25Years[i] = cal.calcDailySavingsWithOneTariff(
+                                newTariffRate1, dailySolarUsedOver25Years[i],
+                                dailySolarExportedOver25Years[i], feedinTariff);
+                        newTariffRate1 = cal.calcTariffRate(newTariffRate1, tariffIncrease);
                     }
                     break;
                 case 2:
                     for (int i = 0; i < 25; i++) {
                         dailySavingsOver25Years[i] = cal.calcDailySavingsWithTwoTariffs(
-                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
-                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
-                                feedinTariff);
+                                newTariffRate1, tariffPercentage1, newTariffRate2,
+                                tariffPercentage2, dailySolarUsedOver25Years[i],
+                                dailySolarExportedOver25Years[i], feedinTariff);
+                        newTariffRate1 = cal.calcTariffRate(newTariffRate1, tariffIncrease);
+                        newTariffRate2 = cal.calcTariffRate(newTariffRate2, tariffIncrease);
                     }
                     break;
                 case 3:
                     for (int i = 0; i < 25; i++) {
                         dailySavingsOver25Years[i] = cal.calcDailySavingsWithThreeTariffs(
-                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
-                                tariffRate3, tariffPercentage3, dailySolarUsedOver25Years[i],
-                                dailySolarExportedOver25Years[i], feedinTariff);
+                                newTariffRate1, tariffPercentage1, newTariffRate2,
+                                tariffPercentage2, newTariffRate3, tariffPercentage3,
+                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
+                                feedinTariff);
+                        newTariffRate1 = cal.calcTariffRate(newTariffRate1, tariffIncrease);
+                        newTariffRate2 = cal.calcTariffRate(newTariffRate2, tariffIncrease);
+                        newTariffRate3 = cal.calcTariffRate(newTariffRate3, tariffIncrease);
                     }
                     break;
                 case 4:
                     for (int i = 0; i < 25; i++) {
                         dailySavingsOver25Years[i] = cal.calcDailySavingsWithFourTariffs(
-                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
-                                tariffRate3, tariffPercentage3, tariffRate4, tariffPercentage4,
-                                dailySolarUsedOver25Years[i], dailySolarExportedOver25Years[i],
-                                feedinTariff);
+                                newTariffRate1, tariffPercentage1, newTariffRate2,
+                                tariffPercentage2, newTariffRate3, tariffPercentage3,
+                                newTariffRate4, tariffPercentage4, dailySolarUsedOver25Years[i],
+                                dailySolarExportedOver25Years[i], feedinTariff);
+                        newTariffRate1 = cal.calcTariffRate(newTariffRate1, tariffIncrease);
+                        newTariffRate2 = cal.calcTariffRate(newTariffRate2, tariffIncrease);
+                        newTariffRate3 = cal.calcTariffRate(newTariffRate3, tariffIncrease);
+                        newTariffRate4 = cal.calcTariffRate(newTariffRate4, tariffIncrease);
                     }
                     break;
                 case 5:
                     for (int i = 0; i < 25; i++) {
                         dailySavingsOver25Years[i] = cal.calcDailySavingsWithFiveTariffs(
-                                tariffRate1, tariffPercentage1, tariffRate2, tariffPercentage2,
-                                tariffRate3, tariffPercentage3, tariffRate4, tariffPercentage4,
-                                tariffRate5, tariffPercentage5, dailySolarUsedOver25Years[i],
+                                newTariffRate1, tariffPercentage1, newTariffRate2,
+                                tariffPercentage2, newTariffRate3, tariffPercentage3,
+                                newTariffRate4, tariffPercentage4, newTariffRate5,
+                                tariffPercentage5, dailySolarUsedOver25Years[i],
                                 dailySolarExportedOver25Years[i], feedinTariff);
+                        newTariffRate1 = cal.calcTariffRate(newTariffRate1, tariffIncrease);
+                        newTariffRate2 = cal.calcTariffRate(newTariffRate2, tariffIncrease);
+                        newTariffRate3 = cal.calcTariffRate(newTariffRate3, tariffIncrease);
+                        newTariffRate4 = cal.calcTariffRate(newTariffRate4, tariffIncrease);
+                        newTariffRate5 = cal.calcTariffRate(newTariffRate5, tariffIncrease);
                     }
                     break;
             }
             
             double cumulativeSavings = 0;
             
+            // calculate annual/cumulative savings over 25 years
             for (int i = 0; i < 25; i++) {
                 annualSavingsOver25Years[i] = dailySavingsOver25Years[i] * 365;
                 cumulativeSavings += annualSavingsOver25Years[i];
                 cumulativeSavingsOver25Years[i] = cumulativeSavings;
             }
             
-            // double breakEvenPoint = cal.calcBreakEvenPoint(systemCost, annualSavings);
+            double totalCost = systemCost;
             
-            // double investmentReturn = cal.calcInvestmentReturn(systemCost);
+            if (costNeeded) {
+                totalCost += replacementCost;
+            }
             
-            // results string constructed here, still needs work
-            // -------------------------------------------------
-            results = "<h2>Results</h2><p>System location latitude: " + confirmedLocation
-                    + "<br />System cost: $" + systemCost + "<br />System size: " + systemSize
+            // calculate break even point
+            breakEvenPoint = cal.calcBreakEvenPoint(totalCost, cumulativeSavingsOver25Years);
+            
+            double cumulativeInvestmentReturn = totalCost;
+            
+            // calculate cumulative investment return over 25 years
+            for (int i = 0; i < 25; i++) {
+                cumulativeInvestmentReturn += cumulativeInvestmentReturn * interestRate / 100;
+                cumulativeInvestmentReturnOver25Years[i] = cumulativeInvestmentReturn;
+            }
+            
+            // construct results string
+            results = "<h2>Results</h2>"
+                    + "<p><a id=\"toggleResults\">Click here</a> to toggle between simple and advanced results.</p>"
+                    
+                    // get simple results
+                    + "<span id=\"simpleResults\"><h3>Solar generation</h3>"
+                    + "<p>Average daily generation over 25 years: ";
+            
+            averageDailySolarGeneration = 0;
+            
+            for (int i = 0; i < 25; i++) {
+                averageDailySolarGeneration += dailySolarGenerationOver25Years[i];
+            }
+            
+            averageDailySolarGeneration = averageDailySolarGeneration / 25;
+            
+            results += cal.calcRoundedDouble(averageDailySolarGeneration) + "kWh<br />"
+                    + "Average annual generation over 25 years: ";
+            
+            averageAnnualSolarGeneration = 0;
+            
+            for (int i = 0; i < 25; i++) {
+                averageAnnualSolarGeneration += annualSolarGenerationOver25Years[i];
+            }
+            
+            averageAnnualSolarGeneration = averageAnnualSolarGeneration / 25;
+            
+            results += cal.calcRoundedDouble(averageAnnualSolarGeneration) + "kWh</p>"
+                    + "<h3>Savings</h3>" + "<p>Average daily savings over 25 years: ";
+            
+            averageDailySavings = 0;
+            
+            for (int i = 0; i < 25; i++) {
+                averageDailySavings += dailySavingsOver25Years[i];
+            }
+            
+            averageDailySavings = averageDailySavings / 25;
+            
+            results += "$" + cal.calcRoundedDouble(averageDailySavings) + "<br />"
+                    + "Average annual savings over 25 years: ";
+            
+            averageAnnualSavings = 0;
+            
+            for (int i = 0; i < 25; i++) {
+                averageAnnualSavings += annualSavingsOver25Years[i];
+            }
+            
+            averageAnnualSavings = averageAnnualSavings / 25;
+            
+            results += "$" + cal.calcRoundedDouble(averageAnnualSavings) + "<br />"
+                    + "Cumulative savings after 25 years: $"
+                    + cal.calcRoundedDouble(cumulativeSavingsOver25Years[24]) + "</p>"
+                    + "<h3>Break even point</h3>";
+            
+            if (breakEvenPoint == 99) {
+                results += "<p>You won't break even after 25 years.</p>";
+            } else {
+                results += "<p>You will break even after " + breakEvenPoint;
+                if (breakEvenPoint == 1) {
+                    results += " year.</p>";
+                } else {
+                    results += " years.</p>";
+                }
+            }
+            
+            results += "<h3>Investment return</h3>";
+            
+            if (interestRate > 0) {
+                results += "<p>Equivalent investment return after 25 years (including system expenses): $"
+                        + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[24])
+                        + "</p></span>";
+            } else {
+                results += "<p>Enter a valid average annual interest rate for comparison to calculate the equivalent investment return after 25 years (including system expenses).</p></span>";
+            }
+            
+            // get advanced results
+            results += "<span id=\"advancedResults\"><p>Average daily solar generation over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += cal.calcRoundedDouble(dailySolarGenerationOver25Years[i]) + "kWh, ";
+            }
+            
+            results += "</p><p>Average daily solar used over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += cal.calcRoundedDouble(dailySolarUsedOver25Years[i]) + "kWh, ";
+            }
+            
+            results += "</p><p>Average daily solar exported over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += cal.calcRoundedDouble(dailySolarExportedOver25Years[i]) + "kWh, ";
+            }
+            
+            results += "</p><p>Average annual solar generation over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += cal.calcRoundedDouble(annualSolarGenerationOver25Years[i]) + "kWh, ";
+            }
+            
+            results += "</p><p>Daily savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + cal.calcRoundedDouble(dailySavingsOver25Years[i]) + ", ";
+            }
+            
+            results += "</p><p>Annual savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + cal.calcRoundedDouble(annualSavingsOver25Years[i]) + ", ";
+            }
+            
+            results += "</p><p>Cumulative savings over 25 years: ";
+            
+            for (int i = 0; i < 25; i++) {
+                results += "$" + cal.calcRoundedDouble(cumulativeSavingsOver25Years[i]) + ", ";
+            }
+            
+            if (breakEvenPoint == 99) {
+                results += "</p><p>You won't break even after 25 years.";
+            } else {
+                results += "</p><p>You will break even after " + breakEvenPoint;
+                if (breakEvenPoint == 1) {
+                    results += " year.";
+                } else {
+                    results += " years.";
+                }
+            }
+            
+            if (interestRate > 0) {
+                results += "</p><p>Cumulative investment return over 25 years: ";
+                
+                for (int i = 0; i < 25; i++) {
+                    results += "$"
+                            + cal.calcRoundedDouble(cumulativeInvestmentReturnOver25Years[i])
+                            + ", ";
+                }
+            } else {
+                results += "</p><p>Enter a valid average annual interest rate for comparison if you would like to calculate your cumulative investment return over 25 years.</p>";
+            }
+            
+            results += "</span>";
+        }
+        
+        // output string as response
+        resp.setContentType("text/plain");
+        PrintWriter output = resp.getWriter();
+        output.print(results);
+        output.flush();
+        output.close();
+    }
+    
+    // set error message as output string
+    public void outputError(String error) {
+        inputIsValid = false;
+        results = error;
+    }
+    
+    // add system details to output string
+    public void outputSystemDetails(boolean detailsWillOutput) {
+        if (detailsWillOutput) {
+            results += "<p>System location latitude: " + confirmedLocation + "<br />System cost: $"
+                    + systemCost + "<br />System size: " + systemSize
                     + "kW<br /><br />Panel bank: " + numberOfPanels1 + " panels, "
                     + panelOrientation1 + "&deg; orientation, " + panelTilt1 + "&deg; tilt";
             
@@ -557,7 +762,7 @@ public class CalculateServlet extends HttpServlet {
             }
             
             results += "<br />Average annual panel efficiency loss rate: " + panelEfficiencyLoss
-                    + "%<br /><br />Inverter efficiency: " + inverterEfficiency
+                    + "% p.a.<br /><br />Inverter efficiency: " + inverterEfficiency
                     + "%<br />Replacement inverter: " + replacementInverter;
             
             if (costNeeded) {
@@ -571,16 +776,16 @@ public class CalculateServlet extends HttpServlet {
                     + "% average percentage of power usage";
             
             if (numTariffs > 1) {
-                results += "<br />Tariff: " + tariffRate2 + " c/kWh, " + tariffPercentage2
+                results += "<br />Tariff: " + tariffRate2 + "c/kWh, " + tariffPercentage2
                         + "% average percentage of power usage";
                 if (numTariffs > 2) {
-                    results += "<br />Tariff: " + tariffRate3 + " c/kWh, " + tariffPercentage3
+                    results += "<br />Tariff: " + tariffRate3 + "c/kWh, " + tariffPercentage3
                             + "% average percentage of power usage";
                     if (numTariffs > 3) {
-                        results += "<br />Tariff: " + tariffRate4 + " c/kWh, " + tariffPercentage4
+                        results += "<br />Tariff: " + tariffRate4 + "c/kWh, " + tariffPercentage4
                                 + "% average percentage of power usage";
                         if (numTariffs > 4) {
-                            results += "<br />Tariff: " + tariffRate5 + " c/kWh, "
+                            results += "<br />Tariff: " + tariffRate5 + "c/kWh, "
                                     + tariffPercentage5 + "% average percentage of power usage";
                         }
                     }
@@ -588,50 +793,9 @@ public class CalculateServlet extends HttpServlet {
             }
             
             results += "<br />Average annual tariff rate increase: " + tariffIncrease
-                    + "%<br />Feed-in tariff rate: " + feedinTariff
-                    + "c/kWh</p><p>Average daily solar generation over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += dailySolarGenerationOver25Years[i] + "kWh, ";
-            }
-            
-            results += "</p><p>Average annual solar generation over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += annualSolarGenerationOver25Years[i] + "kWh, ";
-            }
-            
-            results += "</p><p>Daily savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + dailySavingsOver25Years[i] + ", ";
-            }
-            
-            results += "</p><p>Annual savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + annualSavingsOver25Years[i] + ", ";
-            }
-            
-            results += "</p><p>Cumulative savings over 25 years: ";
-            
-            for (int i = 0; i < 25; i++) {
-                results += "$" + cumulativeSavingsOver25Years[i] + ", ";
-            }
-            
+                    + "% p.a.<br />Feed-in tariff rate: " + feedinTariff
+                    + "c/kWh<br /><br />Average annual interest rate for comparison: "
+                    + interestRate + "% p.a.</p>";
         }
-        
-        // output string as response
-        resp.setContentType("text/plain");
-        PrintWriter output = resp.getWriter();
-        output.print(results);
-        output.flush();
-        output.close();
-    }
-    
-    // set error message as output string
-    public void outputError(String error) {
-        inputIsValid = false;
-        results = error;
     }
 }

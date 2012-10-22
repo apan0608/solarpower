@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import solarpower.servlets.InputValidator;
+import solarpower.InputValidator;
 
 public class InputValidatorTest {
     
@@ -133,52 +133,92 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidNumberField() {
-        assertTrue(val.isInvalidNumberField(null));
+        assertTrue(val.isInvalidNumberField(null, true));
     }
     
     @Test
     public void isInvalidNumberField2() {
-        assertTrue(val.isInvalidNumberField(""));
+        assertTrue(val.isInvalidNumberField("", true));
     }
     
     @Test
     public void isInvalidNumberField3() {
-        assertTrue(val.isInvalidNumberField("$0"));
+        assertTrue(val.isInvalidNumberField("$0", true));
     }
     
     @Test
     public void isInvalidNumberField4() {
-        assertTrue(val.isInvalidNumberField("1 2"));
+        assertTrue(val.isInvalidNumberField("1 2", true));
     }
     
     @Test
     public void isInvalidNumberField5() {
-        assertTrue(val.isInvalidNumberField("3."));
+        assertTrue(val.isInvalidNumberField("3.", true));
     }
     
     @Test
     public void isInvalidNumberField6() {
-        assertTrue(val.isInvalidNumberField("4.567"));
+        assertTrue(val.isInvalidNumberField("4.567", true));
+    }
+    
+    @Test
+    public void isInvalidNumberField7() {
+        assertTrue(val.isInvalidNumberField("$0", false));
+    }
+    
+    @Test
+    public void isInvalidNumberField8() {
+        assertTrue(val.isInvalidNumberField("1 2", false));
+    }
+    
+    @Test
+    public void isInvalidNumberField9() {
+        assertTrue(val.isInvalidNumberField("3.", false));
+    }
+    
+    @Test
+    public void isInvalidNumberField10() {
+        assertTrue(val.isInvalidNumberField("4.567", false));
     }
     
     @Test
     public void isValidNumberField() {
-        assertFalse(val.isInvalidNumberField("0"));
+        assertFalse(val.isInvalidNumberField("0", true));
     }
     
     @Test
     public void isValidNumberField2() {
-        assertFalse(val.isInvalidNumberField(".1"));
+        assertFalse(val.isInvalidNumberField(".1", true));
     }
     
     @Test
     public void isValidNumberField3() {
-        assertFalse(val.isInvalidNumberField("2.3"));
+        assertFalse(val.isInvalidNumberField("2.3", true));
     }
     
     @Test
     public void isValidNumberField4() {
-        assertFalse(val.isInvalidNumberField("4567.89"));
+        assertFalse(val.isInvalidNumberField("4567.89", true));
+    }
+    
+    @Test
+    public void isValidNumberField5() {
+        assertFalse(val.isInvalidNumberField("", false));
+    }
+    
+    @Test
+    public void isValidNumberField6() {
+        assertFalse(val.isInvalidNumberField(".1", false));
+    }
+    
+    @Test
+    public void isValidNumberField7() {
+        assertFalse(val.isInvalidNumberField("2.3", false));
+    }
+    
+    @Test
+    public void isValidNumberField8() {
+        assertFalse(val.isInvalidNumberField("4567.89", false));
     }
     
     @Test
@@ -333,72 +373,137 @@ public class InputValidatorTest {
     
     @Test
     public void isInvalidPercentageField() {
-        assertTrue(val.isInvalidPercentageField(null));
+        assertTrue(val.isInvalidPercentageField(null, true));
     }
     
     @Test
     public void isInvalidPercentageField2() {
-        assertTrue(val.isInvalidPercentageField(""));
+        assertTrue(val.isInvalidPercentageField("", true));
     }
     
     @Test
     public void isInvalidPercentageField3() {
-        assertTrue(val.isInvalidPercentageField("0%"));
+        assertTrue(val.isInvalidPercentageField("0%", true));
     }
     
     @Test
     public void isInvalidPercentageField4() {
-        assertTrue(val.isInvalidPercentageField("1 2"));
+        assertTrue(val.isInvalidPercentageField("1 2", true));
     }
     
     @Test
     public void isInvalidPercentageField5() {
-        assertTrue(val.isInvalidPercentageField("3."));
+        assertTrue(val.isInvalidPercentageField("3.", true));
     }
     
     @Test
     public void isInvalidPercentageField6() {
-        assertTrue(val.isInvalidPercentageField("4.567"));
+        assertTrue(val.isInvalidPercentageField("4.567", true));
+    }
+    
+    @Test
+    public void isInvalidPercentageField7() {
+        assertTrue(val.isInvalidPercentageField("-1", true));
     }
     
     @Test
     public void isInvalidPercentageField8() {
-        assertTrue(val.isInvalidPercentageField("-1"));
+        assertTrue(val.isInvalidPercentageField("-0.01", true));
     }
     
     @Test
     public void isInvalidPercentageField9() {
-        assertTrue(val.isInvalidPercentageField("-0.01"));
+        assertTrue(val.isInvalidPercentageField("101", true));
     }
     
     @Test
     public void isInvalidPercentageField10() {
-        assertTrue(val.isInvalidPercentageField("101"));
+        assertTrue(val.isInvalidPercentageField("100.01", true));
     }
     
     @Test
     public void isInvalidPercentageField11() {
-        assertTrue(val.isInvalidPercentageField("100.01"));
+        assertTrue(val.isInvalidPercentageField("0%", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField12() {
+        assertTrue(val.isInvalidPercentageField("1 2", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField13() {
+        assertTrue(val.isInvalidPercentageField("3.", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField14() {
+        assertTrue(val.isInvalidPercentageField("4.567", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField15() {
+        assertTrue(val.isInvalidPercentageField("-1", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField16() {
+        assertTrue(val.isInvalidPercentageField("-0.01", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField17() {
+        assertTrue(val.isInvalidPercentageField("101", false));
+    }
+    
+    @Test
+    public void isInvalidPercentageField18() {
+        assertTrue(val.isInvalidPercentageField("100.01", false));
     }
     
     @Test
     public void isValidPercentageField() {
-        assertFalse(val.isInvalidPercentageField("0"));
+        assertFalse(val.isInvalidPercentageField("0", true));
     }
     
     @Test
     public void isValidPercentageField2() {
-        assertFalse(val.isInvalidPercentageField(".1"));
+        assertFalse(val.isInvalidPercentageField(".1", true));
     }
     
     @Test
     public void isValidPercentageField3() {
-        assertFalse(val.isInvalidPercentageField("0.01"));
+        assertFalse(val.isInvalidPercentageField("0.01", true));
     }
     
     @Test
     public void isValidPercentageField4() {
-        assertFalse(val.isInvalidPercentageField("100"));
+        assertFalse(val.isInvalidPercentageField("100", true));
+    }
+    
+    @Test
+    public void isValidPercentageField5() {
+        assertFalse(val.isInvalidPercentageField("", false));
+    }
+    
+    @Test
+    public void isValidPercentageField6() {
+        assertFalse(val.isInvalidPercentageField("0", false));
+    }
+    
+    @Test
+    public void isValidPercentageField7() {
+        assertFalse(val.isInvalidPercentageField(".1", false));
+    }
+    
+    @Test
+    public void isValidPercentageField8() {
+        assertFalse(val.isInvalidPercentageField("0.01", false));
+    }
+    
+    @Test
+    public void isValidPercentageField9() {
+        assertFalse(val.isInvalidPercentageField("100", false));
     }
     
     @Test
@@ -665,153 +770,4 @@ public class InputValidatorTest {
     public void isValidTariffPercentage5() {
         assertFalse(val.isInvalidTariffPercentage("0", ".01", "9.99", "40", "50", 5));
     }
-    
-    // @Test(expected = Exception.class)
-    // public void nullString() throws Exception {
-    // val.stringIsNull(null);
-    // }
-    
-    // // Enter a negative system size
-    // @Test(expected = Exception.class)
-    // public void negativeSystemSize() throws Exception {
-    // validate.systemSize(-3.0);
-    // }
-    //
-    // // Enter a negative system cost
-    // @Test(expected = Exception.class)
-    // public void negativeSystemCost() throws Exception {
-    // validate.systemCost(-1000.0);
-    // }
-    //
-    // // Enter a negative percentage of panel on North
-    // @Test(expected = Exception.class)
-    // public void negativePercentNorth() throws Exception {
-    // validate.northRoofDensity(-15.5);
-    // }
-    //
-    // // Set the panel's density to be 106%
-    // @Test(expected = Exception.class)
-    // public void invalidPercentNorth() throws Exception {
-    // validate.northRoofDensity(106.0);
-    // }
-    //
-    // // Enter a negative percentage of panel on West
-    // @Test(expected = Exception.class)
-    // public void negativePercentWest() throws Exception {
-    // validate.westRoofDensity(-27.5);
-    // }
-    //
-    // // Set the panel's density to be 150.%
-    // @Test(expected = Exception.class)
-    // public void invalidPercentWest() throws Exception {
-    // validate.westRoofDensity(150.5);
-    // }
-    //
-    // // Enter a negative percentage represented for the Efficiency Loss (North Roof)
-    // @Test(expected = Exception.class)
-    // public void negativeNorthRoofEfficiencyLoss() throws Exception {
-    // validate.northRoofEfficiencyLoss(-27.1);
-    // }
-    //
-    // // Enter a percentage over 100% for the Efficiency Loss (North Roof)
-    // @Test(expected = Exception.class)
-    // public void invalidNorthRoofEfficiencyLoss() throws Exception {
-    // validate.northRoofEfficiencyLoss(200.1);
-    // }
-    //
-    // // Enter a negative percentage represented for the Efficiency Loss (West Roof)
-    // @Test(expected = Exception.class)
-    // public void negativeWestRoofEfficiencyLoss() throws Exception {
-    // validate.westRoofEfficiencyLoss(-17.5);
-    // }
-    //
-    // // Enter a percentage over 100% for the Efficiency Loss ( Roof)
-    // @Test(expected = Exception.class)
-    // public void invalidWestRoofEfficiencyLoss() throws Exception {
-    // validate.westRoofEfficiencyLoss(210.1);
-    // }
-    //
-    // // Enter a negative percentage represented for the Panel Age Efficiency Loss
-    // @Test(expected = Exception.class)
-    // public void negativePanelAgeEfficiencyLoss() throws Exception {
-    // validate.panelAgeEfficiencyLoss(-66.5);
-    // }
-    //
-    // // Enter a percentage over 100% for the Panel Age Efficiency Loss
-    // @Test(expected = Exception.class)
-    // public void invalidPanelAgeEfficiencyLoss() throws Exception {
-    // validate.panelAgeEfficiencyLoss(110.1);
-    // }
-    //
-    // // Enter a negative Inverter Replacement Cost
-    // @Test(expected = Exception.class)
-    // public void negativeInverterReplacementCost() throws Exception {
-    // validate.inverterReplacementCost(-4000.0);
-    // }
-    //
-    // // Enter a negative Average Daily Hours of Sunlight
-    // @Test(expected = Exception.class)
-    // public void negativeSunlightDailyHours() throws Exception {
-    // validate.sunlightDailyHours(-3.0);
-    // }
-    //
-    // // Set the Average Daily Hours of Sunlight to be 25 hours
-    // @Test(expected = Exception.class)
-    // public void invalidSunlightDailyHours() throws Exception {
-    // validate.sunlightDailyHours(25.0);
-    // }
-    //
-    // // Enter a negative Daily Average Usage
-    // @Test(expected = Exception.class)
-    // public void negativedailyAvgUsage() throws Exception {
-    // validate.dailyAvgUsage(-40.0);
-    // }
-    //
-    // // Enter a negative Day Time Hourly Usage
-    // @Test(expected = Exception.class)
-    // public void negativeDayTimeHourlyUsage() throws Exception {
-    // validate.dayTimeHourlyUsage(-1.0);
-    // }
-    //
-    // // Enter a negative Annual Tariff 11 Cost
-    // @Test(expected = Exception.class)
-    // public void negativeAnnualTariff11Cost() throws Exception {
-    // validate.annualTariff11Cost(-2460.0);
-    // }
-    //
-    // // Enter a negative Annual Tariff 33 Cost
-    // @Test(expected = Exception.class)
-    // public void negativeAnnualTariff33Cost() throws Exception {
-    // validate.annualTariff33Cost(-185.0);
-    // }
-    //
-    // // Enter a negative Tariff 11 Fee
-    // @Test(expected = Exception.class)
-    // public void negativeTariff11Fee() throws Exception {
-    // validate.tariff11Fee(-0.1941);
-    // }
-    //
-    // // Enter a negative Tariff 33 Fee
-    // @Test(expected = Exception.class)
-    // public void negativeTariff33Fee() throws Exception {
-    // validate.tariff33Fee(-0.11);
-    // }
-    //
-    // // Enter a negative Feed in Fee
-    // @Test(expected = Exception.class)
-    // public void negativeFeedInFee() throws Exception {
-    // validate.feedInFee(-0.5);
-    // }
-    //
-    // // Enter a negative Annual Tariff Increase
-    // @Test(expected = Exception.class)
-    // public void negativeAnnualTariffIncrease() throws Exception {
-    // validate.annualTariffIncrease(-5.0);
-    // }
-    //
-    // // Enter a negative Investment Return Rate
-    // @Test(expected = Exception.class)
-    // public void negativeInvestmentReturnRate() throws Exception {
-    // validate.investmentReturnRate(-5.0);
-    // }
 }

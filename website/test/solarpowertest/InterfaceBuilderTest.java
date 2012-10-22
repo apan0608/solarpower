@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import solarpower.servlets.InterfaceBuilder;
+import solarpower.InterfaceBuilder;
 
 public class InterfaceBuilderTest {
     

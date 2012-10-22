@@ -282,28 +282,16 @@ td {
 	margin-top: 10px;
 }
 
-/* currency text fields */
-#systemCost,#replacementCost,#additionalFees {
-	width: 70px;
-}
-
-/* percentage text fields */
-#panelEfficiencyLoss,#inverterEfficiency,#tariffPercentage1,#tariffPercentage2,#tariffPercentage3,#tariffPercentage4,#tariffPercentage5,#tariffIncrease
+/* other text fields */
+#customSystemSize,#panelEfficiencyLoss,#inverterEfficiency,#dailyPowerUsage,#daytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#tariffPercentage1,#tariffPercentage2,#tariffPercentage3,#tariffPercentage4,#tariffPercentage5,#tariffIncrease,#feedinTariff,#interestRate
 	{
 	margin-right: 5px;
 	width: 50px;
 }
 
-/* populate fields link */
-#populateFields {
+/* populate fields and toggle results links */
+#populateFields,#toggleResults {
 	cursor: pointer;
-}
-
-/* power text fields */
-#customSystemSize,#dailyPowerUsage,#daytimePowerUsage,#tariffRate1,#tariffRate2,#tariffRate3,#tariffRate4,#tariffRate5,#feedinTariff
-	{
-	margin-right: 5px;
-	width: 60px;
 }
 
 /* replacement cost currency label */
@@ -314,6 +302,11 @@ td {
 /* replacement cost label */
 #lblReplacementCost {
 	margin-left: 10px;
+}
+
+/* system cost and replacement cost text fields */
+#systemCost,#replacementCost {
+	width: 70px;
 }
 
 /* system location text field */

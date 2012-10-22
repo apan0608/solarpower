@@ -1,7 +1,7 @@
 /**
  * 
  */
-package solarpower.entities;
+package solarpower;
 
 import org.apache.jasper.servlet.JspServlet;
 

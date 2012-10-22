@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<listener>
-		<listener-class>solarpower.servlets.AppServletContextListener</listener-class>
+		<listener-class>solarpower.AppServletContextListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>calculate</servlet-name>
-		<servlet-class>solarpower.servlets.CalculateServlet</servlet-class>
+		<servlet-class>solarpower.CalculateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>calculate</servlet-name>
@@ -28,7 +28,7 @@
 
 	<servlet>
 		<servlet-name>sign</servlet-name>
-		<servlet-class>solarpower.servlets.SignSolarpowerServlet</servlet-class>
+		<servlet-class>solarpower.SignSolarpowerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>sign</servlet-name>
@@ -37,7 +37,7 @@
 
 	<servlet>
 		<servlet-name>oldcalculate</servlet-name>
-		<servlet-class>solarpower.servlets.CalculateSolarpowerServlet</servlet-class>
+		<servlet-class>solarpower.CalculateSolarpowerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>oldcalculate</servlet-name>
@@ -46,7 +46,7 @@
 
 	<servlet>
 		<servlet-name>history</servlet-name>
-		<servlet-class>solarpower.servlets.HistoryResultsServlet</servlet-class>
+		<servlet-class>solarpower.HistoryResultsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>history</servlet-name>

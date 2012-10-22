@@ -1,4 +1,4 @@
-package solarpower.servlets;
+package solarpower;
 
 import java.io.IOException;
 

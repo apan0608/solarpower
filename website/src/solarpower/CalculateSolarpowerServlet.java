@@ -1,4 +1,4 @@
-package solarpower.servlets;
+package solarpower;
 
 import java.io.IOException;
 import java.util.Date;
@@ -23,7 +23,6 @@ import com.google.appengine.api.users.UserServiceFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import solarpower.entities.SolarCalculator;
 
 /*
  * Perform all kinds of calculations. And in later development, enable user service 
@@ -110,32 +109,21 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
         // new added
         double daytimePowerUsage = Double.parseDouble(req.getParameter("daytimePowerUsage"));// daily
         
-        double dailySolarGeneration = calc.calculateDailyGeneration(systemSize,
-                inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
-        
-        double annualSolarGeneration = calc.calculateAnnualGeneration(systemSize,
-                inverterEfficiency / 100, hoursOfSunlight, panelOrientation1, 1);
-        
         double dailySolarUsed = calc.calcDailySolarUsed(daytimePowerUsage, hoursOfSunlight);
         
-        double dailySolarExported = calc.calcDailySolarExported(dailySolarGeneration,
-                dailySolarUsed);
-        
-//        double dailySavings = calc.calcDailySavings(dailySolarUsed, tariffRate, dailySolarExported,
-//                feedinTariff);
-//        
-//        double annualSavings = calc.calcAnnualSavings(dailySavings);
-//        
-//        double cumulativeSavings = calc.calcCumulativeSavings(annualSavings);
-//        
-//        double breakEvenPoint = calc.calcBreakEvenPoint(systemCost, annualSavings);
-        
-        double investmentReturn = calc.calcInvestmentReturn(systemCost);
+        // double dailySavings = calc.calcDailySavings(dailySolarUsed, tariffRate,
+        // dailySolarExported,
+        // feedinTariff);
+        //
+        // double annualSavings = calc.calcAnnualSavings(dailySavings);
+        //
+        // double cumulativeSavings = calc.calcCumulativeSavings(annualSavings);
+        //
+        // double breakEvenPoint = calc.calcBreakEvenPoint(systemCost, annualSavings);
         
         // also be stored in datastore
         String content = "Details of the system: " + "\n" + "\tSize:  "
-                + req.getParameter("systemSize")
-                + "kw"
+                + req.getParameter("systemSize") + "kw"
                 + "\n"
                 + "\tCost:  "
                 + "$"
@@ -163,33 +151,9 @@ public class CalculateSolarpowerServlet extends HttpServlet implements Servlet {
                 + "\tTariff rate:  "
                 + req.getParameter("tariffRate1")
                 + "\n\n"
-                + "Daily power generation of the system: "
-                + dailySolarGeneration
-                + "kWh\n"
-                + "Annual power generation of the system: "
-                + annualSolarGeneration
-                + "kWh\n"
                 + "Daily solar used: "
                 + dailySolarUsed
                 + "kWh\n"
-                + "Daily solar exported: "
-                + dailySolarExported
-                + "kWh\n"
-//                + "Daily savings: $"
-//                + dailySavings
-                + "\n"
-//                + "Annual savings: $"
-//                + annualSavings
-                + "\n"
-//                + "Cumulative savings: $"
-//                + cumulativeSavings
-                + "\n"
-//                + "You will break even after: "
-//                + breakEvenPoint
-                + " years\n"
-                + "The equivalent investment return after 25 years would be: $"
-                + investmentReturn
-                + "\n"
                 + "----------------------------------------------------------------------------\n\n";
         
         calResults = content;

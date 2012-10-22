@@ -2,7 +2,7 @@
  * This servlet retrive the history calculation results of a user and display it in the 
  * calculate.jsp page.
  */
-package solarpower.servlets;
+package solarpower;
 
 import java.io.IOException;
 import java.util.Date;
