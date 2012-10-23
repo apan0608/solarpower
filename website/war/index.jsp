@@ -36,20 +36,19 @@
 			<div id="menu">
 				<ul>
 					<li><a style="color: #FFFFFF" href="index.jsp">Home</a></li>
-					<li><a href="/history">History</a></li>
+					<%--<li><a href="/history">History</a></li>--%>
 				</ul>
 			</div>
 		</div>
 		<div id="sidebar">
 			<ul>
 				<li><a style="color: #DD4B39" href="index.jsp">Home</a></li>
-				<li><a href="/history">History</a></li>
+				<%--<li><a href="/history">History</a></li>--%>
 			</ul>
 		</div>
 		<div id="content">
 			<h2>Calculate</h2>
-
-			<%
+			<%--<%
 			    UserService userService = UserServiceFactory.getUserService();
 			    User user = userService.getCurrentUser();
 			    if (user != null) {
@@ -70,8 +69,7 @@
 			</p>
 			<%
 			    }
-			%>
-
+			%>--%>
 			<p>This is a solar power calculator for grid-connected systems
 				over a period of 25 years. It will calculate average daily and
 				annual solar generation, average daily and annual savings, and

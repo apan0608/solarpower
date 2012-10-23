@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://mgsdtech.appspot.com/" />
+<title>testDaytimePower</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">testDaytimePower</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=systemLocation</td>
+	<td>milton</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=confirmLocation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>id=divConfirmedLocation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=confirmedLocation</td>
+	<td>label=Milton QLD, Australia</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=systemSize</td>
+	<td>label=3kW</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=numberOfPanels1</td>
+	<td>label=14</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=panelOrientation1</td>
+	<td>label=N (0°)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=panelTilt1</td>
+	<td>label=30°</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=panelEfficiencyLoss</td>
+	<td>0.83</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inverterEfficiency</td>
+	<td>95</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=no</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='form']/fieldset[3]/label[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=hoursOfSunlight</td>
+	<td>label=8</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=dailyPowerUsage</td>
+	<td>20</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid average daytime power usage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>0kWh</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid average daytime power usage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>1 2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid average daytime power usage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>3.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid average daytime power usage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>4.567</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid average daytime power usage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid tariff rate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>.1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid tariff rate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>2.3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>valid tariff rate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=daytimePowerUsage</td>
+	<td>4567.89</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitForm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>less than or equal to</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

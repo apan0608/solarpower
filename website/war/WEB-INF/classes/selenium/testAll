@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="testSystemLocation.html">testSystemLocation</a></td></tr>
+<tr><td><a href="testSystemCost.html">testSystemCost</a></td></tr>
+<tr><td><a href="testSystemSize.html">testSystemSize</a></td></tr>
+<tr><td><a href="testPanelBanks.html">testPanelBanks</a></td></tr>
+<tr><td><a href="testPanelEfficiency.html">testPanelEfficiency</a></td></tr>
+<tr><td><a href="testInverterEfficiency.html">testInverterEfficiency</a></td></tr>
+<tr><td><a href="testReplacementInverter.html">testReplacementInverter</a></td></tr>
+<tr><td><a href="testDailyHours.html">testDailyHours</a></td></tr>
+<tr><td><a href="testDailyPower.html">testDailyPower</a></td></tr>
+<tr><td><a href="testDaytimePower.html">testDaytimePower</a></td></tr>
+<tr><td><a href="testTariffs.html">testTariffs</a></td></tr>
+<tr><td><a href="testTariffIncrease.html">testTariffIncrease</a></td></tr>
+<tr><td><a href="testFeedinTariff.html">testFeedinTariff</a></td></tr>
+<tr><td><a href="testInterestRate.html">testInterestRate</a></td></tr>
+<tr><td><a href="testPopulateFields.html">testPopulateFields</a></td></tr>
+<tr><td><a href="testCalculations.html">testCalculations</a></td></tr>
+</tbody></table>
+</body>
+</html>
